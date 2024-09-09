@@ -1,0 +1,69 @@
+/* src/components/header/Header.css */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #282c34;
+    color: white;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo {
+    width: 70px; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.header-center {
+    flex: 1; /* Esto hace que el centro ocupe el espacio disponible */
+    text-align: center;
+}
+
+.header-title {
+    margin: 0;
+    font-size: 2.5em; /* Tamaño grande para el título */
+    color: #FDC1DA; /* Color rosado para el texto */
+    background-color: #00450A; /* Fondo verde */
+    display: inline-block;
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    font-family: 'Roboto', sans-serif; /* Fuente moderna */
+    text-transform: uppercase; /* Transformar texto a mayúsculas */
+    letter-spacing: 1px; /* Espaciado entre letras */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Transiciones suaves */
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-icon {
+    background: none;
+    border: none;
+    color: white;
+    margin-left: 15px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.header-icon:hover {
+    color: #ddd;
+}
+
+/* Estilos para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .header-title {
+        display: none; /* Ajusta el tamaño de fuente si es necesario */
+    }
+    .header-logo {
+        width: 80px; /* Ajusta el tamaño de la imagen en pantallas más pequeñas */
+    }
+}

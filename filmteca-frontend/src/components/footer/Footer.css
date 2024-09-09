@@ -1,0 +1,42 @@
+/* src/components/footer/Footer.css */
+.footer {
+    background-color: #282c34;
+    color: white;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem; /* Reducir el relleno horizontal */
+    z-index: 1000; /* Asegura que el footer esté encima de otros contenidos */
+}
+
+.footer-links {
+    display: flex;
+    align-items: center;
+    margin-right: auto; /* Asegura que los enlaces se alineen a la izquierda */
+}
+
+.footer-links a {
+    color: #FDC1DA;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    margin-right: 1rem; /* Espacio entre enlaces */
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-links span {
+    margin: 0 0.5rem;
+}
+
+.footer-text {
+    margin: 0.5rem;
+    padding: 0 1rem; /* Espacio entre el texto y los bordes */
+}
+
