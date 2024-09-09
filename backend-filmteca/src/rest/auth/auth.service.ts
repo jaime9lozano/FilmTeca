@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { UserSignUpDto } from './dto/update-auth.dto';
 import { UserSignInDto } from './dto/create-auth.dto';
+import { UserRole } from '../users/entities/user-role.entity';
 
 @Injectable()
 export class AuthService {
@@ -26,7 +27,8 @@ export class AuthService {
     const user = await this.usersService.create(
       this.authMapper.toCreateDto(userSignUpDto),
     );
-    return this.getAccessToken(user.id);
+
+    return this.getAccessToken(user.roles);
   }
 
   async singIn(userSignInDto: UserSignInDto) {
@@ -42,7 +44,10 @@ export class AuthService {
     if (!isValidPassword) {
       throw new BadRequestException('username or password are invalid');
     }
-    return this.getAccessToken(user.id);
+
+    const roles = user.roles.map((role) => role.role);
+
+    return this.getAccessToken(roles);
   }
 
   async validateUser(id: number) {
@@ -50,11 +55,10 @@ export class AuthService {
     return await this.usersService.findOne(id);
   }
 
-  private getAccessToken(userId: number) {
-    this.logger.log(`getAccessToken ${userId}`);
+  private getAccessToken(roles: string[]) {
     try {
       const payload = {
-        id: userId,
+        role: roles,
       };
       //console.log(payload)
       const access_token = this.jwtService.sign(payload);

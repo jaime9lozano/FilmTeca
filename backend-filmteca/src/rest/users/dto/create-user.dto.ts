@@ -5,6 +5,7 @@ import {
   IsNotEmpty,
   Matches,
 } from 'class-validator';
+import { UserRole } from '../entities/user-role.entity';
 
 export class CreateUserDto {
   @IsNotEmpty({ message: 'Nombre no puede estar vacío' })

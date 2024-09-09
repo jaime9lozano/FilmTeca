@@ -21,6 +21,7 @@ export class JwtAuthStrategy extends PassportStrategy(Strategy) {
   // Si se valida obtenemos el role
   async validate(payload: Usuario) {
     const id = payload.id;
-    return await this.authService.validateUser(id);
+    const user = await this.authService.validateUser(id);
+    return { ...user, role: payload.roles };
   }
 }

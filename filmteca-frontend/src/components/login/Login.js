@@ -1,67 +1,73 @@
 // src/components/login/Login.js
+import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import Cookies from 'js-cookie';
+import {useNavigate} from "react-router-dom"; // Asegúrate de crear este archivo CSS
+import './Login.css';
 
 const Login = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
-    const getCsrfToken = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
         try {
-            await axios.get('http://localhost:8000/sanctum/csrf-cookie', { withCredentials: true });
+            const response = await axios.post('http://localhost:8000/auth/login', {
+                username,
+                password,
+            });
+
+            const { access_token } = response.data;
+
+            // Guardar el token en una cookie
+            Cookies.set('auth_token', access_token, { expires: 7 }); // Expira en 7 días
+
+            navigate('/'); // Cambia a la ruta que desees
+
         } catch (error) {
-            console.error('Error al obtener el token CSRF:', error);
-            setError('Error al obtener el token CSRF: ' + error.message);
+            setError('Nombre de usuario o contraseña inválidos');
+        } finally {
+            setLoading(false);
         }
     };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        // Obtener el token CSRF
-        await getCsrfToken();
-
-        // Enviar la solicitud de inicio de sesión
-        axios.post('http://localhost:8000/login', {
-            email: email,
-            password: password
-        }, { withCredentials: true })
-            .then(response => {
-                // Manejar la respuesta exitosa
-                console.log(response.data);
-                localStorage.setItem('auth_token', response.data.token);
-                navigate('/');
-            })
-            .catch(error => {
-                // Manejar el error de autenticación
-                console.error('Error de autenticación:', error);
-                setError('Error de autenticación: ' + error.message);
-            });
-    };
-
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                required
-            />
-            <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                required
-            />
-            <button type="submit">Login</button>
-            {error && <p>{error}</p>}
-        </form>
+        <div className="login-container">
+            <h2>Iniciar sesión</h2>
+            <form onSubmit={handleLogin} className="login-form">
+                <div className="form-group">
+                    <label htmlFor="username">Nombre de usuario</label>
+                    <input
+                        type="text"
+                        id="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Contraseña</label>
+                    <input
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit" className="submit-button" disabled={loading}>
+                    {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+                </button>
+                {error && <p className="error-message">{error}</p>}
+            </form>
+        </div>
     );
+
 };
 
 export default Login;
