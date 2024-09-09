@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PeliculasModule } from './rest/peliculas/peliculas.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { CorsConfigModule } from './config/cors/cors.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { CacheModule } from '@nestjs/cache-manager';
       synchronize: false,
     }),
     PeliculasModule,
+    CorsConfigModule,
   ],
   controllers: [],
   providers: [],

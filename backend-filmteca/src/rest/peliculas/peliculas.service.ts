@@ -43,10 +43,11 @@ export class PeliculasService {
     }
 
     const queryBuilder = this.peliculaRepository.createQueryBuilder('pelicula');
+    queryBuilder.where('pelicula.deletedAt IS NULL');
     const pagination = await paginate(query, queryBuilder, {
       sortableColumns: ['title', 'release_year', 'duration'],
-      defaultSortBy: [['title', 'ASC']],
-      relations: ['generos', 'actores', 'premios'],
+      defaultSortBy: [['id', 'ASC']],
+      //relations: ['generos', 'actores', 'premios'],
       searchableColumns: ['title', 'release_year', 'duration'],
       filterableColumns: {
         title: [FilterOperator.EQ, FilterSuffix.NOT],
@@ -73,9 +74,9 @@ export class PeliculasService {
 
     const pelicula = await this.peliculaRepository
       .createQueryBuilder('pelicula')
-      .leftJoinAndSelect('pelicula.generos', 'generos')
-      .leftJoinAndSelect('pelicula.actores', 'actores')
-      .leftJoinAndSelect('pelicula.premios', 'premios')
+      //.leftJoinAndSelect('pelicula.generos', 'generos')
+      //.leftJoinAndSelect('pelicula.actores', 'actores')
+      //.leftJoinAndSelect('pelicula.premios', 'premios')
       .where('pelicula.id = :id', { id })
       .getOne();
 
@@ -102,7 +103,7 @@ export class PeliculasService {
 
     const pelicula = await this.peliculaRepository.findOne({
       where: { id },
-      relations: ['generos', 'actores', 'premios'],
+      //relations: ['generos', 'actores', 'premios'],
     });
 
     if (!pelicula) {
@@ -120,7 +121,11 @@ export class PeliculasService {
       throw new NotFoundException(`Pelicula con id ${id} no encontrada`);
     }
 
-    await this.peliculaRepository.remove(pelicula);
+    // Establecer la fecha actual en deletedAt
+    pelicula.deletedAt = new Date();
+
+    // Guardar los cambios en la base de datos
+    await this.peliculaRepository.save(pelicula);
   }
 
   async updateImage(

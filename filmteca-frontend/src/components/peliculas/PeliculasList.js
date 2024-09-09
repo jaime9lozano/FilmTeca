@@ -9,7 +9,7 @@ const PeliculasList = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/peliculas')
+        axios.get('http://localhost:8000/peliculas', { withCredentials: true })
             .then(response => {
                 setPeliculas(response.data.data); // Accede a la propiedad 'data' del JSON
                 setLoading(false);
