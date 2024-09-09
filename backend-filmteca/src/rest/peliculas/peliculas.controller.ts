@@ -12,6 +12,7 @@ import {
   UseInterceptors,
   HttpCode,
   Logger,
+  UseGuards,
 } from '@nestjs/common';
 import { CacheInterceptor, CacheKey } from '@nestjs/cache-manager';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -23,6 +24,8 @@ import { UpdatePeliculaDto } from './dto/update-pelicula.dto';
 import { Pelicula } from './entities/pelicula.entity';
 import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { PeliculasService } from './peliculas.service';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Roles, RolesAuthGuard } from '../auth/guards/roles-auth.guard';
 
 @Controller('peliculas')
 @UseInterceptors(CacheInterceptor)
@@ -41,16 +44,14 @@ export class PeliculasController {
   }
 
   @Get(':id')
-  //@ApiNotFoundResponse({ description: 'PeliculaEntity no encontrada' })
   async findOne(@Param('id') id: number): Promise<Pelicula> {
     this.logger.log(`Find one pelicula by id:${id}`);
     return await this.peliculasService.findOne(id);
   }
 
   @Post()
-  //@UseGuards(JwtAuthGuard, RolesAuthGuard)
-  //@Roles('ADMIN')
-  //@ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesAuthGuard)
+  @Roles('ADMIN')
   @HttpCode(201)
   async create(
     @Body() createPeliculaDto: CreatePeliculaDto,
@@ -60,9 +61,8 @@ export class PeliculasController {
   }
 
   @Put(':id')
-  //@ApiBearerAuth()
-  //@UseGuards(JwtAuthGuard, RolesAuthGuard)
-  //@Roles('ADMIN')
+  @UseGuards(JwtAuthGuard, RolesAuthGuard)
+  @Roles('ADMIN')
   async update(
     @Param('id') id: number,
     @Body() updatePeliculaDto: UpdatePeliculaDto,
@@ -72,9 +72,8 @@ export class PeliculasController {
   }
 
   @Delete(':id')
-  //@UseGuards(JwtAuthGuard, RolesAuthGuard)
-  //@ApiBearerAuth()
-  //@Roles('ADMIN')
+  @UseGuards(JwtAuthGuard, RolesAuthGuard)
+  @Roles('ADMIN')
   @HttpCode(204)
   async remove(@Param('id') id: number): Promise<void> {
     this.logger.log(`Remove pelicula by id:${id}`);
@@ -82,9 +81,8 @@ export class PeliculasController {
   }
 
   @Patch(':id/imagen')
-  //@UseGuards(JwtAuthGuard, RolesAuthGuard)
-  //@ApiBearerAuth()
-  //@Roles('ADMIN')
+  @UseGuards(JwtAuthGuard, RolesAuthGuard)
+  @Roles('ADMIN')
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({

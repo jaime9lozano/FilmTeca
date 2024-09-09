@@ -3,6 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PeliculasModule } from './rest/peliculas/peliculas.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { CorsConfigModule } from './config/cors/cors.module';
+import { UsersModule } from './rest/users/users.module';
+import { AuthModule } from './rest/auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { CorsConfigModule } from './config/cors/cors.module';
       autoLoadEntities: true,
       synchronize: false,
     }),
+    UsersModule,
+    AuthModule,
     PeliculasModule,
     CorsConfigModule,
   ],
