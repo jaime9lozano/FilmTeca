@@ -6,10 +6,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Pelicula } from './entities/pelicula.entity';
 import { PeliculasMapper } from './mapeador/peliculas-mapper';
 import { StorageModule } from '../storage/storage.module';
+import { Generos } from '../generos/entities/genero.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Pelicula]),
+    TypeOrmModule.forFeature([Generos]),
     CacheModule.register(),
     StorageModule,
   ],

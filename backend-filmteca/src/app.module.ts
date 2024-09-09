@@ -5,6 +5,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { CorsConfigModule } from './config/cors/cors.module';
 import { UsersModule } from './rest/users/users.module';
 import { AuthModule } from './rest/auth/auth.module';
+import { GenerosModule } from './rest/generos/generos.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { AuthModule } from './rest/auth/auth.module';
     AuthModule,
     PeliculasModule,
     CorsConfigModule,
+    GenerosModule,
   ],
   controllers: [],
   providers: [],

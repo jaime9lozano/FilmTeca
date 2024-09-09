@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Pelicula } from './entities/pelicula.entity';
 import { UpdatePeliculaDto } from './dto/update-pelicula.dto';
 import { Cache } from 'cache-manager';
@@ -22,6 +22,7 @@ import { Request } from 'express';
 import { CreatePeliculaDto } from './dto/create-pelicula.dto';
 import { PeliculasMapper } from './mapeador/peliculas-mapper';
 import { StorageService } from '../storage/storage.service';
+import { Generos } from '../generos/entities/genero.entity';
 
 @Injectable()
 export class PeliculasService {
@@ -30,6 +31,8 @@ export class PeliculasService {
   constructor(
     @InjectRepository(Pelicula)
     private readonly peliculaRepository: Repository<Pelicula>,
+    @InjectRepository(Generos)
+    private readonly generoRepository: Repository<Generos>,
     private readonly peliculasMapper: PeliculasMapper,
     private readonly storageService: StorageService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
@@ -74,7 +77,7 @@ export class PeliculasService {
 
     const pelicula = await this.peliculaRepository
       .createQueryBuilder('pelicula')
-      //.leftJoinAndSelect('pelicula.generos', 'generos')
+      .leftJoinAndSelect('pelicula.generos', 'generos')
       //.leftJoinAndSelect('pelicula.actores', 'actores')
       //.leftJoinAndSelect('pelicula.premios', 'premios')
       .where('pelicula.id = :id', { id })
@@ -90,9 +93,24 @@ export class PeliculasService {
 
   async create(createPeliculaDto: CreatePeliculaDto): Promise<Pelicula> {
     this.logger.log('Create pelicula');
-    const pelicula = this.peliculasMapper.toEntity(createPeliculaDto);
 
-    return await this.peliculaRepository.save(pelicula);
+    // Obtener géneros de forma sincrónica
+    const generos = await this.generoRepository.find({
+      where: { id: In(createPeliculaDto.generos) },
+    });
+
+    if (generos.length !== createPeliculaDto.generos.length) {
+      throw new NotFoundException('Algunos géneros no fueron encontrados');
+    }
+
+    // Convertir el DTO en entidad Pelicula con géneros ya obtenidos
+    const peliculaEntity = this.peliculasMapper.toEntity(
+      createPeliculaDto,
+      generos,
+    );
+
+    // Guardar la entidad en la base de datos
+    return await this.peliculaRepository.save(peliculaEntity);
   }
 
   async update(
@@ -101,16 +119,37 @@ export class PeliculasService {
   ): Promise<Pelicula> {
     this.logger.log(`Update pelicula by id: ${id}`);
 
+    // Buscar la película existente
     const pelicula = await this.peliculaRepository.findOne({
       where: { id },
-      //relations: ['generos', 'actores', 'premios'],
+      relations: ['generos'], // Asegúrate de incluir las relaciones necesarias
     });
 
     if (!pelicula) {
       throw new NotFoundException(`Pelicula con id ${id} no encontrada`);
     }
 
+    // Mapear campos básicos del DTO a la entidad
     Object.assign(pelicula, updatePeliculaDto);
+
+    // Manejar los géneros si se proporcionan en el DTO
+    if (updatePeliculaDto.generos && updatePeliculaDto.generos.length > 0) {
+      const generos = await this.generoRepository.find({
+        where: { id: In(updatePeliculaDto.generos) },
+      });
+
+      if (generos.length !== updatePeliculaDto.generos.length) {
+        throw new NotFoundException('Algunos géneros no fueron encontrados');
+      }
+
+      // Asignar los géneros actualizados a la entidad `Pelicula`
+      pelicula.generos = generos;
+    } else {
+      // Si no se proporcionan géneros, asegurarse de que el array esté vacío
+      pelicula.generos = [];
+    }
+
+    // Guardar la película actualizada
     return await this.peliculaRepository.save(pelicula);
   }
 

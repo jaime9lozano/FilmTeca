@@ -1,4 +1,7 @@
 import {
+  ArrayNotEmpty,
+  IsArray,
+  IsInt,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -50,4 +53,9 @@ export class CreatePeliculaDto {
   @IsNotEmpty({ message: 'La imagen no puede estar vacía' })
   @IsString()
   image: string;
+
+  @IsArray()
+  @ArrayNotEmpty({ message: 'Debe seleccionar al menos un género' })
+  @IsInt({ each: true, message: 'Los géneros deben ser números enteros' }) // Asegura que cada elemento sea un número entero
+  generos: number[];
 }

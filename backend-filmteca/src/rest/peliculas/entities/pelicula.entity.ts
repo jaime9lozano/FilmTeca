@@ -4,7 +4,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
+import { Generos } from '../../generos/entities/genero.entity';
 
 @Entity('peliculas')
 export class Pelicula {
@@ -37,6 +40,14 @@ export class Pelicula {
     length: 255,
   })
   image: string;
+
+  @ManyToMany(() => Generos, { eager: true }) // Relación muchos a muchos
+  @JoinTable({
+    name: 'genero_pelicula', // Nombre de la tabla intermedia
+    joinColumn: { name: 'pelicula_id', referencedColumnName: 'id' }, // Columna que hace referencia a Pelicula
+    inverseJoinColumn: { name: 'genero_id', referencedColumnName: 'id' }, // Columna que hace referencia a Generos
+  })
+  generos: Generos[];
 
   @CreateDateColumn({
     name: 'created_at',

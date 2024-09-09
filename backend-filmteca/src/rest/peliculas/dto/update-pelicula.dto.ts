@@ -1,5 +1,7 @@
 import {
+  IsArray,
   IsDateString,
+  IsInt,
   IsNumber,
   IsOptional,
   IsString,
@@ -52,6 +54,11 @@ export class UpdatePeliculaDto {
   @IsString()
   @IsOptional()
   image?: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsInt({ each: true, message: 'Los géneros deben ser números enteros' })
+  generos?: number[];
 
   @IsOptional()
   @IsDateString({}, { message: 'El formato de la fecha no es válido' })
