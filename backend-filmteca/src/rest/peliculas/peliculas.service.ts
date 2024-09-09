@@ -23,6 +23,9 @@ import { CreatePeliculaDto } from './dto/create-pelicula.dto';
 import { PeliculasMapper } from './mapeador/peliculas-mapper';
 import { StorageService } from '../storage/storage.service';
 import { Generos } from '../generos/entities/genero.entity';
+import { Director } from '../director/entities/director.entity';
+import { Actor } from '../actor/entities/actor.entity';
+import { Premio } from '../premio/entities/premio.entity';
 
 @Injectable()
 export class PeliculasService {
@@ -33,6 +36,12 @@ export class PeliculasService {
     private readonly peliculaRepository: Repository<Pelicula>,
     @InjectRepository(Generos)
     private readonly generoRepository: Repository<Generos>,
+    @InjectRepository(Director)
+    private readonly directorRepository: Repository<Director>,
+    @InjectRepository(Actor)
+    private readonly actorRepository: Repository<Actor>,
+    @InjectRepository(Premio)
+    private readonly premioRepository: Repository<Premio>,
     private readonly peliculasMapper: PeliculasMapper,
     private readonly storageService: StorageService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
@@ -50,7 +59,6 @@ export class PeliculasService {
     const pagination = await paginate(query, queryBuilder, {
       sortableColumns: ['title', 'release_year', 'duration'],
       defaultSortBy: [['id', 'ASC']],
-      //relations: ['generos', 'actores', 'premios'],
       searchableColumns: ['title', 'release_year', 'duration'],
       filterableColumns: {
         title: [FilterOperator.EQ, FilterSuffix.NOT],
@@ -78,8 +86,9 @@ export class PeliculasService {
     const pelicula = await this.peliculaRepository
       .createQueryBuilder('pelicula')
       .leftJoinAndSelect('pelicula.generos', 'generos')
-      //.leftJoinAndSelect('pelicula.actores', 'actores')
-      //.leftJoinAndSelect('pelicula.premios', 'premios')
+      .leftJoinAndSelect('pelicula.actores', 'actores')
+      .leftJoinAndSelect('pelicula.premios', 'premios')
+      .leftJoinAndSelect('pelicula.directores', 'directores')
       .where('pelicula.id = :id', { id })
       .getOne();
 
@@ -99,14 +108,28 @@ export class PeliculasService {
       where: { id: In(createPeliculaDto.generos) },
     });
 
-    if (generos.length !== createPeliculaDto.generos.length) {
-      throw new NotFoundException('Algunos géneros no fueron encontrados');
-    }
+    // Obtener directores de forma sincrónica
+    const directores = await this.directorRepository.find({
+      where: { id: In(createPeliculaDto.directores) },
+    });
+
+    // Obtener premios de forma sincrónica
+    const premios = await this.premioRepository.find({
+      where: { id: In(createPeliculaDto.premios) },
+    });
+
+    // Obtener actores de forma sincrónica
+    const actores = await this.actorRepository.find({
+      where: { id: In(createPeliculaDto.actores) },
+    });
 
     // Convertir el DTO en entidad Pelicula con géneros ya obtenidos
     const peliculaEntity = this.peliculasMapper.toEntity(
       createPeliculaDto,
       generos,
+      directores,
+      premios,
+      actores,
     );
 
     // Guardar la entidad en la base de datos

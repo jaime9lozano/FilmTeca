@@ -5,19 +5,20 @@ import { UpdatePeliculaDto } from '../dto/update-pelicula.dto';
 import { In, Repository } from 'typeorm';
 import { Generos } from '../../generos/entities/genero.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Premio } from '../../premio/entities/premio.entity';
+import { Director } from '../../director/entities/director.entity';
+import { Actor } from '../../actor/entities/actor.entity';
 
 // Asegúrate de crear este DTO
 
 @Injectable()
 export class PeliculasMapper {
-  constructor(
-    @InjectRepository(Generos)
-    private readonly generoRepository: Repository<Generos>,
-  ) {}
-
   toEntity(
     createPeliculaDto: CreatePeliculaDto,
-    generos: Generos[] = [], // Añadido parámetro para géneros ya obtenidos
+    generos: Generos[] = [],
+    directores: Director[] = [],
+    premios: Premio[] = [],
+    actores: Actor[] = [],
     pelicula?: Pelicula,
   ): Pelicula {
     const peliculaEntity = pelicula || new Pelicula();
@@ -32,32 +33,12 @@ export class PeliculasMapper {
     peliculaEntity.photography_by = createPeliculaDto.photography_by;
     peliculaEntity.image = createPeliculaDto.image;
 
-    // Asignar entidades `Generos` a la entidad `Pelicula`
+    // Asignar entidades
     peliculaEntity.generos = generos;
+    peliculaEntity.actores = actores;
+    peliculaEntity.premios = premios;
+    peliculaEntity.directores = directores;
 
     return peliculaEntity;
-  }
-
-  async toUpdateEntity(
-    updatePeliculaDto: UpdatePeliculaDto,
-    pelicula: Pelicula,
-  ): Promise<Pelicula> {
-    if (updatePeliculaDto.generos && updatePeliculaDto.generos.length > 0) {
-      const generos = await this.generoRepository.findBy({
-        id: In(updatePeliculaDto.generos),
-      });
-
-      if (generos.length !== updatePeliculaDto.generos.length) {
-        throw new NotFoundException('Algunos géneros no fueron encontrados');
-      }
-
-      pelicula.generos = generos; // Actualizamos las entidades `Generos`
-    }
-
-    return {
-      ...pelicula,
-      ...updatePeliculaDto,
-      generos: pelicula.generos, // Mantenemos los géneros ya convertidos
-    };
   }
 }

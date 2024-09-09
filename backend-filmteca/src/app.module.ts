@@ -6,6 +6,9 @@ import { CorsConfigModule } from './config/cors/cors.module';
 import { UsersModule } from './rest/users/users.module';
 import { AuthModule } from './rest/auth/auth.module';
 import { GenerosModule } from './rest/generos/generos.module';
+import { DirectorModule } from './rest/director/director.module';
+import { PremioModule } from './rest/premio/premio.module';
+import { ActorModule } from './rest/actor/actor.module';
 
 @Module({
   imports: [
@@ -25,6 +28,9 @@ import { GenerosModule } from './rest/generos/generos.module';
     PeliculasModule,
     CorsConfigModule,
     GenerosModule,
+    DirectorModule,
+    PremioModule,
+    ActorModule,
   ],
   controllers: [],
   providers: [],

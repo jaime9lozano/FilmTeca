@@ -61,6 +61,21 @@ export class UpdatePeliculaDto {
   generos?: number[];
 
   @IsOptional()
+  @IsArray()
+  @IsInt({ each: true, message: 'Los directores deben ser números enteros' })
+  directores?: number[];
+
+  @IsOptional()
+  @IsArray()
+  @IsInt({ each: true, message: 'Los actores deben ser números enteros' })
+  actores?: number[];
+
+  @IsOptional()
+  @IsArray()
+  @IsInt({ each: true, message: 'Los premios deben ser números enteros' })
+  premios?: number[];
+
+  @IsOptional()
   @IsDateString({}, { message: 'El formato de la fecha no es válido' })
   deleted_at?: string | null; // Se permite `null` para restaurar la película
 }

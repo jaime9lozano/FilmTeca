@@ -118,6 +118,14 @@ const PeliculaDetail = () => {
                 <div className="pelicula-detail-info">
                     <p><strong>Sinopsis:</strong> {pelicula.sinopsis}</p>
 
+                    <p><strong>Director:</strong> {pelicula.directores && pelicula.directores.length > 0
+                        ? pelicula.directores.map(director => director.name).join(', ')
+                        : 'No tiene directores'}</p>
+
+                    <p><strong>Actores:</strong> {pelicula.actores && pelicula.actores.length > 0
+                        ? pelicula.actores.map(actor => actor.name).join(', ')
+                        : 'No tiene Actores'}</p>
+
                     <p><strong>Géneros:</strong> {pelicula.generos && pelicula.generos.length > 0
                         ? pelicula.generos.map(genero => genero.name).join(', ')
                         : 'No tiene géneros'}</p>
@@ -131,6 +139,10 @@ const PeliculaDetail = () => {
                     <p><strong>Música:</strong> {pelicula.music_by}</p>
 
                     <p><strong>Fotografía:</strong> {pelicula.photography_by}</p>
+
+                    <p><strong>Premios:</strong> {pelicula.premios && pelicula.premios.length > 0
+                        ? pelicula.premios.map(premio => premio.name).join(', ')
+                        : 'No tiene premios'}</p>
                 </div>
             </div>
         </div>

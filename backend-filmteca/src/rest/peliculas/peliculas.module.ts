@@ -7,11 +7,17 @@ import { Pelicula } from './entities/pelicula.entity';
 import { PeliculasMapper } from './mapeador/peliculas-mapper';
 import { StorageModule } from '../storage/storage.module';
 import { Generos } from '../generos/entities/genero.entity';
+import { Actor } from '../actor/entities/actor.entity';
+import { Premio } from '../premio/entities/premio.entity';
+import { Director } from '../director/entities/director.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Pelicula]),
     TypeOrmModule.forFeature([Generos]),
+    TypeOrmModule.forFeature([Director]),
+    TypeOrmModule.forFeature([Actor]),
+    TypeOrmModule.forFeature([Premio]),
     CacheModule.register(),
     StorageModule,
   ],

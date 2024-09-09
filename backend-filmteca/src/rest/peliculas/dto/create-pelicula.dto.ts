@@ -58,4 +58,19 @@ export class CreatePeliculaDto {
   @ArrayNotEmpty({ message: 'Debe seleccionar al menos un género' })
   @IsInt({ each: true, message: 'Los géneros deben ser números enteros' }) // Asegura que cada elemento sea un número entero
   generos: number[];
+
+  @IsArray()
+  @ArrayNotEmpty({ message: 'Debe seleccionar al menos un director' })
+  @IsInt({ each: true, message: 'Los directores deben ser números enteros' }) // Asegura que cada elemento sea un número entero
+  directores: number[];
+
+  @IsArray()
+  @ArrayNotEmpty({ message: 'Debe seleccionar al menos un actor' })
+  @IsInt({ each: true, message: 'Los actores deben ser números enteros' }) // Asegura que cada elemento sea un número entero
+  actores: number[];
+
+  @IsArray()
+  @ArrayNotEmpty({ message: 'Debe seleccionar al menos un premio' })
+  @IsInt({ each: true, message: 'Los premios deben ser números enteros' }) // Asegura que cada elemento sea un número entero
+  premios: number[];
 }

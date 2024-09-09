@@ -8,6 +8,9 @@ import {
   JoinTable,
 } from 'typeorm';
 import { Generos } from '../../generos/entities/genero.entity';
+import { Actor } from '../../actor/entities/actor.entity';
+import { Director } from '../../director/entities/director.entity';
+import { Premio } from '../../premio/entities/premio.entity';
 
 @Entity('peliculas')
 export class Pelicula {
@@ -48,6 +51,30 @@ export class Pelicula {
     inverseJoinColumn: { name: 'genero_id', referencedColumnName: 'id' }, // Columna que hace referencia a Generos
   })
   generos: Generos[];
+
+  @ManyToMany(() => Actor, { eager: true }) // Relación muchos a muchos
+  @JoinTable({
+    name: 'actor_pelicula', // Nombre de la tabla intermedia
+    joinColumn: { name: 'pelicula_id', referencedColumnName: 'id' }, // Columna que hace referencia a Pelicula
+    inverseJoinColumn: { name: 'actor_id', referencedColumnName: 'id' }, // Columna que hace referencia a Generos
+  })
+  actores: Actor[];
+
+  @ManyToMany(() => Director, { eager: true }) // Relación muchos a muchos
+  @JoinTable({
+    name: 'pelicula_directores', // Nombre de la tabla intermedia
+    joinColumn: { name: 'pelicula_id', referencedColumnName: 'id' }, // Columna que hace referencia a Pelicula
+    inverseJoinColumn: { name: 'director_id', referencedColumnName: 'id' }, // Columna que hace referencia a Generos
+  })
+  directores: Director[];
+
+  @ManyToMany(() => Premio, { eager: true }) // Relación muchos a muchos
+  @JoinTable({
+    name: 'premio_pelicula', // Nombre de la tabla intermedia
+    joinColumn: { name: 'pelicula_id', referencedColumnName: 'id' }, // Columna que hace referencia a Pelicula
+    inverseJoinColumn: { name: 'premio_id', referencedColumnName: 'id' }, // Columna que hace referencia a Generos
+  })
+  premios: Premio[];
 
   @CreateDateColumn({
     name: 'created_at',
