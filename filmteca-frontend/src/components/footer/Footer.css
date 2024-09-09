@@ -39,4 +39,36 @@
     margin: 0.5rem;
     padding: 0 1rem; /* Espacio entre el texto y los bordes */
 }
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column; /* Organiza el footer en una columna */
+        padding: 0.5rem; /* Reducir el padding en dispositivos móviles */
+    }
+
+    .footer-links {
+        margin: 0; /* Elimina el margen derecho en móviles */
+        padding-bottom: 0.5rem; /* Añade espacio debajo de los enlaces */
+    }
+
+    .footer-links a {
+        font-size: 0.9rem; /* Reduce el tamaño de fuente para enlaces */
+        margin-right: 0.5rem; /* Reduce el espacio entre enlaces */
+    }
+
+    .footer-text {
+        font-size: 0.8rem; /* Reduce el tamaño de fuente para el texto del footer */
+        padding: 0; /* Elimina el padding lateral */
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-links a {
+        font-size: 0.8rem; /* Ajusta aún más el tamaño de fuente para enlaces */
+    }
+
+    .footer-text {
+        font-size: 0.7rem; /* Ajusta aún más el tamaño de fuente para el texto del footer */
+    }
+}
 
