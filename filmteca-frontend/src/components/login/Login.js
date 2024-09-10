@@ -16,8 +16,13 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
 
+        // Definir la URL base según el entorno
+        const baseURL = process.env.NODE_ENV === 'development'
+            ? 'http://localhost:8000' // URL para desarrollo
+            : 'https://filmteca.onrender.com'; // URL para producción
+
         try {
-            const response = await axios.post('https://filmteca.onrender.com/auth/login', {
+            const response = await axios.post(`${baseURL}/auth/login`, {
                 username,
                 password,
             });

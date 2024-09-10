@@ -17,6 +17,9 @@ const PeliculaDetail = () => {
     const [loadingPelicula, setLoadingPelicula] = useState(true);
     const [error, setError] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
+    const baseURL = process.env.NODE_ENV === 'development'
+        ? 'http://localhost:8000' // URL para desarrollo
+        : 'https://filmteca.onrender.com'; // URL para producción
 
     useEffect(() => {
         // Obtener el token JWT desde la cookie
@@ -33,7 +36,7 @@ const PeliculaDetail = () => {
         }
 
         // Cargar detalles de la película
-        axios.get(`https://filmteca.onrender.com/peliculas/${id}`)
+        axios.get(`${baseURL}/peliculas/${id}`)
             .then(response => {
                 const peliculaData = response.data;
                 setPelicula(peliculaData);
@@ -55,7 +58,7 @@ const PeliculaDetail = () => {
         setDeleting(true); // Activar estado de eliminación
         const token = Cookies.get('auth_token'); // Obtener el token de la cookie
 
-        axios.delete(`https://filmteca.onrender.com/peliculas/${id}`, {
+        axios.delete(`${baseURL}/peliculas/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}` // Enviar el token en el encabezado
             }

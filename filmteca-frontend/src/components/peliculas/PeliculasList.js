@@ -7,9 +7,12 @@ const PeliculasList = () => {
     const [peliculas, setPeliculas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const baseURL = process.env.NODE_ENV === 'development'
+        ? 'http://localhost:8000' // URL para desarrollo
+        : 'https://filmteca.onrender.com'; // URL para producción
 
     useEffect(() => {
-        axios.get('https://filmteca.onrender.com/peliculas', { withCredentials: true })
+        axios.get(`${baseURL}/peliculas`, { withCredentials: true })
             .then(response => {
                 setPeliculas(response.data.data); // Accede a la propiedad 'data' del JSON
                 setLoading(false);

@@ -14,14 +14,14 @@ import { ActorModule } from './rest/actor/actor.module';
   imports: [
     CacheModule.register(),
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'aws-0-eu-central-1.pooler.supabase.com',
-      port: 6543,
-      username: 'postgres.sakcxgmlxeyvhautzyod',
-      password: 'FilmTeca980-', // Asegúrate de reemplazar esto por tu contraseña
-      database: 'postgres',
-      autoLoadEntities: true,
-      synchronize: false,
+      type: process.env.DB_TYPE as 'postgres',
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT, 10),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      autoLoadEntities: process.env.DB_AUTOLOAD_ENTITIES === 'true',
+      synchronize: process.env.DB_SYNCHRONIZE === 'true',
     }),
     UsersModule,
     AuthModule,

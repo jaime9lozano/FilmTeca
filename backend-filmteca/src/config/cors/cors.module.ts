@@ -5,10 +5,16 @@ export class CorsConfigModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply((req, res, next) => {
-        res.header(
-          'Access-Control-Allow-Origin',
+        const allowedOrigins = [
           'https://filmteca.netlify.app',
-        );
+          'http://localhost:3000',
+        ];
+        const origin = req.headers.origin;
+
+        if (allowedOrigins.includes(origin)) {
+          res.header('Access-Control-Allow-Origin', origin);
+        }
+
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
         res.header(
           'Access-Control-Allow-Headers',
