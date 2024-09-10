@@ -33,7 +33,7 @@ const PeliculaDetail = () => {
         }
 
         // Cargar detalles de la película
-        axios.get(`https://filmteca.onrender.com//peliculas/${id}`)
+        axios.get(`https://filmteca.onrender.com/peliculas/${id}`)
             .then(response => {
                 const peliculaData = response.data;
                 setPelicula(peliculaData);
@@ -55,7 +55,7 @@ const PeliculaDetail = () => {
         setDeleting(true); // Activar estado de eliminación
         const token = Cookies.get('auth_token'); // Obtener el token de la cookie
 
-        axios.delete(`https://filmteca.onrender.com//peliculas/${id}`, {
+        axios.delete(`https://filmteca.onrender.com/peliculas/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}` // Enviar el token en el encabezado
             }

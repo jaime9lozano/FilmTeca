@@ -9,7 +9,7 @@ const PeliculasList = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get('https://filmteca.onrender.com//peliculas', { withCredentials: true })
+        axios.get('https://filmteca.onrender.com/peliculas', { withCredentials: true })
             .then(response => {
                 setPeliculas(response.data.data); // Accede a la propiedad 'data' del JSON
                 setLoading(false);
