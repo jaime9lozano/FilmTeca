@@ -9,7 +9,9 @@ import { GenerosModule } from './rest/generos/generos.module';
 import { DirectorModule } from './rest/director/director.module';
 import { PremioModule } from './rest/premio/premio.module';
 import { ActorModule } from './rest/actor/actor.module';
+import * as dotenv from 'dotenv';
 
+dotenv.config();
 @Module({
   imports: [
     CacheModule.register(),
