@@ -56,6 +56,7 @@ export class PeliculasService {
 
     const queryBuilder = this.peliculaRepository.createQueryBuilder('pelicula');
     queryBuilder.where('pelicula.deletedAt IS NULL');
+
     const pagination = await paginate(query, queryBuilder, {
       sortableColumns: ['title', 'release_year', 'duration'],
       defaultSortBy: [['id', 'ASC']],
@@ -157,19 +158,75 @@ export class PeliculasService {
 
     // Manejar los géneros si se proporcionan en el DTO
     if (updatePeliculaDto.generos && updatePeliculaDto.generos.length > 0) {
-      const generos = await this.generoRepository.find({
+      // Buscar los géneros proporcionados en el DTO
+      const nuevosGeneros = await this.generoRepository.find({
         where: { id: In(updatePeliculaDto.generos) },
       });
 
-      if (generos.length !== updatePeliculaDto.generos.length) {
+      // Verificar si todos los géneros proporcionados existen en la base de datos
+      if (nuevosGeneros.length !== updatePeliculaDto.generos.length) {
         throw new NotFoundException('Algunos géneros no fueron encontrados');
       }
 
-      // Asignar los géneros actualizados a la entidad `Pelicula`
-      pelicula.generos = generos;
+      // Combinar los géneros actuales con los nuevos géneros
+      pelicula.generos = [...pelicula.generos, ...nuevosGeneros];
+
+      // Eliminar duplicados si hay géneros repetidos
+      pelicula.generos = Array.from(new Set(pelicula.generos));
     } else {
-      // Si no se proporcionan géneros, asegurarse de que el array esté vacío
-      pelicula.generos = [];
+      // Si no se proporcionan géneros, se dejan los géneros actuales como están
+      pelicula.generos = pelicula.generos || []; // Se asegura de que sea un array si estaba vacío antes
+    }
+
+    // Manejar los premios si se proporcionan en el DTO
+    if (updatePeliculaDto.premios && updatePeliculaDto.premios.length > 0) {
+      const nuevosPremios = await this.premioRepository.find({
+        where: { id: In(updatePeliculaDto.premios) },
+      });
+
+      if (nuevosPremios.length !== updatePeliculaDto.premios.length) {
+        throw new NotFoundException('Algunos premios no fueron encontrados');
+      }
+
+      pelicula.premios = [...pelicula.premios, ...nuevosPremios];
+      pelicula.premios = Array.from(new Set(pelicula.premios));
+    } else {
+      pelicula.premios = pelicula.premios || [];
+    }
+
+    // Manejar los directores si se proporcionan en el DTO
+    if (
+      updatePeliculaDto.directores &&
+      updatePeliculaDto.directores.length > 0
+    ) {
+      const nuevosDirectores = await this.directorRepository.find({
+        where: { id: In(updatePeliculaDto.directores) },
+      });
+
+      if (nuevosDirectores.length !== updatePeliculaDto.directores.length) {
+        throw new NotFoundException('Algunos directores no fueron encontrados');
+      }
+
+      pelicula.directores = [...pelicula.directores, ...nuevosDirectores];
+      pelicula.directores = Array.from(new Set(pelicula.directores));
+    } else {
+      pelicula.directores = pelicula.directores || [];
+    }
+
+    // Manejar los actores si se proporcionan en el DTO
+    if (updatePeliculaDto.actores && updatePeliculaDto.actores.length > 0) {
+      const nuevosActores = await this.actorRepository.find({
+        where: { id: In(updatePeliculaDto.actores) },
+      });
+
+      if (nuevosActores.length !== updatePeliculaDto.actores.length) {
+        throw new NotFoundException('Algunos actores no fueron encontrados');
+      }
+
+      pelicula.actores = [...pelicula.actores, ...nuevosActores];
+      pelicula.actores = Array.from(new Set(pelicula.actores));
+    } else {
+      pelicula.actores = pelicula.actores || [];
     }
 
     // Guardar la película actualizada

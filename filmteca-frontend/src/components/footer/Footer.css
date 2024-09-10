@@ -3,16 +3,17 @@
     background-color: #282c34;
     color: white;
     text-align: center;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+    padding: 0.5rem; /* Espaciado interno */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem; /* Reducir el relleno horizontal */
-    z-index: 1000; /* Asegura que el footer esté encima de otros contenidos */
+    width: 100%;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Sombra para separación del contenido */
+    position: relative; /* Cambia de fixed a relative */
+    bottom: 0; /* No es necesario para relative, pero asegúrate de que esté en la parte inferior */
 }
 
+/* Estilos para los enlaces del footer */
 .footer-links {
     display: flex;
     align-items: center;
@@ -39,6 +40,7 @@
     margin: 0.5rem;
     padding: 0 1rem; /* Espacio entre el texto y los bordes */
 }
+
 /* Estilos para dispositivos móviles */
 @media (max-width: 768px) {
     .footer {

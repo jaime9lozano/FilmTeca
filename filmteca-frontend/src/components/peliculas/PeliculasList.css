@@ -71,6 +71,101 @@
     text-overflow: ellipsis; /* Muestra puntos suspensivos si el texto es demasiado largo */
 }
 
+/* Agrega estilos para el contenedor de búsqueda */
+.search-container {
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center; /* Alinea los elementos verticalmente en el centro */
+    gap: 10px; /* Espacio entre los elementos */
+    flex-wrap: wrap;
+}
+
+.search-input-container {
+    flex: 1; /* Permite que el contenedor del input ocupe el espacio disponible */
+    position: relative;
+    min-width: 0; /* Evita que los inputs se desborden en pantallas pequeñas */
+}
+
+.search-input {
+    padding: 8px;
+    padding-right: 30px; /* Espacio para el botón de borrar dentro del input */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box; /* Incluye el padding en el ancho total del input */
+}
+
+.clear-button {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+
+.clear-button:hover {
+    color: #333;
+}
+
+.search-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #282c34;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap; /* Evita que el texto del botón se divida en varias líneas */
+}
+
+.search-button:hover {
+    background-color: #333;
+}
+
+/* Estilos para la barra de paginación */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    gap: 10px; /* Espacio entre los elementos */
+}
+
+.pagination-button {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #282c34;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.pagination-button:hover:not(:disabled) {
+    background-color: #333;
+}
+
+.pagination-info {
+    font-size: 16px;
+    color: #333;
+}
+
 .loading-container {
     display: flex;
     flex-direction: column;
@@ -120,6 +215,35 @@
     .peliculas-container h2 {
         font-size: 2em; /* Ajusta el tamaño del título para pantallas más pequeñas */
     }
+    .search-form {
+        flex-direction: row; /* Organiza los inputs y el botón en una fila */
+    }
+
+    .search-input-container {
+        flex: 1 1 auto; /* Permite que los inputs crezcan y se encojan */
+        min-width: 0; /* Evita que los inputs se desborden */
+    }
+
+    .search-input {
+        flex: 1; /* Hace que los inputs ocupen el espacio disponible */
+        max-width: 150px; /* Limita el ancho máximo de los inputs */
+    }
+
+    .search-button {
+        flex: 0 0 auto; /* Hace que el botón ocupe solo el espacio necesario */
+        margin-left: 10px; /* Espacio entre el botón y el último input */
+        max-width: 100px; /* Limita el ancho máximo del botón */
+    }
+
+    .pagination {
+        flex-direction: column; /* Organiza los botones en una columna */
+        align-items: center; /* Centra los botones */
+    }
+
+    .pagination-button {
+        width: 100%; /* Ocupa el ancho completo del contenedor */
+        max-width: 300px; /* Limita el ancho máximo del botón */
+    }
 }
 
 /* Estilos adicionales para pantallas más pequeñas */
@@ -130,6 +254,22 @@
 
     .peliculas-container h2 {
         font-size: 1em; /* Ajusta aún más el tamaño del título para pantallas muy pequeñas */
+    }
+    .search-input {
+        font-size: 14px; /* Ajusta el tamaño del texto en pantallas muy pequeñas */
+    }
+
+    .search-button {
+        font-size: 14px; /* Ajusta el tamaño del texto del botón */
+        padding: 6px 12px; /* Ajusta el padding del botón */
+    }
+    .pagination-button {
+        font-size: 14px; /* Ajusta el tamaño del texto del botón en pantallas muy pequeñas */
+        padding: 8px 12px; /* Ajusta el padding del botón */
+    }
+
+    .pagination-info {
+        font-size: 14px; /* Ajusta el tamaño del texto de la información de la paginación */
     }
 }
 
