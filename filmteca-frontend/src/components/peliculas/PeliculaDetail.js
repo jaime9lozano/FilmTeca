@@ -52,7 +52,7 @@ const PeliculaDetail = () => {
                     hideProgressBar: true,
                 });
             });
-    }, [id]);
+    }, [baseURL, id]);
 
     const handleDelete = () => {
         setDeleting(true); // Activar estado de eliminación

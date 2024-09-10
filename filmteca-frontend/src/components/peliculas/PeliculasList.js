@@ -21,7 +21,7 @@ const PeliculasList = () => {
                 setError('Error consiguiendo las películas: ' + error.message);
                 setLoading(false);
             });
-    }, []);
+    }, [baseURL]);
 
     if (loading) {
         return (
