@@ -109,6 +109,8 @@ const PeliculasList = () => {
                             value={searchYear}
                             onChange={(e) => setSearchYear(e.target.value)}
                             className="search-input"
+                            min="1900"
+                            max={new Date().getFullYear()}
                         />
                         {searchYear && (
                             <button type="button" className="clear-button" onClick={clearSearchYear}>
@@ -122,8 +124,8 @@ const PeliculasList = () => {
             <div className="peliculas-list">
                 {peliculas.map(pelicula => (
                     <Link to={`/pelicula/${pelicula.id}`} key={pelicula.id} className="pelicula-card-link">
-                        <div className="pelicula-card">
-                            <img src={pelicula.image} alt={pelicula.title} className="pelicula-image" />
+                        <div className="pelicula-card" style={{backgroundImage: `url(${pelicula.image})`}}>
+                            <span className="pelicula-date">{pelicula.release_year}</span>
                             <div className="pelicula-title">
                                 <h3>{pelicula.title}</h3>
                             </div>

@@ -20,10 +20,10 @@
 }
 
 .peliculas-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center; /* Centra las tarjetas en pantallas más grandes */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); /* Ajusta el tamaño de las columnas */
+    gap: 20px; /* Espacio entre las tarjetas */
+    justify-content: center; /* Centra las tarjetas */
 }
 
 .pelicula-card-link {
@@ -31,41 +31,47 @@
 }
 
 .pelicula-card {
-    background: #fff;
+    background-size: cover;
+    background-position: center; /* Centra la imagen */
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 200px;
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
     height: 350px; /* Ajusta la altura según el tamaño deseado */
+    position: relative; /* Permite la posición absoluta de los elementos dentro */
+}
+
+.pelicula-date {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.6); /* Fondo semitransparente */
+    color: white;
+    font-size: 0.8em; /* Tamaño pequeño */
+    padding: 2px 6px;
+    border-radius: 4px;
 }
 
 .pelicula-card:hover {
     transform: scale(1.05);
 }
 
-.pelicula-image {
-    width: 100%;
-    height: 85%; /* Ajusta el tamaño de la imagen en relación con la tarjeta */
-    object-fit: cover;
-}
-
 .pelicula-title {
-    padding: 15px;
-    background: #f8f8f8;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.4); /* Fondo semitransparente */
+    position: absolute;
+    bottom: 0; /* Lo coloca en la parte inferior de la tarjeta */
+    width: 100%;
+    text-align: center;
+    font-size: 1em; /* Ajusta el tamaño del texto */
+    box-sizing: border-box;
 }
 
 .pelicula-title h3 {
     margin: 0;
     font-size: 0.35em;
-    color: #333;
+    color: #ffffff;
     white-space: nowrap; /* Evita que el texto se divida en varias líneas */
     overflow: hidden; /* Asegura que el texto largo no desborde el contenedor */
     text-overflow: ellipsis; /* Muestra puntos suspensivos si el texto es demasiado largo */
@@ -194,26 +200,35 @@
 /* Estilos para dispositivos móviles */
 @media (max-width: 768px) {
     .peliculas-list {
-        flex-direction: column; /* Organiza las tarjetas en una columna */
-        align-items: center; /* Centra las tarjetas en el contenedor */
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Ajusta el tamaño de las columnas para pantallas pequeñas */
     }
 
     .pelicula-card {
-        width: 100%; /* Ocupa el ancho completo del contenedor */
-        max-width: 500px; /* Limita el ancho máximo para que no sea demasiado grande en pantallas más grandes */
-        height: auto; /* Ajusta la altura automáticamente */
+        width: 120px;
+        height: 150px;
+        background-size: cover;
+        background-position: center;
     }
 
-    .pelicula-image {
-        height: 60%; /* Ajusta el tamaño de la imagen para que se ajuste en pantallas más pequeñas */
+    .pelicula-date {
+        font-size: 0.5em; /* Tamaño más pequeño para pantallas móviles */
+        top: 5px;
+        left: 5px;
+        padding: 1px 4px; /* Reduce el padding */
+    }
+
+    .pelicula-title {
+        padding: 8px;
+        font-size: 0.4em; /* Ajusta el tamaño del texto */
+        bottom: 0; /* Mantén el título en la parte inferior */
     }
 
     .pelicula-title h3 {
-        font-size: 0.8em; /* Ajusta el tamaño de la fuente para pantallas más pequeñas */
+        font-size: 0.4em; /* Ajusta el tamaño del texto */
     }
 
     .peliculas-container h2 {
-        font-size: 2em; /* Ajusta el tamaño del título para pantallas más pequeñas */
+        font-size: 1.2em; /* Ajusta el tamaño del título para pantallas más pequeñas */
     }
     .search-form {
         flex-direction: row; /* Organiza los inputs y el botón en una fila */
@@ -248,19 +263,32 @@
 
 /* Estilos adicionales para pantallas más pequeñas */
 @media (max-width: 480px) {
+    .peliculas-list {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); /* Ajusta el tamaño de las columnas para pantallas pequeñas */
+    }
+
+    .pelicula-card {
+        width: 90px;
+        height: 140px;
+    }
+
+    .pelicula-date {
+        font-size: 0.3em; /* Reduce aún más el tamaño del texto de la fecha */
+    }
+
     .pelicula-title h3 {
-        font-size: 0.6em; /* Ajusta el tamaño de la fuente aún más para pantallas muy pequeñas */
+        font-size: 0.2em; /* Ajusta el tamaño del título */
     }
 
     .peliculas-container h2 {
-        font-size: 1em; /* Ajusta aún más el tamaño del título para pantallas muy pequeñas */
+        font-size: 0.8em; /* Ajusta aún más el tamaño del título para pantallas muy pequeñas */
     }
     .search-input {
-        font-size: 14px; /* Ajusta el tamaño del texto en pantallas muy pequeñas */
+        font-size: 12px; /* Ajusta el tamaño del texto en pantallas muy pequeñas */
     }
 
     .search-button {
-        font-size: 14px; /* Ajusta el tamaño del texto del botón */
+        font-size: 12px; /* Ajusta el tamaño del texto del botón */
         padding: 6px 12px; /* Ajusta el padding del botón */
     }
     .pagination-button {
