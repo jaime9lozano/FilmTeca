@@ -300,6 +300,10 @@
         font-size: 12px; /* Ajusta el tamaño del texto del botón */
         padding: 6px 12px; /* Ajusta el padding del botón */
     }
+
+    .pagination-info {
+        font-size: 10%; /* Reduce el tamaño del texto */
+    }
 }
 
 
