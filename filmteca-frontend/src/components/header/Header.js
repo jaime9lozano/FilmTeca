@@ -39,7 +39,7 @@ function Header() {
         if (!token) {
             navigate('/login'); // Redirige al login si no hay token
         } else {
-            navigate('/'); // Redirige a la página de inicio si ya estás logueado
+            navigate('/user'); // Redirige a la página de inicio si ya estás logueado
         }
     };
 
@@ -257,7 +257,7 @@ function Header() {
             <div className="header-right">
                 {isLoggedIn ? (
                     <>
-                        <button className="header-icon" onClick={() => navigate('/')}>
+                        <button className="header-icon" onClick={() => navigate('/user')}>
                             <FaUser size={24}/>
                         </button>
                         <button className="header-icon" onClick={handleLogout}>

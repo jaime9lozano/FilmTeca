@@ -28,7 +28,7 @@ export class AuthService {
       this.authMapper.toCreateDto(userSignUpDto),
     );
 
-    return this.getAccessToken(user.roles);
+    return this.getAccessToken(user.id, user.roles);
   }
 
   async singIn(userSignInDto: UserSignInDto) {
@@ -47,7 +47,7 @@ export class AuthService {
 
     const roles = user.roles.map((role) => role.role);
 
-    return this.getAccessToken(roles);
+    return this.getAccessToken(user.id, roles);
   }
 
   async validateUser(id: number) {
@@ -55,9 +55,10 @@ export class AuthService {
     return await this.usersService.findOne(id);
   }
 
-  private getAccessToken(roles: string[]) {
+  private getAccessToken(id: number, roles: string[]) {
     try {
       const payload = {
+        id: id,
         role: roles,
       };
       //console.log(payload)

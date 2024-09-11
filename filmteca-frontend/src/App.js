@@ -6,6 +6,7 @@ import PeliculasList from "./components/peliculas/PeliculasList";
 import PeliculaDetail from "./components/peliculas/PeliculaDetail";
 import Login from "./components/login/Login";
 import PeliculasByGenero from "./components/peliculas/GeneroPeliculas";
+import UsersInfo from "./components/usuario/UsersInfo";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                         <Route path="/" element={<PeliculasList/>}/>
                         <Route path="/pelicula/:id" element={<PeliculaDetail/>}/>
                         <Route path="/genero/:id" element={<PeliculasByGenero/>}/>
+                        <Route path="/user" element={<UsersInfo/>}/>
                     </Routes>
                 </div>
                 <Footer/>
