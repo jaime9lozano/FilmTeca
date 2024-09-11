@@ -105,7 +105,7 @@ const PeliculasList = () => {
                     <div className="search-input-container">
                         <input
                             type="number"
-                            placeholder="Buscar por año"
+                            placeholder="Año"
                             value={searchYear}
                             onChange={(e) => setSearchYear(e.target.value)}
                             className="search-input"
