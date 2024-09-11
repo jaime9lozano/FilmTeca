@@ -1,34 +1,71 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UseInterceptors,
+  Logger,
+  UseGuards,
+  HttpCode,
+  Put,
+} from '@nestjs/common';
 import { GenerosService } from './generos.service';
 import { CreateGeneroDto } from './dto/create-genero.dto';
 import { UpdateGeneroDto } from './dto/update-genero.dto';
+import { CacheInterceptor, CacheKey } from '@nestjs/cache-manager';
+import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
+import { Generos } from './entities/genero.entity';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Roles, RolesAuthGuard } from '../auth/guards/roles-auth.guard';
 
 @Controller('generos')
+@UseInterceptors(CacheInterceptor)
 export class GenerosController {
+  private readonly logger: Logger = new Logger(GenerosController.name);
+
   constructor(private readonly generosService: GenerosService) {}
 
-  @Post()
-  create(@Body() createGeneroDto: CreateGeneroDto) {
-    return this.generosService.create(createGeneroDto);
-  }
-
   @Get()
-  findAll() {
-    return this.generosService.findAll();
+  @CacheKey('all_generos')
+  async findAll(@Paginate() query: PaginateQuery): Promise<Paginated<Generos>> {
+    this.logger.log('Find all generos');
+    return await this.generosService.findAll(query);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.generosService.findOne(+id);
+  async findOne(@Param('id') id: number): Promise<Generos> {
+    this.logger.log(`Find one genero by id:${id}`);
+    return await this.generosService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGeneroDto: UpdateGeneroDto) {
-    return this.generosService.update(+id, updateGeneroDto);
+  @Post()
+  @UseGuards(JwtAuthGuard, RolesAuthGuard)
+  @Roles('ADMIN')
+  @HttpCode(201)
+  async create(@Body() createGeneroDto: CreateGeneroDto): Promise<Generos> {
+    this.logger.log(`Create genero`);
+    return await this.generosService.create(createGeneroDto);
+  }
+
+  @Put(':id')
+  @UseGuards(JwtAuthGuard, RolesAuthGuard)
+  @Roles('ADMIN')
+  async update(
+    @Param('id') id: number,
+    @Body() updateGeneroDto: UpdateGeneroDto,
+  ): Promise<Generos> {
+    this.logger.log(`Update genero by id:${id}`);
+    return await this.generosService.update(id, updateGeneroDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.generosService.remove(+id);
+  @UseGuards(JwtAuthGuard, RolesAuthGuard)
+  @Roles('ADMIN')
+  @HttpCode(204)
+  async remove(@Param('id') id: number): Promise<void> {
+    this.logger.log(`Remove genero by id:${id}`);
+    await this.generosService.remove(id);
   }
 }
