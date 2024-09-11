@@ -63,6 +63,7 @@ function Header() {
 
     const handleGenerosMenuClose = () => {
         setGenerosAnchorEl(null);
+        setAnchorEl(null);
     };
 
     const token = Cookies.get('auth_token');
@@ -188,7 +189,10 @@ function Header() {
                                     }}
                                 >
                                     <Link
-                                        to={`/genero/${genero.id}`} // Enlace con el ID del género
+                                        to={{
+                                            pathname: `/genero/${genero.id}`, // Enlace con el ID del género
+                                            state: { generoName: genero.name } // Pasar el nombre del género como parte del estado
+                                        }}
                                         style={{
                                             textDecoration: 'none', // Sin subrayado
                                             color: 'inherit', // Hereda el color del ítem del menú

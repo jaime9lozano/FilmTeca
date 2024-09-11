@@ -251,13 +251,22 @@
     }
 
     .pagination {
-        flex-direction: column; /* Organiza los botones en una columna */
-        align-items: center; /* Centra los botones */
+        flex-direction: row; /* Mantiene los elementos en una sola fila */
+        flex-wrap: nowrap; /* Evita que los elementos se apilen */
+        gap: 5px; /* Reduce el espacio entre los elementos */
     }
 
     .pagination-button {
-        width: 100%; /* Ocupa el ancho completo del contenedor */
-        max-width: 300px; /* Limita el ancho máximo del botón */
+        flex: 0 1 30%; /* Limita el tamaño de los botones */
+        max-width: none; /* Permite que los botones se adapten al tamaño */
+        padding: 6px 8px; /* Reduce el padding de los botones */
+        font-size: 12px; /* Ajusta el tamaño del texto */
+    }
+
+    .pagination-info {
+        flex: 1 1 auto; /* Permite que el texto se ajuste al espacio disponible */
+        text-align: center; /* Centra el texto */
+        font-size: 12px; /* Reduce el tamaño del texto */
     }
 }
 
@@ -290,14 +299,6 @@
     .search-button {
         font-size: 12px; /* Ajusta el tamaño del texto del botón */
         padding: 6px 12px; /* Ajusta el padding del botón */
-    }
-    .pagination-button {
-        font-size: 14px; /* Ajusta el tamaño del texto del botón en pantallas muy pequeñas */
-        padding: 8px 12px; /* Ajusta el padding del botón */
-    }
-
-    .pagination-info {
-        font-size: 14px; /* Ajusta el tamaño del texto de la información de la paginación */
     }
 }
 

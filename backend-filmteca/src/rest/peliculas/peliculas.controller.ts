@@ -35,7 +35,6 @@ export class PeliculasController {
   constructor(private readonly peliculasService: PeliculasService) {}
 
   @Get()
-  @CacheKey('all_peliculas')
   async findAll(
     @Paginate() query: PaginateQuery,
   ): Promise<Paginated<Pelicula>> {

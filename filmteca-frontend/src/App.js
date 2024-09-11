@@ -5,7 +5,7 @@ import Header from "./components/header/Header";
 import PeliculasList from "./components/peliculas/PeliculasList";
 import PeliculaDetail from "./components/peliculas/PeliculaDetail";
 import Login from "./components/login/Login";
-import GeneroPeliculas from "./components/peliculas/GeneroPeliculas";
+import PeliculasByGenero from "./components/peliculas/GeneroPeliculas";
 
 function App() {
     return (
@@ -17,7 +17,7 @@ function App() {
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/" element={<PeliculasList/>}/>
                         <Route path="/pelicula/:id" element={<PeliculaDetail/>}/>
-                        <Route path="/genero/:id" element={<GeneroPeliculas/>}/>
+                        <Route path="/genero/:id" element={<PeliculasByGenero/>}/>
                     </Routes>
                 </div>
                 <Footer/>

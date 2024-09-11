@@ -36,7 +36,6 @@ export class GenerosController {
   }
 
   @Get(':id/peliculas')
-  @CacheKey('all_peli_gene')
   async findAllPelisByGene(
     @Paginate() query: PaginateQuery,
     @Param('id') id: number,
