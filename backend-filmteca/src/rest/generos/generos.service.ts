@@ -13,6 +13,7 @@ import {
   paginate,
   PaginateQuery,
 } from 'nestjs-paginate';
+import { Pelicula } from '../peliculas/entities/pelicula.entity';
 
 @Injectable()
 export class GenerosService {
@@ -21,6 +22,8 @@ export class GenerosService {
   constructor(
     @InjectRepository(Generos)
     private readonly generoRepository: Repository<Generos>,
+    @InjectRepository(Pelicula)
+    private readonly peliculaRepository: Repository<Pelicula>,
     private readonly generosMapper: GeneroMapper,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
@@ -49,6 +52,45 @@ export class GenerosService {
       data: pagination.data,
       meta: pagination.meta,
       links: pagination.links,
+    };
+  }
+
+  async findPeliculasByGenero(id: number, query: PaginateQuery) {
+    this.logger.log(`Find peliculas by one genero by id: ${id}`);
+
+    // Verificar que el género existe con el id proporcionado
+    await this.findOne(id);
+
+    if (!query.path) {
+      throw new Error('Path is required for pagination');
+    }
+
+    // Crear la consulta sobre la tabla de películas relacionadas con el género
+    const queryBuilder = this.peliculaRepository
+      .createQueryBuilder('pelicula')
+      .leftJoin('pelicula.generos', 'genero') // Hacer join con los géneros
+      .where('genero.id = :id', { id }) // Filtrar por el id del género
+      .andWhere('genero.deletedAt IS NULL') // Asegurar que el género no está eliminado
+      .andWhere('pelicula.deletedAt IS NULL'); // Asegurar que las películas no están eliminadas
+
+    // Limitar a 12 resultados por página
+    query.limit = 12;
+
+    // Aplicar la paginación sobre las películas
+    const pagination = await paginate(query, queryBuilder, {
+      sortableColumns: ['title', 'release_year'], // Ordenar por columnas de películas
+      defaultSortBy: [['id', 'ASC']], // Ordenar por defecto por el ID de la película
+      searchableColumns: ['title'], // Permitir búsqueda por nombre de la película
+      filterableColumns: {
+        title: [FilterOperator.EQ, FilterSuffix.NOT], // Filtrar por nombre de película
+        release_year: [FilterOperator.GTE, FilterOperator.LTE], // Filtrar por fechas de lanzamiento
+      },
+    });
+
+    return {
+      data: pagination.data, // Películas encontradas
+      meta: pagination.meta, // Metadatos de la paginación
+      links: pagination.links, // Enlaces de paginación
     };
   }
 

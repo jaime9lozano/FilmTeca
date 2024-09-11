@@ -19,6 +19,7 @@ import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { Generos } from './entities/genero.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles, RolesAuthGuard } from '../auth/guards/roles-auth.guard';
+import { Pelicula } from '../peliculas/entities/pelicula.entity';
 
 @Controller('generos')
 @UseInterceptors(CacheInterceptor)
@@ -32,6 +33,16 @@ export class GenerosController {
   async findAll(@Paginate() query: PaginateQuery): Promise<Paginated<Generos>> {
     this.logger.log('Find all generos');
     return await this.generosService.findAll(query);
+  }
+
+  @Get(':id/peliculas')
+  @CacheKey('all_peli_gene')
+  async findAllPelisByGene(
+    @Paginate() query: PaginateQuery,
+    @Param('id') id: number,
+  ): Promise<Paginated<Pelicula>> {
+    this.logger.log('Find all peliculas by genero');
+    return await this.generosService.findPeliculasByGenero(id, query);
   }
 
   @Get(':id')

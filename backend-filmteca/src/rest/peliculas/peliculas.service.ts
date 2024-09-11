@@ -64,7 +64,7 @@ export class PeliculasService {
       searchableColumns: ['title', 'release_year', 'duration'],
       filterableColumns: {
         title: [FilterOperator.EQ, FilterSuffix.NOT],
-        release_year: true,
+        release_year: [FilterOperator.GTE, FilterOperator.LTE],
         duration: true,
       },
     });
