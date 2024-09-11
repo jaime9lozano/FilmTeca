@@ -79,8 +79,8 @@ function Header() {
                     onClose={handleMenuClose}
                     sx={{
                         '& .MuiPaper-root': {
-                            backgroundColor: '#00450A', // Fondo verde
-                            color: '#FDC1DA', // Color rosado para el texto
+                            backgroundColor: '#282c34', // Fondo oscuro
+                            color: 'white', // Color blanco para el texto
                             borderRadius: '8px', // Bordes redondeados
                             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)', // Sombra
                             border: '1px solid #003d00', // Borde verde oscuro
@@ -102,10 +102,11 @@ function Header() {
                     <MenuItem
                         onClick={handleGenerosMenuOpen}
                         sx={{
-                            color: '#FDC1DA', // Color rosado para el texto
+                            color: 'white', // Color blanco para el texto
                             '&:hover': {
                                 backgroundColor: '#003d00', // Verde más oscuro para el hover
-                                transition: 'background-color 0.3s ease' // Transición suave en hover
+                                color: '#FDC1DA', // Color rosado para el texto en hover
+                                transition: 'background-color 0.3s ease, color 0.3s ease' // Transición suave en hover
                             },
                             borderRadius: '8px', // Bordes redondeados para el ítem del menú
                             padding: '8px 16px', // Espaciado interno más pequeño
@@ -114,10 +115,18 @@ function Header() {
                             '@media (max-width: 768px)': {
                                 padding: '6px 12px', // Espaciado interno más pequeño en pantallas pequeñas
                                 fontSize: '12px', // Tamaño de fuente aún más pequeño en pantallas pequeñas
+                                '&:hover': {
+                                    backgroundColor: 'transparent', // Sin efecto de hover en pantallas pequeñas
+                                    color: 'white', // Color blanco para el texto en pantallas pequeñas
+                                }
                             },
                             '@media (max-width: 480px)': {
                                 padding: '4px 8px', // Espaciado interno aún más pequeño en pantallas muy pequeñas
                                 fontSize: '10px', // Tamaño de fuente aún más pequeño en pantallas muy pequeñas
+                                '&:hover': {
+                                    backgroundColor: 'transparent', // Sin efecto de hover en pantallas muy pequeñas
+                                    color: 'white', // Color blanco para el texto en pantallas muy pequeñas
+                                }
                             },
                         }}
                     >
@@ -129,8 +138,8 @@ function Header() {
                         onClose={handleGenerosMenuClose}
                         PaperProps={{
                             sx: {
-                                backgroundColor: '#00450A', // Fondo verde
-                                color: '#FDC1DA', // Color rosado para el texto
+                                backgroundColor: '#282c34', // Fondo oscuro
+                                color: 'white', // Color blanco para el texto
                                 borderRadius: '8px', // Bordes redondeados
                                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)', // Sombra
                                 width: '150px', // Ajusta el ancho del menú
@@ -150,10 +159,11 @@ function Header() {
                                     key={genero.id}
                                     onClick={handleGenerosMenuClose}
                                     sx={{
-                                        color: '#FDC1DA', // Color rosado para el texto
+                                        color: 'white', // Color blanco para el texto
                                         '&:hover': {
                                             backgroundColor: '#003d00', // Verde más oscuro para el hover
-                                            transition: 'background-color 0.3s ease' // Transición suave en hover
+                                            color: '#FDC1DA', // Color rosado para el texto en hover
+                                            transition: 'background-color 0.3s ease, color 0.3s ease' // Transición suave en hover
                                         },
                                         borderRadius: '8px', // Bordes redondeados para el ítem del menú
                                         padding: '8px 16px', // Espaciado interno más pequeño
@@ -161,10 +171,18 @@ function Header() {
                                         '@media (max-width: 768px)': {
                                             padding: '6px 12px', // Espaciado interno más pequeño en pantallas pequeñas
                                             fontSize: '12px', // Tamaño de fuente aún más pequeño en pantallas pequeñas
+                                            '&:hover': {
+                                                backgroundColor: 'transparent', // Sin efecto de hover en pantallas pequeñas
+                                                color: 'white', // Color blanco para el texto en pantallas pequeñas
+                                            }
                                         },
                                         '@media (max-width: 480px)': {
                                             padding: '4px 8px', // Espaciado interno aún más pequeño en pantallas muy pequeñas
                                             fontSize: '10px', // Tamaño de fuente aún más pequeño en pantallas muy pequeñas
+                                            '&:hover': {
+                                                backgroundColor: 'transparent', // Sin efecto de hover en pantallas muy pequeñas
+                                                color: 'white', // Color blanco para el texto en pantallas muy pequeñas
+                                            }
                                         },
                                     }}
                                 >
@@ -175,10 +193,11 @@ function Header() {
                             <MenuItem
                                 onClick={handleGenerosMenuClose}
                                 sx={{
-                                    color: '#FDC1DA', // Color rosado para el texto
+                                    color: 'white', // Color blanco para el texto
                                     '&:hover': {
                                         backgroundColor: '#003d00', // Verde más oscuro para el hover
-                                        transition: 'background-color 0.3s ease' // Transición suave en hover
+                                        color: '#FDC1DA', // Color rosado para el texto en hover
+                                        transition: 'background-color 0.3s ease, color 0.3s ease' // Transición suave en hover
                                     },
                                     borderRadius: '8px', // Bordes redondeados para el ítem del menú
                                     padding: '8px 16px', // Espaciado interno más pequeño
@@ -186,10 +205,18 @@ function Header() {
                                     '@media (max-width: 768px)': {
                                         padding: '6px 12px', // Espaciado interno más pequeño en pantallas pequeñas
                                         fontSize: '12px', // Tamaño de fuente aún más pequeño en pantallas pequeñas
+                                        '&:hover': {
+                                            backgroundColor: 'transparent', // Sin efecto de hover en pantallas pequeñas
+                                            color: 'white', // Color blanco para el texto en pantallas pequeñas
+                                        }
                                     },
                                     '@media (max-width: 480px)': {
                                         padding: '4px 8px', // Espaciado interno aún más pequeño en pantallas muy pequeñas
                                         fontSize: '10px', // Tamaño de fuente aún más pequeño en pantallas muy pequeñas
+                                        '&:hover': {
+                                            backgroundColor: 'transparent', // Sin efecto de hover en pantallas muy pequeñas
+                                            color: 'white', // Color blanco para el texto en pantallas muy pequeñas
+                                        }
                                     },
                                 }}
                             >
