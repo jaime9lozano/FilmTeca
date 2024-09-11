@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import axios from "axios";
 import { Menu, MenuItem, IconButton } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 function Header() {
     const navigate = useNavigate();
@@ -130,7 +131,16 @@ function Header() {
                             },
                         }}
                     >
-                        Géneros
+                        <Link
+                            to="/genero" // Ruta base, se actualizará en cada elemento del menú
+                            style={{
+                                textDecoration: 'none', // Sin subrayado
+                                color: 'inherit', // Hereda el color del menú
+                                display: 'block',
+                            }}
+                        >
+                            Géneros
+                        </Link>
                     </MenuItem>
                     <Menu
                         anchorEl={generosAnchorEl}
@@ -186,7 +196,16 @@ function Header() {
                                         },
                                     }}
                                 >
-                                    {genero.name}
+                                    <Link
+                                        to={`/genero/${genero.id}`} // Enlace con el ID del género
+                                        style={{
+                                            textDecoration: 'none', // Sin subrayado
+                                            color: 'inherit', // Hereda el color del ítem del menú
+                                            display: 'block',
+                                        }}
+                                    >
+                                        {genero.name}
+                                    </Link>
                                 </MenuItem>
                             ))
                         ) : (
