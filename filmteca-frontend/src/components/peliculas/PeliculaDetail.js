@@ -115,7 +115,7 @@ const PeliculaDetail = () => {
                 </button>
             )}
             <ToastContainer/>
-            <h1 className="pelicula-title">{pelicula.title}</h1>
+            <h1 className="pelicula-titleDetail">{pelicula.title}</h1>
             <div className="pelicula-detail-content">
                 <img src={pelicula.image} alt={pelicula.title} className="pelicula-detail-image"/>
                 <div className="pelicula-detail-info">
