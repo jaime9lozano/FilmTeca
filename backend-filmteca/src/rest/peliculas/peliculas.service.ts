@@ -56,7 +56,7 @@ export class PeliculasService {
 
     const queryBuilder = this.peliculaRepository.createQueryBuilder('pelicula');
     queryBuilder.where('pelicula.deletedAt IS NULL');
-    query.limit = 10;
+    query.limit = 12;
 
     const pagination = await paginate(query, queryBuilder, {
       sortableColumns: ['title', 'release_year', 'duration'],
