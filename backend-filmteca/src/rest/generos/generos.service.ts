@@ -34,6 +34,7 @@ export class GenerosService {
 
     const queryBuilder = this.generoRepository.createQueryBuilder('genero');
     queryBuilder.where('genero.deletedAt IS NULL');
+    query.limit = 50;
 
     const pagination = await paginate(query, queryBuilder, {
       sortableColumns: ['name'],

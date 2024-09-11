@@ -6,6 +6,7 @@
     padding: 10px 20px;
     background-color: #282c34;
     color: white;
+    z-index: 1000; /* Mantén el header encima del contenido */
 }
 
 .header-left {
@@ -38,6 +39,7 @@
     text-transform: uppercase; /* Transformar texto a mayúsculas */
     letter-spacing: 1px; /* Espaciado entre letras */
     transition: transform 0.3s ease, background-color 0.3s ease; /* Transiciones suaves */
+    cursor: pointer;
 }
 
 .header-right {
@@ -52,10 +54,15 @@
     margin-left: 15px;
     cursor: pointer;
     font-size: 24px;
+    transition: color 0.3s ease;
 }
 
 .header-icon:hover {
     color: #ddd;
+}
+
+.header-icon.logout {
+    font-size: 18px; /* Un tamaño más pequeño para logout */
 }
 
 /* Estilos para pantallas más pequeñas */
@@ -75,6 +82,10 @@
 }
 
 @media (max-width: 480px) {
+    .header {
+        padding: 8px 15px;
+    }
+
     .header-logo {
         width: 50px; /* Ajusta aún más el tamaño de la imagen para pantallas muy pequeñas */
     }
