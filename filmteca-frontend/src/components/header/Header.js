@@ -131,16 +131,7 @@ function Header() {
                             },
                         }}
                     >
-                        <Link
-                            to="/genero" // Ruta base, se actualizará en cada elemento del menú
-                            style={{
-                                textDecoration: 'none', // Sin subrayado
-                                color: 'inherit', // Hereda el color del menú
-                                display: 'block',
-                            }}
-                        >
-                            Géneros
-                        </Link>
+                        Géneros
                     </MenuItem>
                     <Menu
                         anchorEl={generosAnchorEl}
