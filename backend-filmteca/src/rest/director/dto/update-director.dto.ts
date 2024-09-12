@@ -1,4 +1,12 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateDirectorDto } from './create-director.dto';
+import { IsDateString, IsOptional, IsString, Length } from 'class-validator';
 
-export class UpdateDirectorDto extends PartialType(CreateDirectorDto) {}
+export class UpdateDirectorDto {
+  @IsOptional()
+  @IsString()
+  @Length(1, 255, { message: 'El nombre debe tener entre 1 y 255 caracteres' })
+  name?: string;
+
+  @IsOptional()
+  @IsDateString({}, { message: 'El formato de la fecha no es válido' })
+  deleted_at?: string | null; // Se permite `null` para restaurar la película
+}

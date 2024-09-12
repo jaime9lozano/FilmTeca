@@ -1,7 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateGeneroDto } from '../../generos/dto/create-genero.dto';
-import { Generos } from '../../generos/entities/genero.entity';
-import { UpdateGeneroDto } from '../../generos/dto/update-genero.dto';
 import { plainToClass } from 'class-transformer';
 import { CreateActorDto } from '../dto/create-actor.dto';
 import { Actor } from '../entities/actor.entity';

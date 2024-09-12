@@ -1,34 +1,75 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Logger,
+  UseInterceptors,
+  UseGuards,
+  HttpCode,
+  Put,
+} from '@nestjs/common';
 import { DirectorService } from './director.service';
 import { CreateDirectorDto } from './dto/create-director.dto';
 import { UpdateDirectorDto } from './dto/update-director.dto';
+import { CacheInterceptor } from '@nestjs/cache-manager';
+import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
+import { Director } from './entities/director.entity';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Roles, RolesAuthGuard } from '../auth/guards/roles-auth.guard';
 
-@Controller('director')
+@Controller('directores')
+@UseInterceptors(CacheInterceptor)
 export class DirectorController {
+  private readonly logger: Logger = new Logger(DirectorController.name);
+
   constructor(private readonly directorService: DirectorService) {}
 
-  @Post()
-  create(@Body() createDirectorDto: CreateDirectorDto) {
-    return this.directorService.create(createDirectorDto);
-  }
-
   @Get()
-  findAll() {
-    return this.directorService.findAll();
+  async findAll(
+    @Paginate() query: PaginateQuery,
+  ): Promise<Paginated<Director>> {
+    this.logger.log('Find all directores');
+    return await this.directorService.findAll(query);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.directorService.findOne(+id);
+  async findOne(@Param('id') id: number): Promise<Director> {
+    this.logger.log(`Find one director by id:${id}`);
+    return await this.directorService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDirectorDto: UpdateDirectorDto) {
-    return this.directorService.update(+id, updateDirectorDto);
+  @Post()
+  @UseGuards(JwtAuthGuard, RolesAuthGuard)
+  @Roles('ADMIN')
+  @HttpCode(201)
+  async create(
+    @Body() createDirectorDto: CreateDirectorDto,
+  ): Promise<Director> {
+    this.logger.log(`Create director`);
+    return await this.directorService.create(createDirectorDto);
+  }
+
+  @Put(':id')
+  @UseGuards(JwtAuthGuard, RolesAuthGuard)
+  @Roles('ADMIN')
+  async update(
+    @Param('id') id: number,
+    @Body() updateDirectorDto: UpdateDirectorDto,
+  ): Promise<Director> {
+    this.logger.log(`Update director by id:${id}`);
+    return await this.directorService.update(id, updateDirectorDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.directorService.remove(+id);
+  @UseGuards(JwtAuthGuard, RolesAuthGuard)
+  @Roles('ADMIN')
+  @HttpCode(204)
+  async remove(@Param('id') id: number): Promise<void> {
+    this.logger.log(`Remove director by id:${id}`);
+    await this.directorService.remove(id);
   }
 }
