@@ -30,9 +30,9 @@ export class GenerosController {
 
   @Get()
   @CacheKey('all_generos')
-  async findAll(@Paginate() query: PaginateQuery): Promise<Paginated<Generos>> {
+  async findAll(): Promise<Generos> {
     this.logger.log('Find all generos');
-    return await this.generosService.findAll(query);
+    return await this.generosService.findAll();
   }
 
   @Get(':id/peliculas')

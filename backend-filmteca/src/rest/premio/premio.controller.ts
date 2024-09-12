@@ -16,13 +16,11 @@ import { PremioService } from './premio.service';
 import { CreatePremioDto } from './dto/create-premio.dto';
 import { UpdatePremioDto } from './dto/update-premio.dto';
 import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
-import { Director } from '../director/entities/director.entity';
 import { Premio } from './entities/premio.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles, RolesAuthGuard } from '../auth/guards/roles-auth.guard';
-import { CreateDirectorDto } from '../director/dto/create-director.dto';
-import { UpdateDirectorDto } from '../director/dto/update-director.dto';
-import { CacheInterceptor } from '@nestjs/cache-manager';
+import { CacheInterceptor, CacheKey } from '@nestjs/cache-manager';
+import { Generos } from '../generos/entities/genero.entity';
 
 @Controller('premios')
 @UseInterceptors(CacheInterceptor)
@@ -32,9 +30,10 @@ export class PremioController {
   constructor(private readonly premioService: PremioService) {}
 
   @Get()
-  async findAll(@Paginate() query: PaginateQuery): Promise<Paginated<Premio>> {
+  @CacheKey('all_premios')
+  async findAll(): Promise<Premio> {
     this.logger.log('Find all premios');
-    return await this.premioService.findAll(query);
+    return await this.premioService.findAll();
   }
 
   @Get(':id')

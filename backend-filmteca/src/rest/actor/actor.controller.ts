@@ -20,6 +20,7 @@ import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { Actor } from './entities/actor.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles, RolesAuthGuard } from '../auth/guards/roles-auth.guard';
+import { Generos } from '../generos/entities/genero.entity';
 
 @Controller('actores')
 @UseInterceptors(CacheInterceptor)
@@ -29,9 +30,9 @@ export class ActorController {
   constructor(private readonly actorService: ActorService) {}
 
   @Get()
-  async findAll(@Paginate() query: PaginateQuery): Promise<Paginated<Actor>> {
+  async findAll(): Promise<Actor> {
     this.logger.log('Find all actores');
-    return await this.actorService.findAll(query);
+    return await this.actorService.findAll();
   }
 
   @Get(':id')

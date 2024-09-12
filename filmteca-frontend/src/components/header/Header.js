@@ -25,7 +25,7 @@ function Header() {
                     ? 'http://localhost:8000'
                     : 'https://filmteca.onrender.com';
                 const response = await axios.get(`${baseURL}/generos`);
-                setGeneros(response.data.data); // Asume que el endpoint devuelve un array de géneros
+                setGeneros(response.data); // Asume que el endpoint devuelve un array de géneros
             } catch (error) {
                 console.error('Error al obtener los géneros:', error);
             }

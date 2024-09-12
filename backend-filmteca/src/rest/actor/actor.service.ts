@@ -7,12 +7,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Actor } from './entities/actor.entity';
 import { Repository } from 'typeorm';
 import { ActorMapper } from './mapeador/actor-mapper';
-import {
-  FilterOperator,
-  FilterSuffix,
-  paginate,
-  PaginateQuery,
-} from 'nestjs-paginate';
 
 @Injectable()
 export class ActorService {
@@ -25,31 +19,18 @@ export class ActorService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
-  async findAll(query: PaginateQuery) {
-    this.logger.log('Find all actores');
+  async findAll(): Promise<any> {
+    this.logger.log('Find all actores without pagination');
 
-    if (!query.path) {
-      throw new Error('Path is required for pagination');
-    }
-
+    // Crear el query builder
     const queryBuilder = this.actorRepository.createQueryBuilder('actor');
+
+    // Filtrar los géneros que no están eliminados (deletedAt es NULL)
     queryBuilder.where('actor.deletedAt IS NULL');
 
-    // Si no se especifica un límite, no aplicamos paginación
-    const pagination = await paginate(query, queryBuilder, {
-      sortableColumns: ['name'],
-      defaultSortBy: [['id', 'ASC']],
-      searchableColumns: ['name'],
-      filterableColumns: {
-        name: [FilterOperator.EQ, FilterSuffix.NOT],
-      },
-    });
-
-    return {
-      data: pagination.data,
-      meta: pagination.meta,
-      links: pagination.links,
-    };
+    // Ejecutar la consulta y obtener los géneros
+    // Devolver un array simple de géneros
+    return await queryBuilder.getMany();
   }
 
   async findOne(id: number) {

@@ -64,7 +64,7 @@
     bottom: 0; /* Lo coloca en la parte inferior de la tarjeta */
     width: 100%;
     text-align: center;
-    font-size: 1em; /* Ajusta el tamaño del texto */
+    font-size: 1.5em; /* Ajusta el tamaño del texto */
     box-sizing: border-box;
 }
 

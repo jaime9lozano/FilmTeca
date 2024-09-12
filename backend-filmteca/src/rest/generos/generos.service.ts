@@ -28,31 +28,18 @@ export class GenerosService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
-  async findAll(query: PaginateQuery): Promise<any> {
-    this.logger.log('Find all generos');
+  async findAll(): Promise<any> {
+    this.logger.log('Find all generos without pagination');
 
-    if (!query.path) {
-      throw new Error('Path is required for pagination');
-    }
-
+    // Crear el query builder
     const queryBuilder = this.generoRepository.createQueryBuilder('genero');
+
+    // Filtrar los géneros que no están eliminados (deletedAt es NULL)
     queryBuilder.where('genero.deletedAt IS NULL');
-    query.limit = 50;
 
-    const pagination = await paginate(query, queryBuilder, {
-      sortableColumns: ['name'],
-      defaultSortBy: [['id', 'ASC']],
-      searchableColumns: ['name'],
-      filterableColumns: {
-        name: [FilterOperator.EQ, FilterSuffix.NOT],
-      },
-    });
-
-    return {
-      data: pagination.data,
-      meta: pagination.meta,
-      links: pagination.links,
-    };
+    // Ejecutar la consulta y obtener los géneros
+    // Devolver un array simple de géneros
+    return await queryBuilder.getMany();
   }
 
   async findPeliculasByGenero(id: number, query: PaginateQuery) {

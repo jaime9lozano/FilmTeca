@@ -15,11 +15,12 @@ import {
 import { DirectorService } from './director.service';
 import { CreateDirectorDto } from './dto/create-director.dto';
 import { UpdateDirectorDto } from './dto/update-director.dto';
-import { CacheInterceptor } from '@nestjs/cache-manager';
+import { CacheInterceptor, CacheKey } from '@nestjs/cache-manager';
 import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { Director } from './entities/director.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles, RolesAuthGuard } from '../auth/guards/roles-auth.guard';
+import { Generos } from '../generos/entities/genero.entity';
 
 @Controller('directores')
 @UseInterceptors(CacheInterceptor)
@@ -29,11 +30,10 @@ export class DirectorController {
   constructor(private readonly directorService: DirectorService) {}
 
   @Get()
-  async findAll(
-    @Paginate() query: PaginateQuery,
-  ): Promise<Paginated<Director>> {
+  @CacheKey('all_directores')
+  async findAll(): Promise<Director> {
     this.logger.log('Find all directores');
-    return await this.directorService.findAll(query);
+    return await this.directorService.findAll();
   }
 
   @Get(':id')
