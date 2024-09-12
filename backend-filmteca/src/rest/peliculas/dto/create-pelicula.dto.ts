@@ -37,14 +37,14 @@ export class CreatePeliculaDto {
 
   @IsOptional()
   @IsString()
-  @Length(1, 100, {
+  @Length(0, 100, {
     message: 'El nombre del compositor debe tener entre 1 y 100 caracteres',
   })
   music_by?: string;
 
   @IsOptional()
   @IsString()
-  @Length(1, 100, {
+  @Length(0, 100, {
     message:
       'El nombre del director de fotografía debe tener entre 1 y 100 caracteres',
   })

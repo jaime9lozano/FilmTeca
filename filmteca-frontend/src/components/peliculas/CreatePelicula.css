@@ -1,5 +1,5 @@
 /* General Styles */
-.user-info-container {
+.film-info-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,7 +8,7 @@
     padding: 20px;
 }
 
-.user-actions {
+.film-actions {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -16,13 +16,13 @@
     margin-bottom: 20px;
 }
 
-.user-info-row {
+.film-info-row {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
 
-.user-info-label {
+.film-info-label {
     font-weight: bold;
     color: #333;
     margin-right: 10px;
@@ -30,7 +30,7 @@
     text-align: right;
 }
 
-.user-info-row input {
+.film-info-row input {
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 8px;
@@ -38,7 +38,7 @@
     width: calc(100% - 160px); /* Ajusta el ancho según el espacio */
 }
 
-.user-info-row span {
+.film-info-row span {
     font-size: 1em;
     color: #555;
 }
@@ -57,7 +57,7 @@
     background-color: #dc3545;
 }
 
-.user-card-actions {
+.film-card-actions {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
@@ -79,7 +79,7 @@
     color: white;
 }
 
-.user-card {
+.film-card {
     background-color: #ffffff;
     padding: 30px;
     border-radius: 12px;
@@ -90,7 +90,7 @@
     border: 1px solid #ddd;
 }
 
-.user-card h2 input, .user-card input {
+.film-card h2 input, .film-card input {
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 8px;
@@ -99,35 +99,35 @@
     font-size: 1em;
 }
 
-.user-card h2 {
+.film-card h2 {
     font-size: 2em;
     margin-bottom: 10px;
     color: #333;
     font-weight: bold;
 }
 
-.user-card p {
+.film-card p {
     font-size: 1.1em;
     color: #555;
     margin: 8px 0;
     line-height: 1.5;
 }
 
-.user-card .user-username {
+.film-card .film-username {
     font-size: 1.4em;
     color: #888;
     margin-bottom: 15px;
 }
 
-.user-card .user-email {
+.film-card .film-email {
     color: #888;
 }
 
-.user-card .user-roles {
+.film-card .film-roles {
     color: #888;
 }
 
-.user-card .user-date {
+.film-card .film-date {
     color: #888;
 }
 
@@ -138,12 +138,13 @@ input, textarea, select {
     border-radius: 4px;
 }
 
-select[multiple] {
-    height: 100px;
+.basic-multi-select {
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 /* Error Styles */
-.user-info-error {
+.film-info-error {
     color: #e74c3c;
     font-size: 1.2em;
     text-align: center;
@@ -151,40 +152,34 @@ select[multiple] {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-    .user-card {
+    .film-card {
         padding: 20px;
         max-width: 90%;
     }
 
-    .user-card h2 {
+    .film-card h2 {
         font-size: 1.6em;
     }
 
-    .user-card p {
+    .film-card p {
         font-size: 1em;
     }
 
-    .user-card .user-username {
+    .film-card .film-username {
         font-size: 1.2em;
     }
-}
 
-@media (max-width: 480px) {
-    .user-card {
-        padding: 15px;
-        max-width: 95%;
+    .film-info-row {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
-    .user-card h2 {
-        font-size: 1.4em;
+    .film-info-label {
+        width: 100%;
+        text-align: left;
     }
 
-    .user-card p {
-        font-size: 0.9em;
-    }
-
-    .user-card .user-username {
-        font-size: 1em;
+    .film-info-row input, .film-info-row textarea, .film-info-row select {
+        width: 100%;
     }
 }
-

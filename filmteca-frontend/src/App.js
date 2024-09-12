@@ -8,6 +8,7 @@ import Login from "./components/login/Login";
 import PeliculasByGenero from "./components/peliculas/GeneroPeliculas";
 import UsersInfo from "./components/usuario/UsersInfo";
 import Register from "./components/login/Register";
+import CreatePelicula from "./components/peliculas/CreatePelicula";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/" element={<PeliculasList/>}/>
                         <Route path="/pelicula/:id" element={<PeliculaDetail/>}/>
+                        <Route path="/createPelicula" element={<CreatePelicula/>}/>
                         <Route path="/genero/:id" element={<PeliculasByGenero/>}/>
                         <Route path="/user" element={<UsersInfo/>}/>
                     </Routes>

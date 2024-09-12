@@ -1,4 +1,3 @@
-// src/components/header/Header.js
 import React, {useEffect, useState} from 'react';
 import './Header.css';
 import {FaUser} from "react-icons/fa";
@@ -66,6 +65,11 @@ function Header() {
         setAnchorEl(null);
     };
 
+    const handleCreatePeliculaClick = () => {
+        navigate('/createPelicula'); // Redirigir a la página de creación de películas
+        handleMenuClose(); // Cerrar el menú
+    };
+
     const token = Cookies.get('auth_token');
     const isLoggedIn = Boolean(token);
 
@@ -81,22 +85,22 @@ function Header() {
                     onClose={handleMenuClose}
                     sx={{
                         '& .MuiPaper-root': {
-                            backgroundColor: '#282c34', // Fondo oscuro
-                            color: 'white', // Color blanco para el texto
-                            borderRadius: '8px', // Bordes redondeados
-                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)', // Sombra
-                            border: '1px solid #003d00', // Borde verde oscuro
-                            transition: 'transform 0.3s ease-in-out', // Transición suave
-                            transform: 'scale(0.9)', // Escalar para el efecto de apertura
-                            width: '150px', // Ajusta el ancho del menú
-                            height: 'auto', // Altura automática para adaptarse al contenido
+                            backgroundColor: '#282c34',
+                            color: 'white',
+                            borderRadius: '8px',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
+                            border: '1px solid #003d00',
+                            transition: 'transform 0.3s ease-in-out',
+                            transform: 'scale(0.9)',
+                            width: '150px',
+                            height: 'auto',
                             '@media (max-width: 768px)': {
-                                width: '120px', // Ajusta el ancho del menú en pantallas pequeñas
-                                fontSize: '14px', // Tamaño de fuente más pequeño
+                                width: '120px',
+                                fontSize: '14px',
                             },
                             '@media (max-width: 480px)': {
-                                width: '100px', // Ajusta aún más el ancho en pantallas muy pequeñas
-                                fontSize: '12px', // Tamaño de fuente aún más pequeño
+                                width: '100px',
+                                fontSize: '12px',
                             },
                         },
                     }}
@@ -104,53 +108,72 @@ function Header() {
                     <MenuItem
                         onClick={handleGenerosMenuOpen}
                         sx={{
-                            color: 'white', // Color blanco para el texto
+                            color: 'white',
                             '&:hover': {
-                                backgroundColor: '#003d00', // Verde más oscuro para el hover
-                                color: '#FDC1DA', // Color rosado para el texto en hover
-                                transition: 'background-color 0.3s ease, color 0.3s ease' // Transición suave en hover
+                                backgroundColor: '#003d00',
+                                color: '#FDC1DA',
+                                transition: 'background-color 0.3s ease, color 0.3s ease'
                             },
-                            borderRadius: '8px', // Bordes redondeados para el ítem del menú
-                            padding: '8px 16px', // Espaciado interno más pequeño
-                            fontWeight: 'bold', // Texto en negrita
-                            fontSize: '14px', // Tamaño de fuente más pequeño
+                            borderRadius: '8px',
+                            padding: '8px 16px',
+                            fontWeight: 'bold',
+                            fontSize: '14px',
                             '@media (max-width: 768px)': {
-                                padding: '6px 12px', // Espaciado interno más pequeño en pantallas pequeñas
-                                fontSize: '12px', // Tamaño de fuente aún más pequeño en pantallas pequeñas
-                                '&:hover': {
-                                    backgroundColor: 'transparent', // Sin efecto de hover en pantallas pequeñas
-                                    color: 'white', // Color blanco para el texto en pantallas pequeñas
-                                }
+                                padding: '6px 12px',
+                                fontSize: '12px',
                             },
                             '@media (max-width: 480px)': {
-                                padding: '4px 8px', // Espaciado interno aún más pequeño en pantallas muy pequeñas
-                                fontSize: '10px', // Tamaño de fuente aún más pequeño en pantallas muy pequeñas
-                                '&:hover': {
-                                    backgroundColor: 'transparent', // Sin efecto de hover en pantallas muy pequeñas
-                                    color: 'white', // Color blanco para el texto en pantallas muy pequeñas
-                                }
+                                padding: '4px 8px',
+                                fontSize: '10px',
                             },
                         }}
                     >
                         Géneros
                     </MenuItem>
+                    {isLoggedIn && ( // Mostrar el MenuItem solo si el usuario esta logueado
+                        <MenuItem
+                            onClick={handleCreatePeliculaClick}
+                            sx={{
+                                color: 'white',
+                                '&:hover': {
+                                    backgroundColor: '#003d00',
+                                    color: '#FDC1DA',
+                                    transition: 'background-color 0.3s ease, color 0.3s ease'
+                                },
+                                borderRadius: '8px',
+                                padding: '8px 16px',
+                                fontWeight: 'bold',
+                                fontSize: '14px',
+                                '@media (max-width: 768px)': {
+                                    padding: '6px 12px',
+                                    fontSize: '12px',
+                                },
+                                '@media (max-width: 480px)': {
+                                    padding: '4px 8px',
+                                    fontSize: '10px',
+                                },
+                            }}
+                        >
+                            Crear Película
+                        </MenuItem>
+                    )}
                     <Menu
                         anchorEl={generosAnchorEl}
                         open={openGenerosMenu}
                         onClose={handleGenerosMenuClose}
                         PaperProps={{
                             sx: {
-                                backgroundColor: '#282c34', // Fondo oscuro
-                                color: 'white', // Color blanco para el texto
-                                borderRadius: '8px', // Bordes redondeados
-                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)', // Sombra
-                                width: '150px', // Ajusta el ancho del menú
-                                height: 'auto', // Altura automática para adaptarse al contenido
+                                backgroundColor: '#282c34',
+                                color: 'white',
+                                borderRadius: '8px',
+                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
+                                width: '150px',
+                                height: 'auto',
                                 '@media (max-width: 768px)': {
-                                    width: '120px', // Ajusta el ancho en pantallas pequeñas
+                                    width: '120px',
                                 },
                                 '@media (max-width: 480px)': {
-                                    width: '100px', // Ajusta aún más el ancho en pantallas muy pequeñas
+                                    width: '100px',
                                 },
                             },
                         }}
@@ -161,41 +184,33 @@ function Header() {
                                     key={genero.id}
                                     onClick={handleGenerosMenuClose}
                                     sx={{
-                                        color: 'white', // Color blanco para el texto
+                                        color: 'white',
                                         '&:hover': {
-                                            backgroundColor: '#003d00', // Verde más oscuro para el hover
-                                            color: '#FDC1DA', // Color rosado para el texto en hover
-                                            transition: 'background-color 0.3s ease, color 0.3s ease' // Transición suave en hover
+                                            backgroundColor: '#003d00',
+                                            color: '#FDC1DA',
+                                            transition: 'background-color 0.3s ease, color 0.3s ease'
                                         },
-                                        borderRadius: '8px', // Bordes redondeados para el ítem del menú
-                                        padding: '8px 16px', // Espaciado interno más pequeño
-                                        fontSize: '14px', // Tamaño de fuente más pequeño
+                                        borderRadius: '8px',
+                                        padding: '8px 16px',
+                                        fontSize: '14px',
                                         '@media (max-width: 768px)': {
-                                            padding: '6px 12px', // Espaciado interno más pequeño en pantallas pequeñas
-                                            fontSize: '12px', // Tamaño de fuente aún más pequeño en pantallas pequeñas
-                                            '&:hover': {
-                                                backgroundColor: 'transparent', // Sin efecto de hover en pantallas pequeñas
-                                                color: 'white', // Color blanco para el texto en pantallas pequeñas
-                                            }
+                                            padding: '6px 12px',
+                                            fontSize: '12px',
                                         },
                                         '@media (max-width: 480px)': {
-                                            padding: '4px 8px', // Espaciado interno aún más pequeño en pantallas muy pequeñas
-                                            fontSize: '10px', // Tamaño de fuente aún más pequeño en pantallas muy pequeñas
-                                            '&:hover': {
-                                                backgroundColor: 'transparent', // Sin efecto de hover en pantallas muy pequeñas
-                                                color: 'white', // Color blanco para el texto en pantallas muy pequeñas
-                                            }
+                                            padding: '4px 8px',
+                                            fontSize: '10px',
                                         },
                                     }}
                                 >
                                     <Link
                                         to={{
-                                            pathname: `/genero/${genero.id}`, // Enlace con el ID del género
-                                            state: { generoName: genero.name } // Pasar el nombre del género como parte del estado
+                                            pathname: `/genero/${genero.id}`,
+                                            state: { generoName: genero.name }
                                         }}
                                         style={{
-                                            textDecoration: 'none', // Sin subrayado
-                                            color: 'inherit', // Hereda el color del ítem del menú
+                                            textDecoration: 'none',
+                                            color: 'inherit',
                                             display: 'block',
                                         }}
                                     >
@@ -207,30 +222,22 @@ function Header() {
                             <MenuItem
                                 onClick={handleGenerosMenuClose}
                                 sx={{
-                                    color: 'white', // Color blanco para el texto
+                                    color: 'white',
                                     '&:hover': {
-                                        backgroundColor: '#003d00', // Verde más oscuro para el hover
-                                        color: '#FDC1DA', // Color rosado para el texto en hover
-                                        transition: 'background-color 0.3s ease, color 0.3s ease' // Transición suave en hover
+                                        backgroundColor: '#003d00',
+                                        color: '#FDC1DA',
+                                        transition: 'background-color 0.3s ease, color 0.3s ease'
                                     },
-                                    borderRadius: '8px', // Bordes redondeados para el ítem del menú
-                                    padding: '8px 16px', // Espaciado interno más pequeño
-                                    fontSize: '14px', // Tamaño de fuente más pequeño
+                                    borderRadius: '8px',
+                                    padding: '8px 16px',
+                                    fontSize: '14px',
                                     '@media (max-width: 768px)': {
-                                        padding: '6px 12px', // Espaciado interno más pequeño en pantallas pequeñas
-                                        fontSize: '12px', // Tamaño de fuente aún más pequeño en pantallas pequeñas
-                                        '&:hover': {
-                                            backgroundColor: 'transparent', // Sin efecto de hover en pantallas pequeñas
-                                            color: 'white', // Color blanco para el texto en pantallas pequeñas
-                                        }
+                                        padding: '6px 12px',
+                                        fontSize: '12px',
                                     },
                                     '@media (max-width: 480px)': {
-                                        padding: '4px 8px', // Espaciado interno aún más pequeño en pantallas muy pequeñas
-                                        fontSize: '10px', // Tamaño de fuente aún más pequeño en pantallas muy pequeñas
-                                        '&:hover': {
-                                            backgroundColor: 'transparent', // Sin efecto de hover en pantallas muy pequeñas
-                                            color: 'white', // Color blanco para el texto en pantallas muy pequeñas
-                                        }
+                                        padding: '4px 8px',
+                                        fontSize: '10px',
                                     },
                                 }}
                             >
@@ -275,3 +282,4 @@ function Header() {
 }
 
 export default Header;
+
