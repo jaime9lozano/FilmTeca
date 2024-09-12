@@ -35,14 +35,17 @@ export class AuthService {
     this.logger.log(`singIn ${userSignInDto.username}`);
     const user = await this.usersService.findByUsername(userSignInDto.username);
     if (!user) {
-      throw new BadRequestException('username or password are invalid');
+      throw new BadRequestException('Username o contraseña son invalidas.');
+    }
+    if (user.deletedAt != null) {
+      throw new BadRequestException('Usuario eliminado.');
     }
     const isValidPassword = await this.usersService.validatePassword(
       userSignInDto.password, // plain
       user.password, // hash
     );
     if (!isValidPassword) {
-      throw new BadRequestException('username or password are invalid');
+      throw new BadRequestException('Username o contraseña son invalidas.');
     }
 
     const roles = user.roles.map((role) => role.role);
