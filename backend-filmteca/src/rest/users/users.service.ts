@@ -80,7 +80,12 @@ export class UsersService {
 
   async findByUsername(username: string) {
     this.logger.log(`findByUsername: ${username}`);
-    return await this.usuariosRepository.findOneBy({ username });
+    return await this.usuariosRepository.findOne({
+      where: {
+        username,
+        deletedAt: null,
+      },
+    });
   }
 
   async validatePassword(password: string, hashPassword: string) {
@@ -159,8 +164,13 @@ export class UsersService {
     return this.usuariosMapper.toResponseDto(updatedUser);
   }
 
-  private async findByEmail(email: string) {
+  async findByEmail(email: string) {
     this.logger.log(`findByEmail: ${email}`);
-    return await this.usuariosRepository.findOneBy({ email });
+    return await this.usuariosRepository.findOne({
+      where: {
+        email,
+        deletedAt: null,
+      },
+    });
   }
 }
