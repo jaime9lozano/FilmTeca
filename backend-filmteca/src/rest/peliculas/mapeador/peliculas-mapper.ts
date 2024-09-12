@@ -1,10 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreatePeliculaDto } from '../dto/create-pelicula.dto';
 import { Pelicula } from '../entities/pelicula.entity';
-import { UpdatePeliculaDto } from '../dto/update-pelicula.dto';
-import { In, Repository } from 'typeorm';
 import { Generos } from '../../generos/entities/genero.entity';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Premio } from '../../premio/entities/premio.entity';
 import { Director } from '../../director/entities/director.entity';
 import { Actor } from '../../actor/entities/actor.entity';
