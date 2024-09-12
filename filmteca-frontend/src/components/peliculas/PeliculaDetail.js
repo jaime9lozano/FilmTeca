@@ -65,9 +65,13 @@ const PeliculaDetail = () => {
         })
             .then(() => {
                 toast.success('Película eliminada con éxito', {
-                    position: "top-center",
+                    position: "top-right",
                     autoClose: 3000,
-                    hideProgressBar: true,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
                 });
                 setTimeout(() => {
                     navigate('/');

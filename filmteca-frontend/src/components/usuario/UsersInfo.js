@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './UsersInfo.css';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +14,7 @@ const UsersInfo = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
+    const [isChangingPassword, setIsChangingPassword] = useState(false);
     const [editForm, setEditForm] = useState({});
     const [errors, setErrors] = useState({});
     const baseURL = process.env.NODE_ENV === 'development'
@@ -45,9 +48,13 @@ const UsersInfo = () => {
         if (!editForm.username) newErrors.username = 'Username no puede estar vacío';
         if (!editForm.email) newErrors.email = 'Email no puede estar vacío';
         else if (!/\S+@\S+\.\S+/.test(editForm.email)) newErrors.email = 'Email debe ser válido';
-        if (!editForm.password) newErrors.password = 'Password no puede estar vacío';
-        else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(editForm.password))
-            newErrors.password = 'Password no es válido, debe contener al menos 8 caracteres, una mayúscula, una minúscula y un número';
+
+        // Solo validamos la contraseña si se está cambiando
+        if (isChangingPassword) {
+            if (!editForm.password) newErrors.password = 'Password no puede estar vacío';
+            else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(editForm.password))
+                newErrors.password = 'Password no es válido, debe contener al menos 8 caracteres, una mayúscula, una minúscula y un número';
+        }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -64,26 +71,42 @@ const UsersInfo = () => {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            });
-            Cookies.remove('auth_token');
-            navigate('/');
+            }).then(() => {
+                toast.success('Usuario eliminado con éxito', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                Cookies.remove('auth_token');
+                setTimeout(() => {
+                    navigate('/');
+                }, 3000);
+            })
         } catch (err) {
             setError('Error al eliminar la información del usuario.');
         }
     };
 
     const handleSaveClick = async () => {
-        if (!validateForm()) return; // Solo guarda si la validación es correcta
+        if (!validateForm()) return;
 
         try {
             const token = Cookies.get('auth_token');
-            await axios.put(`${baseURL}/users/me/profile`, editForm, {
+            const formData = { ...editForm };
+            if (!isChangingPassword) delete formData.password; // Solo incluimos la contraseña si se está cambiando
+
+            await axios.put(`${baseURL}/users/me/profile`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
             setUserInfo(editForm);
             setIsEditing(false);
+            setIsChangingPassword(false); // Resetear estado
         } catch (err) {
             setError('Error al guardar la información del usuario.');
         }
@@ -91,13 +114,18 @@ const UsersInfo = () => {
 
     const handleCancelClick = () => {
         setIsEditing(false);
-        setEditForm(userInfo); // Restablece el formulario a los datos originales
+        setEditForm(userInfo);
         setErrors({});
+        setIsChangingPassword(false);
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setEditForm((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handlePasswordChangeClick = () => {
+        setIsChangingPassword(true);
     };
 
     if (loading) {
@@ -115,6 +143,7 @@ const UsersInfo = () => {
 
     return (
         <div className="user-info-container">
+            <ToastContainer/>
             <div className="user-actions">
                 {!isEditing && (
                     <>
@@ -133,7 +162,7 @@ const UsersInfo = () => {
                             value={editForm.nombre || ''}
                             onChange={handleChange}
                         />
-                        {errors.nombre && <span className="error-message">{errors.nombre}</span>}
+                        {errors.nombre && <p className="error-message">{errors.nombre}</p>}
                     </div>
                     <div className="user-info-row">
                         <span className="user-info-label">Username:</span>
@@ -143,7 +172,7 @@ const UsersInfo = () => {
                             value={editForm.username || ''}
                             onChange={handleChange}
                         />
-                        {errors.username && <span className="error-message">{errors.username}</span>}
+                        {errors.username && <p className="error-message">{errors.username}</p>}
                     </div>
                     <div className="user-info-row">
                         <span className="user-info-label">Correo:</span>
@@ -153,17 +182,23 @@ const UsersInfo = () => {
                             value={editForm.email || ''}
                             onChange={handleChange}
                         />
-                        {errors.email && <span className="error-message">{errors.email}</span>}
+                        {errors.email && <p className="error-message">{errors.email}</p>}
                     </div>
                     <div className="user-info-row">
                         <span className="user-info-label">Contraseña:</span>
-                        <input
-                            type="password"
-                            name="password"
-                            value={editForm.password || ''}
-                            onChange={handleChange}
-                        />
-                        {errors.password && <span className="error-message">{errors.password}</span>}
+                        {!isChangingPassword ? (
+                            <button className="btn-password" onClick={handlePasswordChangeClick}>Cambiar contraseña</button>
+                        ) : (
+                            <>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    value={editForm.password || ''}
+                                    onChange={handleChange}
+                                />
+                                {errors.password && <p className="error-message">{errors.password}</p>}
+                            </>
+                        )}
                     </div>
                     <div className="user-info-row">
                         <span className="user-info-label">Roles:</span>
@@ -215,5 +250,6 @@ const UsersInfo = () => {
 };
 
 export default UsersInfo;
+
 
 
