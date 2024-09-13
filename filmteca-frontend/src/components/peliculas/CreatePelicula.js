@@ -126,116 +126,161 @@ const CreatePelicula = () => {
     };
 
     return (
-        <div className="film-info-container">
-            <ToastContainer/>
-            <form className="film-card" onSubmit={handleSubmit}>
-                <div className="film-info-row">
-                    <label className="film-info-label">Título*:</label>
-                    <input type="text" name="title" value={formData.title} onChange={handleChange}/>
-                    {errors.title && <p className="error-message">{errors.title}</p>}
-                </div>
+        <div className="form-container">
+            <ToastContainer />
+            <form className="film-form" onSubmit={handleSubmit}>
+                <h2 className="form-title">Crear Película</h2>
+                <div className="form-fields">
+                    <div className="field-group">
+                        <label className="form-label">Título*</label>
+                        <input
+                            type="text"
+                            name="title"
+                            value={formData.title}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+                        {errors.title && <p className="error-message">{errors.title}</p>}
+                    </div>
 
-                <div className="film-info-row">
-                    <label className="film-info-label">Sinopsis*:</label>
-                    <textarea name="sinopsis" value={formData.sinopsis} onChange={handleChange}></textarea>
-                    {errors.sinopsis && <p className="error-message">{errors.sinopsis}</p>}
-                </div>
+                    <div className="field-group">
+                        <label className="form-label">Sinopsis*</label>
+                        <textarea
+                            name="sinopsis"
+                            value={formData.sinopsis}
+                            onChange={handleChange}
+                            className="form-textarea"
+                        />
+                        {errors.sinopsis && <p className="error-message">{errors.sinopsis}</p>}
+                    </div>
 
-                <div className="film-info-row">
-                    <label className="film-info-label">Duración*:</label>
-                    <input type="number" name="duration" value={formData.duration} onChange={handleChange}/>
-                    {errors.duration && <p className="error-message">{errors.duration}</p>}
-                </div>
+                    <div className="field-group">
+                        <label className="form-label">Duración*</label>
+                        <input
+                            type="number"
+                            name="duration"
+                            value={formData.duration}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+                        {errors.duration && <p className="error-message">{errors.duration}</p>}
+                    </div>
 
-                <div className="film-info-row">
-                    <label className="film-info-label">Año de Estreno*:</label>
-                    <input type="number" name="release_year" value={formData.release_year} onChange={handleChange}/>
-                    {errors.release_year && <p className="error-message">{errors.release_year}</p>}
-                </div>
+                    <div className="field-group">
+                        <label className="form-label">Año de Estreno*</label>
+                        <input
+                            type="number"
+                            name="release_year"
+                            value={formData.release_year}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+                        {errors.release_year && <p className="error-message">{errors.release_year}</p>}
+                    </div>
 
-                <div className="film-info-row">
-                    <label className="film-info-label">País de Origen*:</label>
-                    <input type="text" name="country_of_origin" value={formData.country_of_origin}
-                           onChange={handleChange}/>
-                    {errors.country_of_origin && <p className="error-message">{errors.country_of_origin}</p>}
-                </div>
+                    <div className="field-group">
+                        <label className="form-label">País de Origen*</label>
+                        <input
+                            type="text"
+                            name="country_of_origin"
+                            value={formData.country_of_origin}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+                        {errors.country_of_origin && <p className="error-message">{errors.country_of_origin}</p>}
+                    </div>
 
-                <div className="film-info-row">
-                    <label className="film-info-label">Imagen*:</label>
-                    <input type="text" name="image" value={formData.image} onChange={handleChange}/>
-                    {errors.image && <p className="error-message">{errors.image}</p>}
-                </div>
+                    <div className="field-group">
+                        <label className="form-label">Imagen*</label>
+                        <input
+                            type="text"
+                            name="image"
+                            value={formData.image}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+                        {errors.image && <p className="error-message">{errors.image}</p>}
+                    </div>
 
-                <div className="film-info-row">
-                    <label className="film-info-label">Musica:</label>
-                    <input type="text" name="music_by" value={formData.music_by} onChange={handleChange}/>
-                    {errors.music_by && <p className="error-message">{errors.music_by}</p>}
-                </div>
+                    <div className="field-group">
+                        <label className="form-label">Música</label>
+                        <input
+                            type="text"
+                            name="music_by"
+                            value={formData.music_by}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+                        {errors.music_by && <p className="error-message">{errors.music_by}</p>}
+                    </div>
 
-                <div className="film-info-row">
-                    <label className="film-info-label">Fotografía:</label>
-                    <input type="text" name="photography_by" value={formData.photography_by} onChange={handleChange}/>
-                    {errors.photography_by && <p className="error-message">{errors.photography_by}</p>}
-                </div>
+                    <div className="field-group">
+                        <label className="form-label">Fotografía</label>
+                        <input
+                            type="text"
+                            name="photography_by"
+                            value={formData.photography_by}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+                        {errors.photography_by && <p className="error-message">{errors.photography_by}</p>}
+                    </div>
 
-                {/* Géneros */}
-                <div className="film-info-row">
-                    <label className="film-info-label">Géneros*:</label>
-                    <Select
-                        isMulti
-                        name="generos"
-                        options={generos}
-                        value={generos.filter(g => formData.generos.includes(g.value))}
-                        onChange={(selectedOptions) => handleMultiSelectChange('generos', selectedOptions)}
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                    />
-                    {errors.generos && <p className="error-message">{errors.generos}</p>}
-                </div>
+                    <div className="field-group">
+                        <label className="form-label">Géneros*</label>
+                        <Select
+                            isMulti
+                            name="generos"
+                            options={generos}
+                            value={generos.filter(g => formData.generos.includes(g.value))}
+                            onChange={(selectedOptions) => handleMultiSelectChange('generos', selectedOptions)}
+                            className="select-input"
+                            classNamePrefix="select"
+                        />
+                        {errors.generos && <p className="error-message">{errors.generos}</p>}
+                    </div>
 
-                {/* Directores */}
-                <div className="film-info-row">
-                    <label className="film-info-label">Directores*:</label>
-                    <Select
-                        isMulti
-                        name="directores"
-                        options={directores}
-                        value={directores.filter(d => formData.directores.includes(d.value))}
-                        onChange={(selectedOptions) => handleMultiSelectChange('directores', selectedOptions)}
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                    />
-                    {errors.directores && <p className="error-message">{errors.directores}</p>}
-                </div>
+                    <div className="field-group">
+                        <label className="form-label">Directores*</label>
+                        <Select
+                            isMulti
+                            name="directores"
+                            options={directores}
+                            value={directores.filter(d => formData.directores.includes(d.value))}
+                            onChange={(selectedOptions) => handleMultiSelectChange('directores', selectedOptions)}
+                            className="select-input"
+                            classNamePrefix="select"
+                        />
+                        {errors.directores && <p className="error-message">{errors.directores}</p>}
+                    </div>
 
-                {/* Actores */}
-                <div className="film-info-row">
-                    <label className="film-info-label">Actores*:</label>
-                    <Select
-                        isMulti
-                        name="actores"
-                        options={actores}
-                        value={actores.filter(a => formData.actores.includes(a.value))}
-                        onChange={(selectedOptions) => handleMultiSelectChange('actores', selectedOptions)}
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                    />
-                    {errors.actores && <p className="error-message">{errors.actores}</p>}
-                </div>
+                    <div className="field-group">
+                        <label className="form-label">Actores*</label>
+                        <Select
+                            isMulti
+                            name="actores"
+                            options={actores}
+                            value={actores.filter(a => formData.actores.includes(a.value))}
+                            onChange={(selectedOptions) => handleMultiSelectChange('actores', selectedOptions)}
+                            className="select-input"
+                            classNamePrefix="select"
+                        />
+                        {errors.actores && <p className="error-message">{errors.actores}</p>}
+                    </div>
 
-                {/* Premios */}
-                <div className="film-info-row">
-                    <label className="film-info-label">Premios:</label>
-                    <Select
-                        isMulti
-                        name="premios"
-                        options={premios}
-                        value={premios.filter(p => formData.premios.includes(p.value))}
-                        onChange={(selectedOptions) => handleMultiSelectChange('premios', selectedOptions)}
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                    />
-                    {errors.premios && <p className="error-message">{errors.premios}</p>}
+                    <div className="field-group">
+                        <label className="form-label">Premios</label>
+                        <Select
+                            isMulti
+                            name="premios"
+                            options={premios}
+                            value={premios.filter(p => formData.premios.includes(p.value))}
+                            onChange={(selectedOptions) => handleMultiSelectChange('premios', selectedOptions)}
+                            className="select-input"
+                            classNamePrefix="select"
+                        />
+                        {errors.premios && <p className="error-message">{errors.premios}</p>}
+                    </div>
                 </div>
 
                 <button type="submit" className="submit-button">Crear Película</button>

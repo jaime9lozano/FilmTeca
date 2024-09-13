@@ -1,185 +1,119 @@
-/* General Styles */
-.film-info-container {
+/* CreatePeliculas.css */
+.form-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 80vh;
-    background: linear-gradient(to bottom, #f9f9f9, #e0e0e0);
+    background: #f0f4f8;
     padding: 20px;
 }
 
-.film-actions {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
-    margin-bottom: 20px;
-}
-
-.film-info-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.film-info-label {
-    font-weight: bold;
-    color: #333;
-    margin-right: 10px;
-    width: 150px; /* Ajusta según el espacio disponible */
-    text-align: right;
-}
-
-.film-info-row input {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 8px;
-    font-size: 1em;
-    width: calc(100% - 160px); /* Ajusta el ancho según el espacio */
-}
-
-.film-info-row span {
-    font-size: 1em;
-    color: #555;
-}
-
-.btn-edit, .btn-delete, .btn-save, .btn-cancel, .btn-password {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 1em;
-}
-
-.btn-delete {
-    background-color: #dc3545;
-}
-
-.film-card-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-.btn-save, .btn-cancel {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.btn-save {
-    background-color: #28a745;
-}
-
-.btn-cancel {
-    background-color: #dc3545;
-    color: white;
-}
-
-.film-card {
+.film-form {
     background-color: #ffffff;
     padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    border: 1px solid #ddd;
+    max-width: 900px;
+    border: 1px solid #e0e0e0;
+    margin: auto;
+    text-align: center;
 }
 
-.film-card h2 input, .film-card input {
+.form-title {
+    font-size: 2em; /* Tamaño grande y prominente para el título */
+    color: white; /* Color rosado para el título */
+    background-color: #282c34; /* Fondo oscuro para contraste */
+    display: inline-block; /* Para ajustar el tamaño del fondo al texto */
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    margin-bottom: 20px; /* Espacio debajo del título */
+    font-family: 'Roboto', sans-serif; /* Fuente moderna */
+    text-transform: uppercase; /* Transformar texto a mayúsculas */
+    letter-spacing: 1px; /* Espaciado entre letras */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transiciones suaves */
+}
+
+.form-fields {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.form-input, .form-textarea, .select-input {
     border: 1px solid #ddd;
     border-radius: 5px;
-    padding: 8px;
-    width: calc(100% - 16px);
-    margin: 10px 0;
-    font-size: 1em;
-}
-
-.film-card h2 {
-    font-size: 2em;
-    margin-bottom: 10px;
-    color: #333;
-    font-weight: bold;
-}
-
-.film-card p {
-    font-size: 1.1em;
-    color: #555;
-    margin: 8px 0;
-    line-height: 1.5;
-}
-
-.film-card .film-username {
-    font-size: 1.4em;
-    color: #888;
-    margin-bottom: 15px;
-}
-
-.film-card .film-email {
-    color: #888;
-}
-
-.film-card .film-roles {
-    color: #888;
-}
-
-.film-card .film-date {
-    color: #888;
-}
-
-input, textarea, select {
-    width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.basic-multi-select {
+    font-size: 1em;
     width: 100%;
-    margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
-/* Error Styles */
-.film-info-error {
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.error-message {
     color: #e74c3c;
-    font-size: 1.2em;
-    text-align: center;
+    font-size: 0.875em;
+    margin-top: 5px;
 }
 
-/* Responsive Styles */
+.submit-button {
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.submit-button:hover {
+    background-color: #2980b9;
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
-    .film-card {
+    .form-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .form-title {
+        font-size: 1.5em;
+    }
+
+    .film-form {
         padding: 20px;
-        max-width: 90%;
+        max-width: 95%;
     }
+}
 
-    .film-card h2 {
-        font-size: 1.6em;
-    }
-
-    .film-card p {
+@media (max-width: 480px) {
+    .form-title {
         font-size: 1em;
     }
 
-    .film-card .film-username {
-        font-size: 1.2em;
-    }
-
-    .film-info-row {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .film-info-label {
-        width: 100%;
-        text-align: left;
-    }
-
-    .film-info-row input, .film-info-row textarea, .film-info-row select {
-        width: 100%;
+    .submit-button {
+        font-size: 0.9em;
+        padding: 12px;
     }
 }
+
