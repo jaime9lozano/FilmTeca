@@ -9,6 +9,7 @@ import PeliculasByGenero from "./components/peliculas/GeneroPeliculas";
 import UsersInfo from "./components/usuario/UsersInfo";
 import Register from "./components/login/Register";
 import CreatePelicula from "./components/peliculas/CreatePelicula";
+import CambiarImagen from "./components/imagen/CambiarImagen";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                         <Route path="/" element={<PeliculasList/>}/>
                         <Route path="/pelicula/:id" element={<PeliculaDetail/>}/>
                         <Route path="/createPelicula" element={<CreatePelicula/>}/>
+                        <Route path="/cambiarImagen/:id" element={<CambiarImagen/>}/>
                         <Route path="/genero/:id" element={<PeliculasByGenero/>}/>
                         <Route path="/user" element={<UsersInfo/>}/>
                     </Routes>

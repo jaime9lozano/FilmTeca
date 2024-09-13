@@ -17,7 +17,6 @@ const CreatePelicula = () => {
         country_of_origin: '',
         music_by: '',
         photography_by: '',
-        image: '',
         generos: [],
         directores: [],
         actores: [],
@@ -73,7 +72,6 @@ const CreatePelicula = () => {
         if (!formData.duration) newErrors.duration = 'La duración es obligatoria';
         if (!formData.release_year) newErrors.release_year = 'El año de estreno es obligatorio';
         if (!formData.country_of_origin) newErrors.country_of_origin = 'El país de origen es obligatorio';
-        if (!formData.image) newErrors.image = 'La imagen es obligatoria';
         if (formData.generos.length === 0) newErrors.generos = 'Debe seleccionar al menos un género';
         if (formData.directores.length === 0) newErrors.directores = 'Debe seleccionar al menos un director';
         if (formData.actores.length === 0) newErrors.actores = 'Debe seleccionar al menos un actor';
@@ -188,18 +186,6 @@ const CreatePelicula = () => {
                             className="form-input"
                         />
                         {errors.country_of_origin && <p className="error-message">{errors.country_of_origin}</p>}
-                    </div>
-
-                    <div className="field-group">
-                        <label className="form-label">Imagen*</label>
-                        <input
-                            type="text"
-                            name="image"
-                            value={formData.image}
-                            onChange={handleChange}
-                            className="form-input"
-                        />
-                        {errors.image && <p className="error-message">{errors.image}</p>}
                     </div>
 
                     <div className="field-group">

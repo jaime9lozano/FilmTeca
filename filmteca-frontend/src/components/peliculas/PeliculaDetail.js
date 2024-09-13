@@ -1,11 +1,11 @@
-import {useParams, Link, useNavigate} from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import './PeliculaDetail.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from "js-cookie";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 axios.defaults.withCredentials = true;
 
@@ -17,6 +17,7 @@ const PeliculaDetail = () => {
     const [loadingPelicula, setLoadingPelicula] = useState(true);
     const [error, setError] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para verificar si el usuario está logueado
     const baseURL = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000' // URL para desarrollo
         : 'https://filmteca.onrender.com'; // URL para producción
@@ -26,6 +27,7 @@ const PeliculaDetail = () => {
         const token = Cookies.get('auth_token');
 
         if (token) {
+            setIsLoggedIn(true); // Usuario está logueado si hay token
             try {
                 const decodedToken = jwtDecode(token); // Decodificar el token JWT
                 const roles = decodedToken.role; // Obtener roles del token
@@ -88,6 +90,10 @@ const PeliculaDetail = () => {
             });
     };
 
+    const handleUpdateImage = () => {
+        navigate(`/cambiarImagen/${pelicula.id}`); // Redirigir a la página de actualización de imagen
+    };
+
     if (loadingPelicula) {
         return (
             <div className="loading-container">
@@ -96,7 +102,6 @@ const PeliculaDetail = () => {
             </div>
         );
     }
-
 
     if (error) {
         return <p>{error}</p>;
@@ -118,10 +123,18 @@ const PeliculaDetail = () => {
                     {deleting ? 'Eliminando...' : 'Eliminar'}
                 </button>
             )}
-            <ToastContainer/>
+            {isLoggedIn && (
+                <button
+                    onClick={handleUpdateImage}
+                    className="update-image-button" // Puedes agregar estilos específicos para este botón en tu CSS
+                >
+                    Actualizar Imagen
+                </button>
+            )}
+            <ToastContainer />
             <h1 className="pelicula-titleDetail">{pelicula.title}</h1>
             <div className="pelicula-detail-content">
-                <img src={pelicula.image} alt={pelicula.title} className="pelicula-detail-image"/>
+                <img src={`${baseURL}/storage/${pelicula.image}`} alt={pelicula.title} className="pelicula-detail-image" />
                 <div className="pelicula-detail-info">
                     <p><strong>Sinopsis:</strong> {pelicula.sinopsis}</p>
 
@@ -157,5 +170,6 @@ const PeliculaDetail = () => {
 };
 
 export default PeliculaDetail;
+
 
 

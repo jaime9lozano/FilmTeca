@@ -50,9 +50,9 @@ export class CreatePeliculaDto {
   })
   photography_by?: string;
 
-  @IsNotEmpty({ message: 'La imagen no puede estar vacía' })
+  @IsOptional()
   @IsString()
-  image: string;
+  image?: string;
 
   @IsArray()
   @ArrayNotEmpty({ message: 'Debe seleccionar al menos un género' })

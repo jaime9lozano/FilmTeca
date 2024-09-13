@@ -109,6 +109,31 @@
     outline: none;
 }
 
+/* Botón de actualizar imagen */
+.update-image-button {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ecc438;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.update-image-button:hover {
+    background-color: #5a4d15;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.update-image-button:focus {
+    outline: none;
+}
 
 .loading-container {
     display: flex;
@@ -167,6 +192,11 @@
         padding: 8px 16px;
         font-size: 0.9em;
     }
+    .update-image-button {
+        top: 10px;
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
 }
 
 /* Estilos adicionales para pantallas muy pequeñas */
@@ -188,6 +218,11 @@
     .delete-button {
         top: 5px;
         right: 5px;
+        padding: 6px 12px;
+        font-size: 0.8em;
+    }
+    .update-image-button {
+        top: 5px;
         padding: 6px 12px;
         font-size: 0.8em;
     }

@@ -44,7 +44,7 @@ export class DirectorController {
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
-  @Roles('ADMIN')
+  @Roles('USER')
   @HttpCode(201)
   async create(
     @Body() createDirectorDto: CreateDirectorDto,

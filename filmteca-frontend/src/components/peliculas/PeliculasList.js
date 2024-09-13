@@ -124,7 +124,7 @@ const PeliculasList = () => {
             <div className="peliculas-list">
                 {peliculas.map(pelicula => (
                     <Link to={`/pelicula/${pelicula.id}`} key={pelicula.id} className="pelicula-card-link">
-                        <div className="pelicula-card" style={{backgroundImage: `url(${pelicula.image})`}}>
+                        <div className="pelicula-card" style={{backgroundImage: `url(${baseURL}/storage/${pelicula.image})`}}>
                             <span className="pelicula-date">{pelicula.release_year}</span>
                             <div className="pelicula-title">
                                 <h3>{pelicula.title}</h3>

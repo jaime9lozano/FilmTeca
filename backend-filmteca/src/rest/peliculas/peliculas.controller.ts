@@ -50,7 +50,7 @@ export class PeliculasController {
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
-  @Roles('ADMIN')
+  @Roles('USER')
   @HttpCode(201)
   async create(
     @Body() createPeliculaDto: CreatePeliculaDto,
@@ -81,7 +81,7 @@ export class PeliculasController {
 
   @Patch(':id/imagen')
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
-  @Roles('ADMIN')
+  @Roles('USER')
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
