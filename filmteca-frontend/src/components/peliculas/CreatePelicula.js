@@ -28,6 +28,12 @@ const CreatePelicula = () => {
     const [actores, setActores] = useState([]);
     const [premios, setPremios] = useState([]);
 
+    // Modales para crear nuevos actores o directores
+    const [showCreateActor, setShowCreateActor] = useState(false);
+    const [showCreateDirector, setShowCreateDirector] = useState(false);
+    const [newActor, setNewActor] = useState('');
+    const [newDirector, setNewDirector] = useState('');
+
     const baseURL = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000'
         : 'https://filmteca.onrender.com';
@@ -89,14 +95,14 @@ const CreatePelicula = () => {
         // Convertir valores a números enteros donde sea necesario
         const updatedFormData = {
             ...formData,
-            duration: parseInt(formData.duration, 10), // Asegurarse de que es un número entero
-            release_year: parseInt(formData.release_year, 10), // Asegurarse de que es un número entero
-            music_by: formData.music_by.trim() || '', // Asegurarse de que no sea una cadena vacía si es opcional
-            photography_by: formData.photography_by.trim() || '', // Asegurarse de que no sea una cadena vacía si es opcional
-            generos: formData.generos.map(id => parseInt(id, 10)), // Convertir IDs a números enteros
-            directores: formData.directores.map(id => parseInt(id, 10)), // Convertir IDs a números enteros
-            actores: formData.actores.map(id => parseInt(id, 10)), // Convertir IDs a números enteros
-            premios: formData.premios.map(id => parseInt(id, 10)) // Convertir IDs a números enteros
+            duration: parseInt(formData.duration, 10),
+            release_year: parseInt(formData.release_year, 10),
+            music_by: formData.music_by.trim() || '',
+            photography_by: formData.photography_by.trim() || '',
+            generos: formData.generos.map(id => parseInt(id, 10)),
+            directores: formData.directores.map(id => parseInt(id, 10)),
+            actores: formData.actores.map(id => parseInt(id, 10)),
+            premios: formData.premios.map(id => parseInt(id, 10))
         };
 
         axios.post(`${baseURL}/peliculas`, updatedFormData, {
@@ -116,12 +122,67 @@ const CreatePelicula = () => {
                 });
                 setTimeout(() => {
                     navigate('/');
-                }, 3000); // Opcional: Añadir un retraso antes de navegar
+                }, 3000);
             })
             .catch(() => {
                 toast.error('Error al crear la película');
             });
     };
+
+    // Lógica para crear un nuevo actor o director
+    // Lógica para crear un nuevo actor o director
+    const handleCreateActor = () => {
+        const token = Cookies.get('auth_token'); // Obtener el token de autenticación
+
+        axios.post(`${baseURL}/actores`, { name: newActor }, {
+            headers: {
+                Authorization: `Bearer ${token}` // Enviar el token en los headers
+            }
+        })
+            .then(() => {
+                setNewActor('');
+                setShowCreateActor(false);
+                // Recargar actores
+                axios.get(`${baseURL}/actores`, {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Enviar el token en los headers al recargar la lista
+                    }
+                }).then(res => {
+                    setActores(res.data.map(a => ({ value: a.id, label: a.name })));
+                });
+                toast.success('Actor creado con éxito');
+            })
+            .catch(() => {
+                toast.error('Error al crear el actor');
+            });
+    };
+
+    const handleCreateDirector = () => {
+        const token = Cookies.get('auth_token'); // Obtener el token de autenticación
+
+        axios.post(`${baseURL}/directores`, { name: newDirector }, {
+            headers: {
+                Authorization: `Bearer ${token}` // Enviar el token en los headers
+            }
+        })
+            .then(() => {
+                setNewDirector('');
+                setShowCreateDirector(false);
+                // Recargar directores
+                axios.get(`${baseURL}/directores`, {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Enviar el token en los headers al recargar la lista
+                    }
+                }).then(res => {
+                    setDirectores(res.data.map(d => ({ value: d.id, label: d.name })));
+                });
+                toast.success('Director creado con éxito');
+            })
+            .catch(() => {
+                toast.error('Error al crear el director');
+            });
+    };
+
 
     return (
         <div className="form-container">
@@ -237,6 +298,8 @@ const CreatePelicula = () => {
                             className="select-input"
                             classNamePrefix="select"
                         />
+                        <p>¿No lo encuentras? <span className="crealo-link"
+                                                    onClick={() => setShowCreateDirector(true)}>¡Créalo!</span></p>
                         {errors.directores && <p className="error-message">{errors.directores}</p>}
                     </div>
 
@@ -251,6 +314,8 @@ const CreatePelicula = () => {
                             className="select-input"
                             classNamePrefix="select"
                         />
+                        <p>¿No lo encuentras? <span className="crealo-link"
+                                                    onClick={() => setShowCreateActor(true)}>¡Créalo!</span></p>
                         {errors.actores && <p className="error-message">{errors.actores}</p>}
                     </div>
 
@@ -271,10 +336,47 @@ const CreatePelicula = () => {
 
                 <button type="submit" className="submit-button">Crear Película</button>
             </form>
+
+            {/* Modal para crear nuevo actor */}
+            {showCreateActor && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h3>Crear Actor</h3>
+                        <input
+                            type="text"
+                            value={newActor}
+                            onChange={(e) => setNewActor(e.target.value)}
+                            placeholder="Nombre del actor"
+                        />
+                        <div className="modal-buttons">
+                            <button onClick={handleCreateActor} className="create-button">Crear</button>
+                            <button onClick={() => setShowCreateActor(false)} className="cancel-button">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal para crear nuevo director */}
+            {showCreateDirector && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h3>Crear Director</h3>
+                        <input
+                            type="text"
+                            value={newDirector}
+                            onChange={(e) => setNewDirector(e.target.value)}
+                            placeholder="Nombre del director"
+                        />
+                        <div className="modal-buttons">
+                            <button onClick={handleCreateDirector} className="create-button">Crear</button>
+                            <button onClick={() => setShowCreateDirector(false)} className="cancel-button">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 };
 
 export default CreatePelicula;
-
-
