@@ -1,3 +1,4 @@
+/* CambiarImagen.css */
 .cambiar-imagen-container {
     max-width: 900px;
     margin: 0 auto;
@@ -7,12 +8,14 @@
 
 .cambiar-imagen-content {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    gap: 20px;
 }
 
 .pelicula-detail-image {
-    max-width: 300px;
+    max-width: 100%;
+    height: auto;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -20,13 +23,13 @@
 .cambiar-imagen-form {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
-    align-items: flex-start;
 }
 
 .botones {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 10px;
 }
 
@@ -36,6 +39,7 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 1em;
+    transition: background-color 0.3s ease;
 }
 
 .volver-button a {
@@ -52,3 +56,32 @@
     background-color: #00450A;
     color: #FDC1DA;
 }
+
+.volver-button:hover, .cambiar-button:hover {
+    opacity: 0.8;
+}
+
+/* Media queries para adaptarse a diferentes tamaños de pantalla */
+@media (min-width: 768px) {
+    .cambiar-imagen-content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .cambiar-imagen-form {
+        align-items: flex-start;
+    }
+
+    .botones {
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 768px) {
+    .cambiar-imagen-content {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+

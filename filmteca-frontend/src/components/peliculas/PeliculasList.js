@@ -74,7 +74,10 @@ const PeliculasList = () => {
         return (
             <div className="loading-container">
                 <div className="spinner"></div>
-                <p>Cargando películas...</p>
+                <p>
+                    El servidor está inactivo y está tardando unos minutos en reactivarse.
+                    Por favor, espera un momento mientras se cargan los datos.
+                </p>
             </div>
         );
     }
