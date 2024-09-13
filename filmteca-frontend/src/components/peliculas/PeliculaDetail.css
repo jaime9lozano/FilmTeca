@@ -11,6 +11,7 @@
 
 .pelicula-titleDetail {
     font-size: 2.5em;
+    margin-top: 60px;
     margin-bottom: 20px;
     text-align: center;
     color: #333; /* Color del título */
@@ -175,11 +176,10 @@
     .pelicula-detail-info {
         max-width: 100%; /* El ancho máximo del contenedor de información se ajusta al ancho del contenedor principal */
     }
-
-    .pelicula-title {
-        font-size: 1.8em; /* Reduce el tamaño del título para pantallas más pequeñas */
+    .pelicula-titleDetail {
+        margin-top: 40px;
+        font-size: 1.8em;
     }
-
     .back-button {
         top: 10px;
         left: 10px;
@@ -201,10 +201,10 @@
 
 /* Estilos adicionales para pantallas muy pequeñas */
 @media (max-width: 480px) {
-    .pelicula-title {
-        font-size: 1.5em; /* Ajusta aún más el tamaño del título */
+    .pelicula-titleDetail {
+        margin-top: 20px;
+        font-size: 1.5em;
     }
-
     .pelicula-detail-info p {
         font-size: 0.9em; /* Reduce el tamaño de la fuente para el contenido de la película */
     }

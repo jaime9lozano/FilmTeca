@@ -39,16 +39,16 @@
 }
 
 .volver-button a {
-    color: white;
+    color: #FDC1DA;
     text-decoration: none;
 }
 
 .cambiar-button {
-    background-color: #28a745;
+    background-color: #ecc438;
     color: white;
 }
 
 .volver-button {
-    background-color: #007bff;
-    color: white;
+    background-color: #00450A;
+    color: #FDC1DA;
 }

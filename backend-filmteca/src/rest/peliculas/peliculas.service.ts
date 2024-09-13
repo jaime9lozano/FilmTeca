@@ -254,24 +254,39 @@ export class PeliculasService {
     req: Request,
     withUrl: boolean = true,
   ): Promise<Pelicula> {
-    this.logger.log(`Update image of pelicula with id: ${id}`);
+    this.logger.log(`Actualizando la imagen de la película con id: ${id}`);
 
     const pelicula = await this.peliculaRepository.findOne({ where: { id } });
 
     if (!pelicula) {
-      throw new NotFoundException(`Pelicula con id ${id} no encontrada`);
+      throw new NotFoundException(`Película con id ${id} no encontrada`);
     }
+
     if (!file) {
       throw new BadRequestException('No se proporcionó ninguna imagen');
     }
-    this.logger.log(`Borrando imagen ${pelicula.image}`);
-    const imagePath = this.storageService.getFileNameWithouUrl(pelicula.image);
-    try {
-      this.storageService.removeFile(imagePath);
-    } catch (error) {
-      this.logger.error(error);
+
+    // Verificar si la imagen actual no es la predeterminada
+    if (pelicula.image !== 'Default.png') {
+      this.logger.log(`Borrando imagen anterior: ${pelicula.image}`);
+      const imagePath = this.storageService.getFileNameWithouUrl(
+        pelicula.image,
+      );
+
+      try {
+        this.storageService.removeFile(imagePath);
+      } catch (error) {
+        this.logger.error(
+          `Error al intentar borrar la imagen anterior: ${error}`,
+        );
+      }
+    } else {
+      this.logger.log(
+        'La imagen es la predeterminada (Default.png), no se elimina.',
+      );
     }
 
+    // Actualizar la imagen de la película con el nuevo archivo
     pelicula.image = file.filename;
     return await this.peliculaRepository.save(pelicula);
   }
