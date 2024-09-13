@@ -7,6 +7,7 @@ import axios from "axios";
 import { Menu, MenuItem, IconButton } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import {jwtDecode} from "jwt-decode";
 
 function Header() {
     const navigate = useNavigate();
@@ -72,6 +73,24 @@ function Header() {
 
     const token = Cookies.get('auth_token');
     const isLoggedIn = Boolean(token);
+    // Determina si el usuario es un administrador
+    const isAdmin = () => {
+        if (!token) {
+            return false;
+        }
+
+        try {
+            // Decodifica el token para obtener la información del usuario
+            const decodedToken = jwtDecode(token);
+
+            // Asegúrate de que el campo 'role' es accesible y contiene el valor 'admin'
+            return decodedToken.role === 'ADMIN';
+        } catch (error) {
+            // Manejo de errores en caso de que el token no pueda ser decodificado
+            console.error('Error al decodificar el token:', error);
+            return false;
+        }
+    };
 
     return (
         <header className="header">
@@ -130,7 +149,7 @@ function Header() {
                     >
                         Géneros
                     </MenuItem>
-                    {isLoggedIn && ( // Mostrar el MenuItem solo si el usuario esta logueado
+                    {isAdmin && ( // Mostrar el MenuItem solo si el usuario es admin
                         <MenuItem
                             onClick={handleCreatePeliculaClick}
                             sx={{
