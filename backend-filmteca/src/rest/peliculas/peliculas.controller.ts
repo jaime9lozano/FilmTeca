@@ -81,7 +81,7 @@ export class PeliculasController {
 
   @Patch(':id/imagen')
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
-  @Roles('USER')
+  @Roles('ADMIN')
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({

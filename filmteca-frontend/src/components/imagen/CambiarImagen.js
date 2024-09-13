@@ -51,7 +51,7 @@ const CambiarImagen = () => {
         }
 
         const formData = new FormData();
-        formData.append('image', newImage);
+        formData.append('file', newImage);
 
         const token = Cookies.get('auth_token'); // Obtener el token de la cookie
 

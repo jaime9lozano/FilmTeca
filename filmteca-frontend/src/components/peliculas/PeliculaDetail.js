@@ -17,7 +17,6 @@ const PeliculaDetail = () => {
     const [loadingPelicula, setLoadingPelicula] = useState(true);
     const [error, setError] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para verificar si el usuario está logueado
     const baseURL = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000' // URL para desarrollo
         : 'https://filmteca.onrender.com'; // URL para producción
@@ -27,7 +26,6 @@ const PeliculaDetail = () => {
         const token = Cookies.get('auth_token');
 
         if (token) {
-            setIsLoggedIn(true); // Usuario está logueado si hay token
             try {
                 const decodedToken = jwtDecode(token); // Decodificar el token JWT
                 const roles = decodedToken.role; // Obtener roles del token
@@ -123,7 +121,7 @@ const PeliculaDetail = () => {
                     {deleting ? 'Eliminando...' : 'Eliminar'}
                 </button>
             )}
-            {isLoggedIn && (
+            {isAdmin && (
                 <button
                     onClick={handleUpdateImage}
                     className="update-image-button" // Puedes agregar estilos específicos para este botón en tu CSS
