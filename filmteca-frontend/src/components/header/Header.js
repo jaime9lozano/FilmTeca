@@ -16,6 +16,7 @@ function Header() {
     const [generosAnchorEl, setGenerosAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const openGenerosMenu = Boolean(generosAnchorEl);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     // Obtener los géneros al cargar el componente
     useEffect(() => {
@@ -31,6 +32,19 @@ function Header() {
             }
         };
 
+        // Obtener el token JWT desde la cookie
+        const token = Cookies.get('auth_token');
+
+        if (token) {
+            try {
+                const decodedToken = jwtDecode(token); // Decodificar el token JWT
+                const roles = decodedToken.role; // Obtener roles del token
+                setIsAdmin(roles.includes('ADMIN')); // Verificar si el usuario es ADMIN
+            } catch (err) {
+                console.error('Error decodificando el token JWT:', err);
+            }
+        }
+
         fetchGeneros();
     }, []);
 
@@ -45,7 +59,7 @@ function Header() {
 
     const handleLogout = () => {
         Cookies.remove('auth_token'); // Borra el token de la cookie
-        navigate('/login'); // Redirige al login después de cerrar sesión
+        window.location.reload();
     };
 
     const handleMenuOpen = (event) => {
@@ -73,24 +87,6 @@ function Header() {
 
     const token = Cookies.get('auth_token');
     const isLoggedIn = Boolean(token);
-    // Determina si el usuario es un administrador
-    const isAdmin = () => {
-        if (!token) {
-            return false;
-        }
-
-        try {
-            // Decodifica el token para obtener la información del usuario
-            const decodedToken = jwtDecode(token);
-
-            // Asegúrate de que el campo 'role' es accesible y contiene el valor 'admin'
-            return decodedToken.role === 'ADMIN';
-        } catch (error) {
-            // Manejo de errores en caso de que el token no pueda ser decodificado
-            console.error('Error al decodificar el token:', error);
-            return false;
-        }
-    };
 
     return (
         <header className="header">

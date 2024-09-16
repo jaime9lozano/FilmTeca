@@ -30,8 +30,8 @@ const Login = () => {
 
             // Guardar el token en una cookie
             Cookies.set('auth_token', access_token, { expires: 7 }); // Expira en 7 días
-
-            navigate('/'); // Cambia a la ruta que desees
+            navigate('/'); // Cambia a la ruta que desees y refresca
+            window.location.reload();
 
         } catch (error) {
             setError('Nombre de usuario o contraseña inválidos');
