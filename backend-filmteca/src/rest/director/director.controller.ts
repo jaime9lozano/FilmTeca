@@ -11,16 +11,15 @@ import {
   UseGuards,
   HttpCode,
   Put,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { DirectorService } from './director.service';
 import { CreateDirectorDto } from './dto/create-director.dto';
 import { UpdateDirectorDto } from './dto/update-director.dto';
 import { CacheInterceptor, CacheKey } from '@nestjs/cache-manager';
-import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { Director } from './entities/director.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles, RolesAuthGuard } from '../auth/guards/roles-auth.guard';
-import { Generos } from '../generos/entities/genero.entity';
 
 @Controller('directores')
 @UseInterceptors(CacheInterceptor)
@@ -37,7 +36,7 @@ export class DirectorController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Director> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Director> {
     this.logger.log(`Find one director by id:${id}`);
     return await this.directorService.findOne(id);
   }
@@ -57,7 +56,7 @@ export class DirectorController {
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
   @Roles('ADMIN')
   async update(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateDirectorDto: UpdateDirectorDto,
   ): Promise<Director> {
     this.logger.log(`Update director by id:${id}`);
@@ -68,7 +67,7 @@ export class DirectorController {
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
   @Roles('ADMIN')
   @HttpCode(204)
-  async remove(@Param('id') id: number): Promise<void> {
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     this.logger.log(`Remove director by id:${id}`);
     await this.directorService.remove(id);
   }

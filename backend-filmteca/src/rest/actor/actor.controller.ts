@@ -11,6 +11,7 @@ import {
   UseGuards,
   HttpCode,
   Put,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ActorService } from './actor.service';
 import { CreateActorDto } from './dto/create-actor.dto';
@@ -36,7 +37,7 @@ export class ActorController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Actor> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Actor> {
     this.logger.log(`Find one actor by id:${id}`);
     return await this.actorService.findOne(id);
   }
@@ -54,7 +55,7 @@ export class ActorController {
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
   @Roles('ADMIN')
   async update(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateActorDto: UpdateActorDto,
   ): Promise<Actor> {
     this.logger.log(`Update actor by id:${id}`);
@@ -65,7 +66,7 @@ export class ActorController {
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
   @Roles('ADMIN')
   @HttpCode(204)
-  async remove(@Param('id') id: number): Promise<void> {
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     this.logger.log(`Remove actor by id:${id}`);
     await this.actorService.remove(id);
   }

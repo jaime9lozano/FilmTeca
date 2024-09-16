@@ -13,8 +13,8 @@ import {
   HttpCode,
   Logger,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
-import { CacheInterceptor, CacheKey } from '@nestjs/cache-manager';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { parse, extname } from 'path';
 import { Request } from 'express';
@@ -28,7 +28,6 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles, RolesAuthGuard } from '../auth/guards/roles-auth.guard';
 
 @Controller('peliculas')
-@UseInterceptors(CacheInterceptor)
 export class PeliculasController {
   private readonly logger: Logger = new Logger(PeliculasController.name);
 
@@ -43,7 +42,7 @@ export class PeliculasController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Pelicula> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Pelicula> {
     this.logger.log(`Find one pelicula by id:${id}`);
     return await this.peliculasService.findOne(id);
   }
@@ -63,7 +62,7 @@ export class PeliculasController {
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
   @Roles('ADMIN')
   async update(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updatePeliculaDto: UpdatePeliculaDto,
   ): Promise<Pelicula> {
     this.logger.log(`Update pelicula by id:${id}`);
@@ -74,7 +73,7 @@ export class PeliculasController {
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
   @Roles('ADMIN')
   @HttpCode(204)
-  async remove(@Param('id') id: number): Promise<void> {
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     this.logger.log(`Remove pelicula by id:${id}`);
     await this.peliculasService.remove(id);
   }
@@ -96,7 +95,7 @@ export class PeliculasController {
     }),
   )
   async updateImage(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @UploadedFile() file: Express.Multer.File,
     @Req() req: Request,
   ): Promise<Pelicula> {

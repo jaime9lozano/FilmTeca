@@ -10,6 +10,7 @@ import {
   UseGuards,
   HttpCode,
   Put,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { GenerosService } from './generos.service';
 import { CreateGeneroDto } from './dto/create-genero.dto';
@@ -38,14 +39,14 @@ export class GenerosController {
   @Get(':id/peliculas')
   async findAllPelisByGene(
     @Paginate() query: PaginateQuery,
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
   ): Promise<Paginated<Pelicula>> {
     this.logger.log('Find all peliculas by genero');
     return await this.generosService.findPeliculasByGenero(id, query);
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Generos> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Generos> {
     this.logger.log(`Find one genero by id:${id}`);
     return await this.generosService.findOne(id);
   }
@@ -63,7 +64,7 @@ export class GenerosController {
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
   @Roles('ADMIN')
   async update(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateGeneroDto: UpdateGeneroDto,
   ): Promise<Generos> {
     this.logger.log(`Update genero by id:${id}`);
@@ -74,7 +75,7 @@ export class GenerosController {
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
   @Roles('ADMIN')
   @HttpCode(204)
-  async remove(@Param('id') id: number): Promise<void> {
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     this.logger.log(`Remove genero by id:${id}`);
     await this.generosService.remove(id);
   }

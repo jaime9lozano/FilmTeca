@@ -11,6 +11,7 @@ import {
   HttpCode,
   Put,
   UseInterceptors,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { PremioService } from './premio.service';
 import { CreatePremioDto } from './dto/create-premio.dto';
@@ -37,7 +38,7 @@ export class PremioController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Premio> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Premio> {
     this.logger.log(`Find one premio by id:${id}`);
     return await this.premioService.findOne(id);
   }
@@ -55,7 +56,7 @@ export class PremioController {
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
   @Roles('ADMIN')
   async update(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updatePremioDto: UpdatePremioDto,
   ): Promise<Premio> {
     this.logger.log(`Update premio by id:${id}`);
@@ -66,7 +67,7 @@ export class PremioController {
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
   @Roles('ADMIN')
   @HttpCode(204)
-  async remove(@Param('id') id: number): Promise<void> {
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     this.logger.log(`Remove premio by id:${id}`);
     await this.premioService.remove(id);
   }

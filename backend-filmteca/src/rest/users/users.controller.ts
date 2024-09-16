@@ -6,6 +6,7 @@ import {
   HttpCode,
   Logger,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   Req,
@@ -40,7 +41,7 @@ export class UsersController {
 
   @Get(':id')
   @Roles('ADMIN')
-  async findOne(@Param('id') id: number) {
+  async findOne(@Param('id', ParseIntPipe) id: number) {
     this.logger.log(`findOne: ${id}`);
     return await this.usersService.findOne(id);
   }
@@ -55,7 +56,10 @@ export class UsersController {
 
   @Put(':id')
   @Roles('ADMIN')
-  async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
     this.logger.log(`update: ${id}`);
     return await this.usersService.update(id, updateUserDto, true);
   }

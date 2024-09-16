@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { UserRole } from './user-role.entity';
+import { Valoracion } from '../../valoracion/entities/valoracion.entity';
 
 @Entity({ name: 'users' }) // Nombre de la tabla (es case sensitive!!!)
 export class Usuario {
@@ -24,6 +25,11 @@ export class Usuario {
 
   @Column({ type: 'varchar', length: 255, nullable: false })
   password: string;
+
+  @OneToMany(() => Valoracion, (valoracion) => valoracion.user, {
+    eager: true,
+  })
+  valoraciones: Valoracion[];
 
   @CreateDateColumn({
     name: 'created_at',

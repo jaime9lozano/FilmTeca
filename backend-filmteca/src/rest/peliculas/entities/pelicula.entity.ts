@@ -6,11 +6,13 @@ import {
   UpdateDateColumn,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { Generos } from '../../generos/entities/genero.entity';
 import { Actor } from '../../actor/entities/actor.entity';
 import { Director } from '../../director/entities/director.entity';
 import { Premio } from '../../premio/entities/premio.entity';
+import { Valoracion } from '../../valoracion/entities/valoracion.entity';
 
 @Entity('peliculas')
 export class Pelicula {
@@ -75,6 +77,11 @@ export class Pelicula {
     inverseJoinColumn: { name: 'premio_id', referencedColumnName: 'id' }, // Columna que hace referencia a Generos
   })
   premios: Premio[];
+
+  @OneToMany(() => Valoracion, (valoracion) => valoracion.pelicula, {
+    eager: true,
+  })
+  valoraciones: Valoracion[];
 
   @CreateDateColumn({
     name: 'created_at',
