@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -21,9 +22,11 @@ export class Valoracion {
   rating: number;
 
   @ManyToOne(() => Pelicula, (pelicula) => pelicula.valoraciones)
+  @JoinColumn({ name: 'pelicula_id' })
   pelicula: Pelicula;
 
   @ManyToOne(() => Usuario, (usuario) => usuario.valoraciones)
+  @JoinColumn({ name: 'user_id' })
   user: Usuario;
 
   @CreateDateColumn({

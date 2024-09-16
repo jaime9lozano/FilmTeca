@@ -97,7 +97,7 @@ export class ValoracionService {
     );
     const user = await this.userRepository
       .createQueryBuilder('user')
-      .where('user.id = :id', { userId })
+      .where('user.id = :id', { id: userId })
       .getOne();
 
     if (!user) {

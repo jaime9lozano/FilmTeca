@@ -15,7 +15,7 @@ import {
 import { ValoracionService } from './valoracion.service';
 import { CreateValoracionDto } from './dto/create-valoracion.dto';
 import { UpdateValoracionDto } from './dto/update-valoracion.dto';
-import { Paginated, PaginateQuery } from 'nestjs-paginate';
+import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { Valoracion } from './entities/valoracion.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles, RolesAuthGuard } from '../auth/guards/roles-auth.guard';
@@ -28,7 +28,9 @@ export class ValoracionController {
   constructor(private readonly valoracionService: ValoracionService) {}
 
   @Get()
-  async findAll(@Query() query: PaginateQuery): Promise<Paginated<Valoracion>> {
+  async findAll(
+    @Paginate() query: PaginateQuery,
+  ): Promise<Paginated<Valoracion>> {
     this.logger.log('Sacando todas las valoraciones');
     return await this.valoracionService.findAll(query);
   }
