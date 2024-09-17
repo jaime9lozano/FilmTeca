@@ -6,6 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import {useAuth} from "../../AuthContext";
 
 axios.defaults.withCredentials = true;
 
@@ -16,26 +17,15 @@ const PeliculaDetail = () => {
     const [deleting, setDeleting] = useState(false);
     const [loadingPelicula, setLoadingPelicula] = useState(true);
     const [error, setError] = useState(null);
-    const [isAdmin, setIsAdmin] = useState(false);
+    const { roles, updateAuthState } = useAuth();
+    const isAdmin = roles && roles.includes('ADMIN');
     const baseURL = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000' // URL para desarrollo
         : 'https://filmteca.onrender.com'; // URL para producción
     const cloudinaryURL = 'https://res.cloudinary.com/dj0fdyymb/image/upload/';
 
     useEffect(() => {
-        // Obtener el token JWT desde la cookie
-        const token = Cookies.get('auth_token');
-
-        if (token) {
-            try {
-                const decodedToken = jwtDecode(token); // Decodificar el token JWT
-                const roles = decodedToken.role; // Obtener roles del token
-                setIsAdmin(roles.includes('ADMIN')); // Verificar si el usuario es ADMIN
-            } catch (err) {
-                console.error('Error decodificando el token JWT:', err);
-            }
-        }
-
+        updateAuthState();
         // Cargar detalles de la película
         axios.get(`${baseURL}/peliculas/${id}`)
             .then(response => {
@@ -53,7 +43,7 @@ const PeliculaDetail = () => {
                     hideProgressBar: true,
                 });
             });
-    }, [baseURL, id]);
+    }, [baseURL, id, updateAuthState]);
 
     const handleDelete = () => {
         setDeleting(true); // Activar estado de eliminación

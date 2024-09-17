@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import {useNavigate} from "react-router-dom"; // Asegúrate de crear este archivo CSS
+import {useNavigate} from "react-router-dom";
 import './Login.css';
+import {useAuth} from "../../AuthContext";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -11,6 +12,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const { updateAuthState } = useAuth();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -30,8 +32,8 @@ const Login = () => {
 
             // Guardar el token en una cookie
             Cookies.set('auth_token', access_token, { expires: 7 }); // Expira en 7 días
+            updateAuthState();
             navigate('/'); // Cambia a la ruta que desees y refresca
-            window.location.reload();
 
         } catch (error) {
             setError('Nombre de usuario o contraseña inválidos');

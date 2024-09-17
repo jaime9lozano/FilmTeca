@@ -7,7 +7,7 @@ import axios from "axios";
 import { Menu, MenuItem, IconButton } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import {jwtDecode} from "jwt-decode";
+import {useAuth} from "../../AuthContext";
 
 function Header() {
     const navigate = useNavigate();
@@ -16,7 +16,8 @@ function Header() {
     const [generosAnchorEl, setGenerosAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const openGenerosMenu = Boolean(generosAnchorEl);
-    const [isAdmin, setIsAdmin] = useState(false);
+    const { isAuthenticated, roles, updateAuthState } = useAuth();
+    const isAdmin = roles && roles.includes('ADMIN');
 
     // Obtener los géneros al cargar el componente
     useEffect(() => {
@@ -32,25 +33,11 @@ function Header() {
             }
         };
 
-        // Obtener el token JWT desde la cookie
-        const token = Cookies.get('auth_token');
-
-        if (token) {
-            try {
-                const decodedToken = jwtDecode(token); // Decodificar el token JWT
-                const roles = decodedToken.role; // Obtener roles del token
-                setIsAdmin(roles.includes('ADMIN')); // Verificar si el usuario es ADMIN
-            } catch (err) {
-                console.error('Error decodificando el token JWT:', err);
-            }
-        }
-
         fetchGeneros();
     }, []);
 
     const handleLoginClick = () => {
-        const token = Cookies.get('auth_token');
-        if (!token) {
+        if (!isAuthenticated) {
             navigate('/login'); // Redirige al login si no hay token
         } else {
             navigate('/user'); // Redirige a la página de inicio si ya estás logueado
@@ -59,8 +46,8 @@ function Header() {
 
     const handleLogout = () => {
         Cookies.remove('auth_token'); // Borra el token de la cookie
+        updateAuthState();
         navigate('/login');
-        window.location.reload();
     };
 
     const handleMenuOpen = (event) => {
@@ -85,9 +72,6 @@ function Header() {
         navigate('/createPelicula'); // Redirigir a la página de creación de películas
         handleMenuClose(); // Cerrar el menú
     };
-
-    const token = Cookies.get('auth_token');
-    const isLoggedIn = Boolean(token);
 
     return (
         <header className="header">
@@ -146,7 +130,7 @@ function Header() {
                     >
                         Géneros
                     </MenuItem>
-                    {isAdmin && ( // Mostrar el MenuItem solo si el usuario es admin
+                    {isAdmin && (
                         <MenuItem
                             onClick={handleCreatePeliculaClick}
                             sx={{
@@ -278,7 +262,7 @@ function Header() {
                 </h1>
             </div>
             <div className="header-right">
-                {isLoggedIn ? (
+                {isAuthenticated ? (
                     <>
                         <button className="header-icon" onClick={() => navigate('/user')}>
                             <FaUser size={24}/>
