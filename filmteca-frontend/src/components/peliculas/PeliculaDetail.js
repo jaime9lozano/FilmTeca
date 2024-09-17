@@ -5,7 +5,6 @@ import './PeliculaDetail.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode";
 import {useAuth} from "../../AuthContext";
 
 axios.defaults.withCredentials = true;
