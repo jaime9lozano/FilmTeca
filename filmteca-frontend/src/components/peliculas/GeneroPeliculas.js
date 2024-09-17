@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import {Link, useParams} from 'react-router-dom';
 import './PeliculasList.css';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaStar } from 'react-icons/fa';
 
 const PeliculasByGenero = () => {
     const { id } = useParams(); // Obtener el id del género desde los parámetros de la URL
@@ -84,6 +84,12 @@ const PeliculasByGenero = () => {
     const clearSearchTitle = () => setSearchTitle('');
     const clearSearchYear = () => setSearchYear('');
 
+    const calculateAverageRating = (valoraciones) => {
+        if (valoraciones.length === 0) return 0;
+        const total = valoraciones.reduce((acc, { rating }) => acc + rating, 0);
+        return (total / valoraciones.length).toFixed(1); // Devolver la media con un decimal
+    };
+
     if (loading) {
         return (
             <div className="loading-container">
@@ -138,8 +144,15 @@ const PeliculasByGenero = () => {
             <div className="peliculas-list">
                 {peliculas.map(pelicula => (
                     <Link to={`/pelicula/${pelicula.id}`} key={pelicula.id} className="pelicula-card-link">
-                        <div className="pelicula-card" style={{ backgroundImage: `url(${cloudinaryURL}${pelicula.image})` }}>
+                        <div className="pelicula-card"
+                             style={{backgroundImage: `url(${cloudinaryURL}${pelicula.image})`}}>
                             <span className="pelicula-date">{pelicula.release_year}</span>
+                            <div className="rating-container">
+                                <FaStar className="rating-icon"/>
+                                <span className="rating-value">
+                                    {calculateAverageRating(pelicula.valoraciones)}
+                                </span>
+                            </div>
                             <div className="pelicula-title">
                                 <h3>{pelicula.title}</h3>
                             </div>

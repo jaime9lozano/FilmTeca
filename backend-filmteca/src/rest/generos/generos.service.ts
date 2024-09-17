@@ -56,6 +56,7 @@ export class GenerosService {
     const queryBuilder = this.peliculaRepository
       .createQueryBuilder('pelicula')
       .leftJoin('pelicula.generos', 'genero') // Hacer join con los géneros
+      .leftJoinAndSelect('pelicula.valoraciones', 'valoracion')
       .where('genero.id = :id', { id }) // Filtrar por el id del género
       .andWhere('genero.deletedAt IS NULL') // Asegurar que el género no está eliminado
       .andWhere('pelicula.deletedAt IS NULL'); // Asegurar que las películas no están eliminadas
