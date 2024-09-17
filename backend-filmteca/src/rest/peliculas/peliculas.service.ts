@@ -251,7 +251,6 @@ export class PeliculasService {
   async updateImage(
     id: number,
     file: Express.Multer.File,
-    req: Request,
     withUrl: boolean = true,
   ): Promise<Pelicula> {
     this.logger.log(`Actualizando la imagen de la película con id: ${id}`);
@@ -267,14 +266,10 @@ export class PeliculasService {
     }
 
     // Verificar si la imagen actual no es la predeterminada
-    if (pelicula.image !== 'Default.png') {
+    if (pelicula.image && pelicula.image !== 'ykbc1cq3oy4dltm90f76') {
       this.logger.log(`Borrando imagen anterior: ${pelicula.image}`);
-      const imagePath = this.storageService.getFileNameWithouUrl(
-        pelicula.image,
-      );
-
       try {
-        this.storageService.removeFile(imagePath);
+        await this.storageService.deleteFile(pelicula.image); // Utilizar el ID público de Cloudinary
       } catch (error) {
         this.logger.error(
           `Error al intentar borrar la imagen anterior: ${error}`,
@@ -286,8 +281,15 @@ export class PeliculasService {
       );
     }
 
-    // Actualizar la imagen de la película con el nuevo archivo
-    pelicula.image = file.filename;
+    // Subir la nueva imagen a Cloudinary
+    try {
+      const result = await this.storageService.uploadFile(file);
+      pelicula.image = result.public_id; // Guardar el public_id en la base de datos
+      // Puedes guardar también result.secure_url si necesitas la URL completa
+    } catch (error) {
+      throw new BadRequestException('Error al subir la nueva imagen.');
+    }
+
     return await this.peliculaRepository.save(pelicula);
   }
 }

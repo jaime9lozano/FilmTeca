@@ -11,10 +11,16 @@ import { PremioModule } from './rest/premio/premio.module';
 import { ActorModule } from './rest/actor/actor.module';
 import { ValoracionModule } from './rest/valoracion/valoracion.module';
 import * as dotenv from 'dotenv';
+import { CloudinaryModule } from './config/cloudinary/cloudinary.module';
+import { ConfigModule } from '@nestjs/config';
 
 dotenv.config();
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true, // Hacer que las variables de entorno sean accesibles globalmente
+      envFilePath: ['.env'], // Archivo de variables de entorno
+    }),
     CacheModule.register(),
     TypeOrmModule.forRoot({
       type: process.env.DB_TYPE as 'postgres',
@@ -26,6 +32,7 @@ dotenv.config();
       autoLoadEntities: process.env.DB_AUTOLOAD_ENTITIES === 'true',
       synchronize: process.env.DB_SYNCHRONIZE === 'true',
     }),
+    CloudinaryModule,
     UsersModule,
     AuthModule,
     PeliculasModule,

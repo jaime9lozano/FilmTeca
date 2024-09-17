@@ -7,18 +7,15 @@ import {
   Patch,
   Param,
   Body,
-  Req,
   UploadedFile,
   UseInterceptors,
   HttpCode,
   Logger,
   UseGuards,
   ParseIntPipe,
+  BadRequestException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { parse, extname } from 'path';
-import { Request } from 'express';
-import { diskStorage } from 'multer';
 import { CreatePeliculaDto } from './dto/create-pelicula.dto';
 import { UpdatePeliculaDto } from './dto/update-pelicula.dto';
 import { Pelicula } from './entities/pelicula.entity';
@@ -26,6 +23,7 @@ import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { PeliculasService } from './peliculas.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles, RolesAuthGuard } from '../auth/guards/roles-auth.guard';
+import { Express } from 'express';
 
 @Controller('peliculas')
 export class PeliculasController {
@@ -83,23 +81,27 @@ export class PeliculasController {
   @Roles('ADMIN')
   @UseInterceptors(
     FileInterceptor('file', {
-      storage: diskStorage({
-        destination: process.env.UPLOADS_DIR || './storage-dir',
-        filename: (_req, file, cb) => {
-          const { name } = parse(file.originalname);
-          const fileName = `${Date.now()}_${name.replace(/\s/g, '')}`;
-          const fileExt = extname(file.originalname);
-          cb(null, `${fileName}${fileExt}`);
-        },
-      }),
+      // No es necesario configurar almacenamiento aquí porque el archivo se enviará como buffer a Cloudinary
+      // Solo se requiere el fileFilter para validar el tipo de archivo
+      fileFilter: (req, file, cb) => {
+        if (!file.mimetype.match(/\/(jpg|jpeg|png|gif)$/)) {
+          cb(new BadRequestException('Fichero no soportado.'), false);
+        } else {
+          cb(null, true);
+        }
+      },
     }),
   )
   async updateImage(
     @Param('id', ParseIntPipe) id: number,
     @UploadedFile() file: Express.Multer.File,
-    @Req() req: Request,
   ): Promise<Pelicula> {
-    this.logger.log(`Actualizando imagen de la pelicula con id: ${id}`);
-    return await this.peliculasService.updateImage(id, file, req);
+    this.logger.log(`Actualizando imagen de la película con id: ${id}`);
+
+    if (!file) {
+      throw new BadRequestException('No se proporcionó ninguna imagen');
+    }
+
+    return await this.peliculasService.updateImage(id, file);
   }
 }
