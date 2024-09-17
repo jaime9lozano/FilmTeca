@@ -16,7 +16,7 @@ const PeliculaDetail = () => {
     const [deleting, setDeleting] = useState(false);
     const [loadingPelicula, setLoadingPelicula] = useState(true);
     const [error, setError] = useState(null);
-    const { roles, updateAuthState } = useAuth();
+    const { roles } = useAuth();
     const isAdmin = roles && roles.includes('ADMIN');
     const baseURL = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000' // URL para desarrollo
@@ -24,7 +24,6 @@ const PeliculaDetail = () => {
     const cloudinaryURL = 'https://res.cloudinary.com/dj0fdyymb/image/upload/';
 
     useEffect(() => {
-        updateAuthState();
         // Cargar detalles de la película
         axios.get(`${baseURL}/peliculas/${id}`)
             .then(response => {
@@ -42,7 +41,7 @@ const PeliculaDetail = () => {
                     hideProgressBar: true,
                 });
             });
-    }, [baseURL, id, updateAuthState]);
+    }, [baseURL, id]);
 
     const handleDelete = () => {
         setDeleting(true); // Activar estado de eliminación

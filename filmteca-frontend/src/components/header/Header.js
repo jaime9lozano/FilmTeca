@@ -26,13 +26,26 @@ function Header() {
                 const baseURL = process.env.NODE_ENV === 'development'
                     ? 'http://localhost:8000'
                     : 'https://filmteca.onrender.com';
-                const response = await axios.get(`${baseURL}/generos`);
+
+                const response = await axios.get(`${baseURL}/generos`, { withCredentials: true });
                 setGeneros(response.data); // Asume que el endpoint devuelve un array de géneros
+
             } catch (error) {
-                console.error('Error al obtener los géneros:', error);
+                if (error.response) {
+                    // El servidor respondió con un código de estado fuera del rango 2xx
+                    console.error('Error en la respuesta del servidor:', error.response.data);
+                    console.error('Estado:', error.response.status);
+                    console.error('Encabezados:', error.response.headers);
+                } else if (error.request) {
+                    // La solicitud fue hecha pero no se recibió respuesta (error de red o servidor inactivo)
+                    console.error('No se recibió respuesta del servidor:', error.request);
+                } else {
+                    // Otro tipo de error al configurar la solicitud
+                    console.error('Error al hacer la solicitud:', error.message);
+                }
+                console.error('Detalles completos del error:', error.config);
             }
         };
-
         fetchGeneros();
     }, []);
 
