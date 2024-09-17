@@ -52,20 +52,21 @@ const PeliculasList = () => {
 
     // Fetch initial data with empty filters
     useEffect(() => {
+        fetchPeliculas();
+    }, [fetchPeliculas]);
+
+    // Manejar el temporizador y el mensaje del servidor
+    useEffect(() => {
         if (loading) {
-            // Temporizador de 2 segundos
             const timer = setTimeout(() => {
                 setShowServerMessage(true);
             }, 2000);
 
-            // Limpiar el temporizador cuando el componente se desmonte o si loading cambia
-            return () => clearTimeout(timer);
+            return () => clearTimeout(timer); // Limpiar temporizador al desmontar o cambiar loading
         } else {
-            // Resetear el estado cuando loading sea falso
-            setShowServerMessage(false);
+            setShowServerMessage(false); // Ocultar el mensaje si loading es false
         }
-        fetchPeliculas();
-    }, [fetchPeliculas, loading]);
+    }, [loading]);
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -178,13 +179,3 @@ const PeliculasList = () => {
 };
 
 export default PeliculasList;
-
-
-
-
-
-
-
-
-
-
