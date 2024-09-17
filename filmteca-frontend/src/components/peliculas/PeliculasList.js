@@ -17,6 +17,7 @@ const PeliculasList = () => {
     const [searchTitle, setSearchTitle] = useState('');
     const [searchYear, setSearchYear] = useState('');
     const [searchParams, setSearchParams] = useState({});
+    const [showServerMessage, setShowServerMessage] = useState(false);
     const baseURL = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000'
         : 'https://filmteca.onrender.com';
@@ -51,8 +52,20 @@ const PeliculasList = () => {
 
     // Fetch initial data with empty filters
     useEffect(() => {
+        if (loading) {
+            // Temporizador de 2 segundos
+            const timer = setTimeout(() => {
+                setShowServerMessage(true);
+            }, 2000);
+
+            // Limpiar el temporizador cuando el componente se desmonte o si loading cambia
+            return () => clearTimeout(timer);
+        } else {
+            // Resetear el estado cuando loading sea falso
+            setShowServerMessage(false);
+        }
         fetchPeliculas();
-    }, [fetchPeliculas]);
+    }, [fetchPeliculas, loading]);
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -75,10 +88,14 @@ const PeliculasList = () => {
         return (
             <div className="loading-container">
                 <div className="spinner"></div>
-                <p>
-                    El servidor es gratuito y se desactiva, necesita reactivarse y tarda unos minutos.
-                    Por favor, espera un momento mientras se cargan los datos.
-                </p>
+                {showServerMessage ? (
+                    <p>
+                        El servidor es gratuito y se desactiva, necesita reactivarse y tarda unos minutos.
+                        Por favor, espera un momento mientras se cargan los datos.
+                    </p>
+                ) : (
+                    <p>Cargando películas...</p>
+                )}
             </div>
         );
     }
