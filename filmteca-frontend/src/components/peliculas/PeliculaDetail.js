@@ -20,6 +20,7 @@ const PeliculaDetail = () => {
     const baseURL = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000' // URL para desarrollo
         : 'https://filmteca.onrender.com'; // URL para producción
+    const cloudinaryURL = 'https://res.cloudinary.com/dj0fdyymb/image/upload/';
 
     useEffect(() => {
         // Obtener el token JWT desde la cookie
@@ -132,7 +133,7 @@ const PeliculaDetail = () => {
             <ToastContainer />
             <h1 className="pelicula-titleDetail">{pelicula.title}</h1>
             <div className="pelicula-detail-content">
-                <img src={`${baseURL}/storage/${pelicula.image}`} alt={pelicula.title} className="pelicula-detail-image" />
+                <img src={`${cloudinaryURL}${pelicula.image}`} alt={pelicula.title} className="pelicula-detail-image" />
                 <div className="pelicula-detail-info">
                     <p><strong>Sinopsis:</strong> {pelicula.sinopsis}</p>
 

@@ -22,6 +22,7 @@ const PeliculasByGenero = () => {
     const baseURL = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000'
         : 'https://filmteca.onrender.com';
+    const cloudinaryURL = 'https://res.cloudinary.com/dj0fdyymb/image/upload/';
 
     const fetchGeneroName = useCallback(async () => {
             try {
@@ -137,7 +138,7 @@ const PeliculasByGenero = () => {
             <div className="peliculas-list">
                 {peliculas.map(pelicula => (
                     <Link to={`/pelicula/${pelicula.id}`} key={pelicula.id} className="pelicula-card-link">
-                        <div className="pelicula-card" style={{ backgroundImage: `url(${baseURL}/storage/${pelicula.image})` }}>
+                        <div className="pelicula-card" style={{ backgroundImage: `url(${cloudinaryURL}${pelicula.image})` }}>
                             <span className="pelicula-date">{pelicula.release_year}</span>
                             <div className="pelicula-title">
                                 <h3>{pelicula.title}</h3>

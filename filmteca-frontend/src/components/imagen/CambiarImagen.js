@@ -18,6 +18,7 @@ const CambiarImagen = () => {
     const baseURL = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000'
         : 'https://filmteca.onrender.com';
+    const cloudinaryURL = 'https://res.cloudinary.com/dj0fdyymb/image/upload/';
 
     useEffect(() => {
         // Cargar detalles de la película
@@ -103,7 +104,7 @@ const CambiarImagen = () => {
             <h1>Cambiar Imagen de {pelicula.title}</h1>
             <div className="cambiar-imagen-content">
                 <img
-                    src={`${baseURL}/storage/${pelicula.image}`}
+                    src={`${cloudinaryURL}${pelicula.image}`}
                     alt={pelicula.title}
                     className="pelicula-detail-image"
                 />
