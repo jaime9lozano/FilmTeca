@@ -59,6 +59,7 @@ function Header() {
 
     const handleLogout = () => {
         Cookies.remove('auth_token'); // Borra el token de la cookie
+        navigate('/login');
         window.location.reload();
     };
 
