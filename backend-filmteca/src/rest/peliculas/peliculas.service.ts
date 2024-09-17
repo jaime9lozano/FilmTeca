@@ -18,7 +18,6 @@ import {
   PaginateQuery,
 } from 'nestjs-paginate';
 
-import { Request } from 'express';
 import { CreatePeliculaDto } from './dto/create-pelicula.dto';
 import { PeliculasMapper } from './mapeador/peliculas-mapper';
 import { StorageService } from '../storage/storage.service';
@@ -54,18 +53,19 @@ export class PeliculasService {
       throw new Error('Path is required for pagination');
     }
 
-    const queryBuilder = this.peliculaRepository.createQueryBuilder('pelicula');
-    queryBuilder.where('pelicula.deletedAt IS NULL');
+    const queryBuilder = this.peliculaRepository
+      .createQueryBuilder('pelicula')
+      .leftJoinAndSelect('pelicula.valoraciones', 'valoracion')
+      .where('pelicula.deletedAt IS NULL');
     query.limit = 12;
 
     const pagination = await paginate(query, queryBuilder, {
-      sortableColumns: ['title', 'release_year', 'duration'],
+      sortableColumns: ['title', 'release_year'],
       defaultSortBy: [['id', 'ASC']],
-      searchableColumns: ['title', 'release_year', 'duration'],
+      searchableColumns: ['title', 'release_year'],
       filterableColumns: {
         title: [FilterOperator.EQ, FilterSuffix.NOT],
         release_year: [FilterOperator.GTE, FilterOperator.LTE],
-        duration: true,
       },
     });
 

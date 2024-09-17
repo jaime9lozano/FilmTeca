@@ -169,8 +169,8 @@
     }
 
     .pelicula-detail-image {
-        width: 100%; /* La imagen ocupa el ancho completo del contenedor */
-        max-width: 250px; /* Limita el ancho máximo de la imagen */
+        width: 300px; /* Limita el ancho máximo de la imagen */
+        height: 150px;
     }
 
     .pelicula-detail-info {
@@ -207,6 +207,11 @@
     }
     .pelicula-detail-info p {
         font-size: 0.9em; /* Reduce el tamaño de la fuente para el contenido de la película */
+    }
+
+    .pelicula-detail-image {
+        width: 250px; /* Limita el ancho máximo de la imagen */
+        height: 100px;
     }
 
     .back-button {
