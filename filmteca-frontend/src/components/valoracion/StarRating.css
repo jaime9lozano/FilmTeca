@@ -1,0 +1,32 @@
+/* Base styles */
+.star-rating {
+    display: flex;
+    cursor: pointer;
+}
+
+.star {
+    font-size: 24px;
+    color: #ffffff;
+    margin-right: 5px;
+    transition: color 0.3s;
+}
+
+.star.filled {
+    color: #f5b301;
+}
+
+/* Tablet styles */
+@media (max-width: 768px) {
+    .star {
+        font-size: 20px;
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 480px) {
+    .star {
+        font-size: 16px;
+        margin-right: 3px;
+    }
+}
+

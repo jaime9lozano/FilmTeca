@@ -24,7 +24,7 @@ function App() {
                         <Route path="/" element={<PeliculasList/>}/>
                         <Route path="/pelicula/:id" element={<PeliculaDetail/>}/>
                         <Route path="/createPelicula" element={<CreatePelicula/>}/>
-                        <Route path="/createValoracion" element={<CreateValoracion/>}/>
+                        <Route path="/createValoracion/:id" element={<CreateValoracion/>}/>
                         <Route path="/cambiarImagen/:id" element={<CambiarImagen/>}/>
                         <Route path="/genero/:id" element={<PeliculasByGenero/>}/>
                         <Route path="/user" element={<UsersInfo/>}/>

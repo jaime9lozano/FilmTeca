@@ -103,7 +103,7 @@ const PeliculaDetail = () => {
     };
 
     const handleLeaveReview = () => {
-        navigate(`/createValoracion`);
+        navigate(`/createValoracion/${pelicula.id}`);
     }
 
     if (loadingPelicula || loadingValoraciones) {

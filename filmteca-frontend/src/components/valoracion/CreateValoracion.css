@@ -1,0 +1,205 @@
+/* CreateValoracion.css */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9); /* Fondo blanco con algo de transparencia para destacar el contenido */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(6px); /* Añade desenfoque a la imagen */
+    z-index: -1; /* Asegura que la imagen esté detrás del contenido */
+}
+
+.rating-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.movie-details {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.movie-image {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 20px;
+}
+
+.movie-title {
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.form-fields {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+    color: #ffffff;
+}
+
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #323232;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-input:focus, .form-textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.form-textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.botones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.enviarBoton, .volverBoton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.enviarBoton {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.enviarBoton:hover {
+    background-color: #0056b3;
+}
+
+.volverBoton {
+    background-color: #00450A;
+    color: #FDC1DA;
+}
+
+.volverBoton:hover {
+    background-color: #4adf3f;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsivo para tablets y móviles */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 15px;
+    }
+
+    .background-image {
+        filter: blur(6px); /* Menos desenfoque en pantallas más pequeñas */
+    }
+    .movie-details {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .movie-image {
+        width: 80px;
+        height: 120px;
+        margin-bottom: 10px;
+    }
+
+    .movie-title {
+        font-size: 18px;
+    }
+
+    .form-title {
+        font-size: 20px;
+    }
+
+    .form-textarea {
+        height: 80px;
+    }
+
+    .botones {
+        flex-direction: row; /* Asegura que los botones estén en una fila */
+        gap: 10px; /* Espacio entre los botones */
+    }
+
+    .enviarBoton, .volverBoton {
+        flex: 1; /* Asegura que los botones ocupen el mismo ancho */
+        font-size: 14px; /* Ajusta el tamaño de fuente si es necesario */
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        padding: 10px;
+    }
+
+    .background-image {
+        filter: blur(4px); /* Menos desenfoque en pantallas más pequeñas */
+    }
+
+    .movie-image {
+        width: 70px;
+        height: 100px;
+    }
+
+    .movie-title {
+        font-size: 16px;
+    }
+
+    .form-title {
+        font-size: 18px;
+    }
+
+    .form-textarea {
+        height: 60px;
+    }
+
+    .enviarBoton, .volverBoton {
+        flex: 1; /* Asegura que los botones ocupen el mismo ancho */
+        font-size: 12px; /* Ajusta el tamaño de fuente si es necesario */
+        padding: 8px 16px; /* Ajusta el padding para pantallas más pequeñas */
+    }
+}
+
+
