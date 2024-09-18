@@ -6,6 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from "js-cookie";
 import {useAuth} from "../../AuthContext";
+import { FaStar } from 'react-icons/fa';
 
 axios.defaults.withCredentials = true;
 
@@ -13,8 +14,10 @@ const PeliculaDetail = () => {
     const navigate = useNavigate();
     const { id } = useParams(); // Obtén el ID de la película desde la URL
     const [pelicula, setPelicula] = useState(null);
+    const [valoraciones, setValoraciones] = useState([]);
     const [deleting, setDeleting] = useState(false);
     const [loadingPelicula, setLoadingPelicula] = useState(true);
+    const [loadingValoraciones, setLoadingValoraciones] = useState(true);
     const [error, setError] = useState(null);
     const { roles } = useAuth();
     const isAdmin = roles && roles.includes('ADMIN');
@@ -41,6 +44,24 @@ const PeliculaDetail = () => {
                     hideProgressBar: true,
                 });
             });
+
+        // Cargar valoraciones de la película
+        axios.get(`${baseURL}/valoraciones/${id}/pelicula`)
+            .then(response => {
+                setValoraciones(response.data.data); // Asigna las valoraciones al estado
+                setLoadingValoraciones(false);
+            })
+            .catch(error => {
+                const errorMessage = 'Error cargando las valoraciones: ' + error.message;
+                setError(errorMessage);
+                setLoadingValoraciones(false);
+                toast.error(errorMessage, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                });
+            });
+
     }, [baseURL, id]);
 
     const handleDelete = () => {
@@ -81,7 +102,7 @@ const PeliculaDetail = () => {
         navigate(`/cambiarImagen/${pelicula.id}`); // Redirigir a la página de actualización de imagen
     };
 
-    if (loadingPelicula) {
+    if (loadingPelicula || loadingValoraciones) {
         return (
             <div className="loading-container">
                 <div className="spinner"></div>
@@ -151,6 +172,35 @@ const PeliculaDetail = () => {
                         ? pelicula.premios.map(premio => premio.name).join(', ')
                         : 'No tiene premios'}</p>
                 </div>
+            </div>
+            {/* Contenedor de valoraciones */}
+            <div className="valoraciones-container">
+                <h2>Valoraciones</h2>
+                {valoraciones.length === 0 ? (
+                    <p>No hay valoraciones para esta película.</p>
+                ) : (
+                    valoraciones.map(valoracion => (
+                        <div key={valoracion.id} className="valoracion-card">
+                            <div className="valoracion-header">
+                                <p className="valoracion-usuario"><strong>Usuario:</strong> {valoracion.user.name}</p>
+                                <div className="valoracion-rating">
+                                    {[...Array(10)].map((star, i) => {
+                                        const ratingValue = i + 1;
+                                        return (
+                                            <FaStar
+                                                key={i}
+                                                color={ratingValue <= valoracion.rating ? "#ffc107" : "#e4e5e9"}
+                                                size={20}
+                                            />
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                            {valoracion.review && <p className="valoracion-review"><strong>Reseña:</strong> {valoracion.review}</p>}
+                            <p className="valoracion-fecha"><strong>Fecha:</strong> {new Date(valoracion.createdAt).toLocaleDateString()}</p>
+                        </div>
+                    ))
+                )}
             </div>
         </div>
     );
