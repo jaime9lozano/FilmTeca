@@ -16,6 +16,7 @@ import {
 } from 'nestjs-paginate';
 import { PeliculasService } from '../peliculas/peliculas.service';
 import { Pelicula } from '../peliculas/entities/pelicula.entity';
+import Any = jasmine.Any;
 
 @Injectable()
 export class ValoracionService {
@@ -44,6 +45,42 @@ export class ValoracionService {
     queryBuilder
       .leftJoinAndSelect('valoracion.pelicula', 'pelicula') // Relación con Película
       .leftJoinAndSelect('valoracion.user', 'user'); // Relación con Usuario
+
+    const pagination = await paginate(query, queryBuilder, {
+      sortableColumns: ['rating'],
+      defaultSortBy: [['id', 'ASC']],
+      searchableColumns: ['rating'],
+      filterableColumns: {
+        rating: [FilterOperator.EQ, FilterSuffix.NOT],
+      },
+    });
+
+    return {
+      data: pagination.data,
+      meta: pagination.meta,
+      links: pagination.links,
+    };
+  }
+
+  async findAllByPelicula(query: PaginateQuery, id: number): Promise<any> {
+    this.logger.log('Find all valoraciones');
+
+    if (!query.path) {
+      throw new Error('Path is required for pagination');
+    }
+
+    await this.peliculaService.findOne(id);
+
+    const queryBuilder =
+      this.valoracionRepository.createQueryBuilder('valoracion');
+    queryBuilder
+      .leftJoin('valoracion.pelicula', 'pelicula') // Relación con Película
+      .leftJoinAndSelect('valoracion.user', 'user'); // Relación con Usuario
+
+    queryBuilder.where('valoracion.deletedAt IS NULL');
+    queryBuilder.andWhere('pelicula.id = :id', { id });
+
+    query.limit = 10;
 
     const pagination = await paginate(query, queryBuilder, {
       sortableColumns: ['rating'],

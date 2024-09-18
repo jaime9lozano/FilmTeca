@@ -19,7 +19,6 @@ import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { Valoracion } from './entities/valoracion.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles, RolesAuthGuard } from '../auth/guards/roles-auth.guard';
-import { Pelicula } from '../peliculas/entities/pelicula.entity';
 
 @Controller('valoraciones')
 export class ValoracionController {
@@ -33,6 +32,15 @@ export class ValoracionController {
   ): Promise<Paginated<Valoracion>> {
     this.logger.log('Sacando todas las valoraciones');
     return await this.valoracionService.findAll(query);
+  }
+
+  @Get(':id/pelicula')
+  async findAllByPelicula(
+    @Paginate() query: PaginateQuery,
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Paginated<Valoracion>> {
+    this.logger.log('Sacando todas las valoraciones de una pelicula.');
+    return await this.valoracionService.findAllByPelicula(query, id);
   }
 
   @Get(':id')
