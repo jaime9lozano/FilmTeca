@@ -19,7 +19,7 @@ const PeliculaDetail = () => {
     const [loadingPelicula, setLoadingPelicula] = useState(true);
     const [loadingValoraciones, setLoadingValoraciones] = useState(true);
     const [error, setError] = useState(null);
-    const { roles } = useAuth();
+    const { roles, isAuthenticated } = useAuth();
     const isAdmin = roles && roles.includes('ADMIN');
     const baseURL = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000' // URL para desarrollo
@@ -102,6 +102,10 @@ const PeliculaDetail = () => {
         navigate(`/cambiarImagen/${pelicula.id}`); // Redirigir a la página de actualización de imagen
     };
 
+    const handleLeaveReview = () => {
+        navigate(`/createValoracion`);
+    }
+
     if (loadingPelicula || loadingValoraciones) {
         return (
             <div className="loading-container">
@@ -121,16 +125,8 @@ const PeliculaDetail = () => {
 
     return (
         <div className="pelicula-detail-container">
+            <div className="button-container">
             <Link to="/" className="back-button">Volver</Link>
-            {isAdmin && (
-                <button
-                    onClick={handleDelete}
-                    className="delete-button"
-                    disabled={deleting} // Deshabilita el botón si está en proceso de eliminación
-                >
-                    {deleting ? 'Eliminando...' : 'Eliminar'}
-                </button>
-            )}
             {isAdmin && (
                 <button
                     onClick={handleUpdateImage}
@@ -139,6 +135,24 @@ const PeliculaDetail = () => {
                     Actualizar Imagen
                 </button>
             )}
+            {isAuthenticated && (
+                <button
+                    onClick={handleLeaveReview} // Aquí agregas la función que abrirá el formulario de valoración
+                    className="leave-review-button"
+                >
+                    Dejar una valoración
+                </button>
+            )}
+                {isAdmin && (
+                    <button
+                        onClick={handleDelete}
+                        className="delete-button"
+                        disabled={deleting} // Deshabilita el botón si está en proceso de eliminación
+                    >
+                        {deleting ? 'Eliminando...' : 'Eliminar'}
+                    </button>
+                )}
+            </div>
             <ToastContainer />
             <h1 className="pelicula-titleDetail">{pelicula.title}</h1>
             <div className="pelicula-detail-content">

@@ -60,11 +60,22 @@
     color: #333; /* Color del texto en negrita */
 }
 
-/* Botón de volver */
-.back-button {
+/* Contenedor de botones para evitar que se solapen */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: absolute;
     top: 20px;
     left: 20px;
+    right: 20px;
+    gap: 10px; /* Espacio entre botones */
+    flex-wrap: nowrap; /* Asegura que los botones siempre estén en una línea */
+}
+
+/* Botón de volver */
+.back-button {
+    text-align: center;
     background-color: #00450A;
     color: #FDC1DA;
     padding: 10px 20px;
@@ -74,6 +85,7 @@
     font-size: 1em;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s, box-shadow 0.3s;
+    flex: 1; /* Permite que los botones compartan el mismo espacio */
 }
 
 .back-button:hover {
@@ -81,15 +93,8 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.back-button:focus {
-    outline: none;
-}
-
 /* Botón de eliminar */
 .delete-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
     background-color: red;
     color: white;
     padding: 10px 20px;
@@ -99,6 +104,7 @@
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s, box-shadow 0.3s;
+    flex: 1;
 }
 
 .delete-button:hover {
@@ -106,16 +112,8 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.delete-button:focus {
-    outline: none;
-}
-
 /* Botón de actualizar imagen */
 .update-image-button {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
     background-color: #ecc438;
     color: #ffffff;
     padding: 10px 20px;
@@ -125,6 +123,7 @@
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s, box-shadow 0.3s;
+    flex: 1;
 }
 
 .update-image-button:hover {
@@ -132,8 +131,23 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.update-image-button:focus {
-    outline: none;
+/* Botón de dejar una valoración */
+.leave-review-button {
+    background-color: #008CBA;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    flex: 1;
+}
+
+.leave-review-button:hover {
+    background-color: #005f73;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Contenedor de valoraciones */
@@ -227,23 +241,7 @@
         margin-top: 50px;
         font-size: 2.2em;
     }
-    .back-button {
-        top: 10px;
-        left: 10px;
-        padding: 8px 16px;
-        font-size: 0.9em;
-    }
-    .delete-button {
-        top: 10px;
-        right: 10px;
-        padding: 8px 16px;
-        font-size: 0.9em;
-    }
-    .update-image-button {
-        top: 10px;
-        padding: 8px 16px;
-        font-size: 0.9em;
-    }
+
     .valoracion-card {
         padding: 15px;
     }
@@ -270,6 +268,20 @@
     .valoracion-fecha {
         font-size: 11px;
     }
+    .button-container {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        gap: 5px; /* Menos espacio entre los botones */
+    }
+
+    .back-button,
+    .delete-button,
+    .update-image-button,
+    .leave-review-button {
+        padding: 8px 10px; /* Ajustar padding en pantallas pequeñas */
+        font-size: 0.7em; /* Tamaño de texto reducido */
+    }
 }
 
 /* Estilos adicionales para pantallas muy pequeñas */
@@ -285,24 +297,6 @@
     .pelicula-detail-image {
         width: 250px; /* Limita el ancho máximo de la imagen */
         height: 100px;
-    }
-
-    .back-button {
-        top: 5px;
-        left: 5px;
-        padding: 6px 12px;
-        font-size: 0.8em;
-    }
-    .delete-button {
-        top: 5px;
-        right: 5px;
-        padding: 6px 12px;
-        font-size: 0.8em;
-    }
-    .update-image-button {
-        top: 5px;
-        padding: 6px 12px;
-        font-size: 0.8em;
     }
     .valoracion-card {
         padding: 10px;
@@ -324,6 +318,20 @@
 
     .valoracion-fecha {
         font-size: 10px;
+    }
+    .button-container {
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        gap: 3px; /* Aún menos espacio entre los botones */
+    }
+
+    .back-button,
+    .delete-button,
+    .update-image-button,
+    .leave-review-button {
+        padding: 6px 8px; /* Ajustar padding en pantallas pequeñas */
+        font-size: 0.6em; /* Tamaño de texto reducido */
     }
 }
 
