@@ -93,14 +93,14 @@ const UserValoraciones = () => {
         <div className="user-valoraciones-container">
             <ToastContainer/>
             <h1>Valoraciones de {valoraciones[0]?.user?.name}</h1>
-            <div className="valoraciones-list">
+            <div className="valoraciones-lista">
                 {valoraciones.map((valoracion) => (
                     <Link
                         key={valoracion.id}
                         to={`/pelicula/${valoracion.pelicula.id}`}
                         className="valoracion-link"
                     >
-                    <div key={valoracion.id} className="valoracion-card">
+                    <div key={valoracion.id} className="valoracion-carta">
                         <h2>{valoracion.pelicula.title}</h2>
                         {/* Imagen de la película */}
                         <div className="valoracion-image-container">
@@ -111,11 +111,11 @@ const UserValoraciones = () => {
                             />
                         </div>
 
-                        <p className="valoracion-rating">
+                        <p className="valoracion2-rating">
                             <FaStar className="star-icon"/> {valoracion.rating}
                         </p>
-                        <p className="valoracion-review">{valoracion.review}</p>
-                        <p className="valoracion-date">
+                        <p className="valoracion2-review">{valoracion.review}</p>
+                        <p className="valoracion2-date">
                             Fecha: {new Date(valoracion.createdAt).toLocaleDateString()}
                         </p>
                     </div>
