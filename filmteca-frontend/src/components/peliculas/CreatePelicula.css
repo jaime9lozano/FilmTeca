@@ -5,8 +5,10 @@
     align-items: center;
     min-height: 80vh;
     background: #f0f4f8;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    width: 100%;
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
+    overflow: hidden; /* Evita que el contenido desborde */
 }
 
 .pelicula-form {
@@ -17,8 +19,9 @@
     width: 100%;
     max-width: 900px;
     border: 1px solid #e0e0e0;
-    margin: auto;
+    margin: 0 auto; /* Centra el formulario */
     text-align: center;
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
 }
 
 .form-titulo {
