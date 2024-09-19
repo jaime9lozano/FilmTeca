@@ -21,6 +21,7 @@ const PeliculaDetail = () => {
     const [error, setError] = useState(null);
     const { roles, isAuthenticated } = useAuth();
     const isAdmin = roles && roles.includes('ADMIN');
+    const isSuperUser = roles && roles.includes('SUPERUSER');
     const baseURL = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000' // URL para desarrollo
         : 'https://filmteca.onrender.com'; // URL para producción
@@ -127,7 +128,7 @@ const PeliculaDetail = () => {
         <div className="pelicula-detail-container">
             <div className="button-container">
             <Link to="/" className="back-button">Volver</Link>
-            {isAdmin && (
+            {isSuperUser && (
                 <button
                     onClick={handleUpdateImage}
                     className="update-image-button" // Puedes agregar estilos específicos para este botón en tu CSS

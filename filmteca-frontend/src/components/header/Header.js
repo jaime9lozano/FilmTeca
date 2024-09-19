@@ -17,7 +17,7 @@ function Header() {
     const open = Boolean(anchorEl);
     const openGenerosMenu = Boolean(generosAnchorEl);
     const { isAuthenticated, roles, updateAuthState } = useAuth();
-    const isAdmin = roles && roles.includes('ADMIN');
+    const isSuperUser = roles && roles.includes('SUPERUSER');
 
     // Obtener los géneros al cargar el componente
     useEffect(() => {
@@ -143,7 +143,7 @@ function Header() {
                     >
                         Géneros
                     </MenuItem>
-                    {isAdmin && (
+                    {isSuperUser && (
                         <MenuItem
                             onClick={handleCreatePeliculaClick}
                             sx={{
