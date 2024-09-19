@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import './Header.css';
-import {FaUser} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import Cookies from 'js-cookie';
 import axios from "axios";
 import { Menu, MenuItem, IconButton } from '@mui/material';
-import { Menu as MenuIcon } from '@mui/icons-material';
+import { FaFilm, FaStar, FaUser } from 'react-icons/fa';
+import { MdMenu } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import {useAuth} from "../../AuthContext";
+import {IoMdList} from "react-icons/io";
 
 function Header() {
     const navigate = useNavigate();
@@ -95,7 +96,7 @@ function Header() {
         <header className="header">
             <div className="header-left">
                 <IconButton onClick={handleMenuOpen} color="inherit">
-                    <MenuIcon />
+                    <MdMenu />
                 </IconButton>
                 <Menu
                     anchorEl={anchorEl}
@@ -146,6 +147,7 @@ function Header() {
                             },
                         }}
                     >
+                        <IoMdList style={{ marginRight: '8px' }} />
                         Géneros
                     </MenuItem>
                     {isSuperUser && (
@@ -172,6 +174,7 @@ function Header() {
                                 },
                             }}
                         >
+                            <FaFilm style={{ marginRight: '8px' }} />
                             Crear Película
                         </MenuItem>
                     )}
@@ -199,6 +202,7 @@ function Header() {
                                 },
                             }}
                         >
+                            <FaStar style={{ marginRight: '8px' }} />
                             Valoraciones
                         </MenuItem>
                     )}
