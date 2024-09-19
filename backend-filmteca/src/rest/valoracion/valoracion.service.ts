@@ -63,7 +63,7 @@ export class ValoracionService {
   }
 
   async findAllByPelicula(query: PaginateQuery, id: number): Promise<any> {
-    this.logger.log('Find all valoraciones');
+    this.logger.log('Find all valoraciones by pelicula.');
 
     if (!query.path) {
       throw new Error('Path is required for pagination');
@@ -79,6 +79,42 @@ export class ValoracionService {
 
     queryBuilder.where('valoracion.deletedAt IS NULL');
     queryBuilder.andWhere('pelicula.id = :id', { id });
+
+    query.limit = 10;
+
+    const pagination = await paginate(query, queryBuilder, {
+      sortableColumns: ['rating'],
+      defaultSortBy: [['id', 'ASC']],
+      searchableColumns: ['rating'],
+      filterableColumns: {
+        rating: [FilterOperator.EQ, FilterSuffix.NOT],
+      },
+    });
+
+    return {
+      data: pagination.data,
+      meta: pagination.meta,
+      links: pagination.links,
+    };
+  }
+
+  async findAllByUser(query: PaginateQuery, id: number): Promise<any> {
+    this.logger.log('Find all valoraciones by user.');
+
+    if (!query.path) {
+      throw new Error('Path is required for pagination');
+    }
+
+    await this.userRepository.findOneBy({ id });
+
+    const queryBuilder =
+      this.valoracionRepository.createQueryBuilder('valoracion');
+    queryBuilder
+      .leftJoinAndSelect('valoracion.pelicula', 'pelicula') // Relación con Película
+      .leftJoinAndSelect('valoracion.user', 'user'); // Relación con Usuario
+
+    queryBuilder.where('valoracion.deletedAt IS NULL');
+    queryBuilder.andWhere('user.id = :id', { id });
 
     query.limit = 10;
 

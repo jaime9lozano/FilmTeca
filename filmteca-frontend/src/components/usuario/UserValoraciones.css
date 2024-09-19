@@ -1,0 +1,172 @@
+/* UserValoraciones.css */
+.user-valoraciones-container {
+    padding: 15px;
+    text-align: center;
+}
+
+.user-valoraciones-container h1 {
+    font-size: 1.8em;
+    color: white;
+    background-color: #282c34;
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 15px;
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.valoraciones-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center; /* Alinear al centro */
+}
+
+/* Estilos generales para tarjetas de valoración */
+.valoracion-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    max-width: 260px; /* Limitar el ancho máximo */
+    height: 370px; /* Asegurar altura consistente */
+    display: flex;
+    flex-direction: column; /* Asegura que el contenido se ordene verticalmente */
+    justify-content: space-between; /* Espacio entre los elementos */
+}
+
+.valoracion-card:hover {
+    transform: scale(1.05);
+}
+
+.valoracion-image-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.valoracion-pelicula-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.valoracion-rating {
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+}
+
+.star-icon {
+    color: #ffcc00;
+    margin-right: 5px;
+}
+
+.valoracion-review {
+    font-size: 13px;
+    margin: 8px 0;
+}
+
+.valoracion-date {
+    font-size: 0.85em;
+    color: #777;
+}
+
+.valoracion-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.valoracion-link:hover {
+    text-decoration: none;
+}
+
+/* Estilos responsivos para tablets */
+@media (max-width: 768px) {
+    .user-valoraciones-container {
+        padding: 10px;
+    }
+
+    .user-valoraciones-container h1 {
+        font-size: 1.5em;
+    }
+
+    .valoraciones-list {
+        /* Muestra las tarjetas en dos columnas en tablets */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .valoracion-card {
+        max-width: none; /* Permitir que ocupe el ancho completo de la columna */
+        height: auto; /* Ajustar altura automáticamente */
+        min-height: 300px; /* Altura mínima consistente */
+    }
+
+    .valoracion-image-container {
+        height: 180px;
+    }
+
+    .valoracion-rating {
+        font-size: 0.9em;
+    }
+
+    .valoracion-review {
+        font-size: 12px;
+    }
+
+    .valoracion-date {
+        font-size: 0.8em;
+    }
+}
+
+/* Estilos responsivos para móviles */
+@media (max-width: 480px) {
+    .user-valoraciones-container h1 {
+        font-size: 1.2em;
+    }
+
+    .valoraciones-list {
+        /* Muestra las tarjetas en una sola columna en móviles */
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .valoracion-card {
+        padding: 8px;
+        max-width: none; /* Permitir que ocupe el ancho completo de la columna */
+        height: auto; /* Ajustar altura automáticamente */
+        min-height: 250px; /* Altura mínima consistente */
+    }
+
+    .valoracion-image-container {
+        height: 150px;
+    }
+
+    .valoracion-rating {
+        font-size: 0.8em;
+    }
+
+    .valoracion-review {
+        font-size: 11px;
+    }
+
+    .valoracion-date {
+        font-size: 0.75em;
+    }
+}

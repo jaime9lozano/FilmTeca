@@ -16,7 +16,7 @@ function Header() {
     const [generosAnchorEl, setGenerosAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const openGenerosMenu = Boolean(generosAnchorEl);
-    const { isAuthenticated, roles, updateAuthState } = useAuth();
+    const { isAuthenticated, userId, roles, updateAuthState } = useAuth();
     const isSuperUser = roles && roles.includes('SUPERUSER');
 
     // Obtener los géneros al cargar el componente
@@ -83,6 +83,11 @@ function Header() {
 
     const handleCreatePeliculaClick = () => {
         navigate('/createPelicula'); // Redirigir a la página de creación de películas
+        handleMenuClose(); // Cerrar el menú
+    };
+
+    const handleValoracionesClick = () => {
+        navigate(`/userValoraciones/${userId}`); // Redirigir a la página de creación de películas
         handleMenuClose(); // Cerrar el menú
     };
 
@@ -168,6 +173,33 @@ function Header() {
                             }}
                         >
                             Crear Película
+                        </MenuItem>
+                    )}
+                    {isAuthenticated && (
+                        <MenuItem
+                            onClick={handleValoracionesClick}
+                            sx={{
+                                color: 'white',
+                                '&:hover': {
+                                    backgroundColor: '#003d00',
+                                    color: '#FDC1DA',
+                                    transition: 'background-color 0.3s ease, color 0.3s ease'
+                                },
+                                borderRadius: '8px',
+                                padding: '8px 16px',
+                                fontWeight: 'bold',
+                                fontSize: '14px',
+                                '@media (max-width: 768px)': {
+                                    padding: '6px 12px',
+                                    fontSize: '12px',
+                                },
+                                '@media (max-width: 480px)': {
+                                    padding: '4px 8px',
+                                    fontSize: '10px',
+                                },
+                            }}
+                        >
+                            Valoraciones
                         </MenuItem>
                     )}
                     <Menu

@@ -43,6 +43,15 @@ export class ValoracionController {
     return await this.valoracionService.findAllByPelicula(query, id);
   }
 
+  @Get(':id/user')
+  async findAllByUser(
+    @Paginate() query: PaginateQuery,
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Paginated<Valoracion>> {
+    this.logger.log('Sacando todas las valoraciones de un usuario.');
+    return await this.valoracionService.findAllByUser(query, id);
+  }
+
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number): Promise<Valoracion> {
     this.logger.log(`Find one valoracion by id:${id}`);

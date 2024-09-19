@@ -11,6 +11,7 @@ import Register from "./components/login/Register";
 import CreatePelicula from "./components/peliculas/CreatePelicula";
 import CambiarImagen from "./components/imagen/CambiarImagen";
 import CreateValoracion from "./components/valoracion/CreateValoracion";
+import UserValoraciones from "./components/usuario/UserValoraciones";
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                         <Route path="/cambiarImagen/:id" element={<CambiarImagen/>}/>
                         <Route path="/genero/:id" element={<PeliculasByGenero/>}/>
                         <Route path="/user" element={<UsersInfo/>}/>
+                        <Route path="/userValoraciones/:id" element={<UserValoraciones/>}/>
                     </Routes>
                 </div>
                 <Footer/>
