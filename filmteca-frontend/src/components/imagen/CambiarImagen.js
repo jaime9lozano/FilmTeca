@@ -64,7 +64,7 @@ const CambiarImagen = () => {
         }).then(() => {
             toast.success('Imagen cambiada con éxito', {
                 position: "top-right",
-                autoClose: 3000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -74,12 +74,12 @@ const CambiarImagen = () => {
 
             setTimeout(() => {
                 navigate(`/pelicula/${id}`); // Redirige a la página de detalles de la película
-            }, 3000);
+            }, 2000);
 
         }).catch(error => {
             toast.error('Error al cambiar la imagen: ' + error.message, {
                 position: "top-right",
-                autoClose: 3000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,

@@ -64,7 +64,7 @@ const Register = () => {
             // Muestra una notificación de éxito con el nombre del usuario
             toast.success(`¡Registro exitoso, ${name}!`, {
                 position: "top-right",
-                autoClose: 3000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -75,7 +75,7 @@ const Register = () => {
             // Redirige al login después de un breve retraso
             setTimeout(() => {
                 navigate('/login');
-            }, 3000);
+            }, 2000);
 
         } catch (err) {
             const validationErrors = err.response?.data?.message || {};

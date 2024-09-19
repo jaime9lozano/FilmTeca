@@ -74,7 +74,7 @@ const UsersInfo = () => {
             }).then(() => {
                 toast.success('Usuario eliminado con éxito', {
                     position: "top-right",
-                    autoClose: 3000,
+                    autoClose: 2000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -84,7 +84,7 @@ const UsersInfo = () => {
                 Cookies.remove('auth_token');
                 setTimeout(() => {
                     navigate('/');
-                }, 3000);
+                }, 2000);
             })
         } catch (err) {
             setError('Error al eliminar la información del usuario.');

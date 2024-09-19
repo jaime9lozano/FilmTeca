@@ -113,7 +113,7 @@ const CreatePelicula = () => {
             .then(() => {
                 toast.success('Pelicula creada con éxito', {
                     position: "top-right",
-                    autoClose: 3000,
+                    autoClose: 2000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -122,7 +122,7 @@ const CreatePelicula = () => {
                 });
                 setTimeout(() => {
                     navigate('/');
-                }, 3000);
+                }, 2000);
             })
             .catch(() => {
                 toast.error('Error al crear la película');

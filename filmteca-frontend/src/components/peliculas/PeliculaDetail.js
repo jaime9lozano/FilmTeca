@@ -1,6 +1,6 @@
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './PeliculaDetail.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -41,7 +41,7 @@ const PeliculaDetail = () => {
                 setLoadingPelicula(false);
                 toast.error(errorMessage, {
                     position: "top-center",
-                    autoClose: 5000,
+                    autoClose: 2000,
                     hideProgressBar: true,
                 });
             });
@@ -58,7 +58,7 @@ const PeliculaDetail = () => {
                 setLoadingValoraciones(false);
                 toast.error(errorMessage, {
                     position: "top-center",
-                    autoClose: 5000,
+                    autoClose: 2000,
                     hideProgressBar: true,
                 });
             });
@@ -77,7 +77,7 @@ const PeliculaDetail = () => {
             .then(() => {
                 toast.success('Película eliminada con éxito', {
                     position: "top-right",
-                    autoClose: 3000,
+                    autoClose: 2000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -86,13 +86,13 @@ const PeliculaDetail = () => {
                 });
                 setTimeout(() => {
                     navigate('/');
-                }, 3000); // Navegar después de que se cierra la notificación
+                }, 2000); // Navegar después de que se cierra la notificación
             })
             .catch(error => {
                 console.error('Error al eliminar la película:', error.response || error.message);
                 toast.error('Error al eliminar la película: ' + (error.response ? error.response.data.message : error.message), {
                     position: "top-center",
-                    autoClose: 5000,
+                    autoClose: 2000,
                     hideProgressBar: true,
                 });
                 setDeleting(false); // Reiniciar el estado de eliminación en caso de error
@@ -127,23 +127,23 @@ const PeliculaDetail = () => {
     return (
         <div className="pelicula-detail-container">
             <div className="button-container">
-            <Link to="/" className="back-button">Volver</Link>
-            {isSuperUser && (
-                <button
-                    onClick={handleUpdateImage}
-                    className="update-image-button" // Puedes agregar estilos específicos para este botón en tu CSS
-                >
-                    Actualizar Imagen
-                </button>
-            )}
-            {isAuthenticated && (
-                <button
-                    onClick={handleLeaveReview} // Aquí agregas la función que abrirá el formulario de valoración
-                    className="leave-review-button"
-                >
-                    Dejar una valoración
-                </button>
-            )}
+                <button type="button" className="back-button" onClick={() => navigate(-1)}>Volver</button>
+                {isSuperUser && (
+                    <button
+                        onClick={handleUpdateImage}
+                        className="update-image-button" // Puedes agregar estilos específicos para este botón en tu CSS
+                    >
+                        Actualizar Imagen
+                    </button>
+                )}
+                {isAuthenticated && (
+                    <button
+                        onClick={handleLeaveReview} // Aquí agregas la función que abrirá el formulario de valoración
+                        className="leave-review-button"
+                    >
+                        Dejar una valoración
+                    </button>
+                )}
                 {isAdmin && (
                     <button
                         onClick={handleDelete}
@@ -154,7 +154,7 @@ const PeliculaDetail = () => {
                     </button>
                 )}
             </div>
-            <ToastContainer />
+            <ToastContainer/>
             <h1 className="pelicula-titleDetail">{pelicula.title}</h1>
             <div className="pelicula-detail-content">
                 <img src={`${cloudinaryURL}${pelicula.image}`} alt={pelicula.title} className="pelicula-detail-image" />

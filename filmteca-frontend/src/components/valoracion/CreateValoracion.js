@@ -71,7 +71,7 @@ const CreateValoracion = () => {
             .then(() => {
                 toast.success('Valoración creada con éxito', {
                     position: "top-right",
-                    autoClose: 3000,
+                    autoClose: 2000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
