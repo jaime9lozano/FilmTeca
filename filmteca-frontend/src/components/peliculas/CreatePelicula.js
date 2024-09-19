@@ -185,117 +185,117 @@ const CreatePelicula = () => {
 
 
     return (
-        <div className="form-container">
+        <div className="form-contenedor">
             <ToastContainer />
-            <form className="film-form" onSubmit={handleSubmit}>
-                <h2 className="form-title">Crear Película</h2>
-                <div className="form-fields">
-                    <div className="field-group">
-                        <label className="form-label">Título*</label>
+            <form className="pelicula-form" onSubmit={handleSubmit}>
+                <h2 className="form-titulo">Crear Película</h2>
+                <div className="form-celdas">
+                    <div className="celdas-grupo">
+                        <label className="formu-label">Título*</label>
                         <input
                             type="text"
                             name="title"
                             value={formData.title}
                             onChange={handleChange}
-                            className="form-input"
+                            className="formu-input"
                         />
                         {errors.title && <p className="error-message">{errors.title}</p>}
                     </div>
 
-                    <div className="field-group">
-                        <label className="form-label">Sinopsis*</label>
+                    <div className="celdas-grupo">
+                        <label className="formu-label">Sinopsis*</label>
                         <textarea
                             name="sinopsis"
                             value={formData.sinopsis}
                             onChange={handleChange}
-                            className="form-textarea"
+                            className="formu-textarea"
                         />
                         {errors.sinopsis && <p className="error-message">{errors.sinopsis}</p>}
                     </div>
 
-                    <div className="field-group">
-                        <label className="form-label">Duración*</label>
+                    <div className="celdas-grupo">
+                        <label className="formu-label">Duración*</label>
                         <input
                             type="number"
                             name="duration"
                             value={formData.duration}
                             onChange={handleChange}
-                            className="form-input"
+                            className="formu-input"
                         />
                         {errors.duration && <p className="error-message">{errors.duration}</p>}
                     </div>
 
-                    <div className="field-group">
-                        <label className="form-label">Año de Estreno*</label>
+                    <div className="celdas-grupo">
+                        <label className="formu-label">Año de Estreno*</label>
                         <input
                             type="number"
                             name="release_year"
                             value={formData.release_year}
                             onChange={handleChange}
-                            className="form-input"
+                            className="formu-input"
                         />
                         {errors.release_year && <p className="error-message">{errors.release_year}</p>}
                     </div>
 
-                    <div className="field-group">
-                        <label className="form-label">País de Origen*</label>
+                    <div className="celdas-grupo">
+                        <label className="formu-label">País de Origen*</label>
                         <input
                             type="text"
                             name="country_of_origin"
                             value={formData.country_of_origin}
                             onChange={handleChange}
-                            className="form-input"
+                            className="formu-input"
                         />
                         {errors.country_of_origin && <p className="error-message">{errors.country_of_origin}</p>}
                     </div>
 
-                    <div className="field-group">
-                        <label className="form-label">Música</label>
+                    <div className="celdas-grupo">
+                        <label className="formu-label">Música</label>
                         <input
                             type="text"
                             name="music_by"
                             value={formData.music_by}
                             onChange={handleChange}
-                            className="form-input"
+                            className="formu-input"
                         />
                         {errors.music_by && <p className="error-message">{errors.music_by}</p>}
                     </div>
 
-                    <div className="field-group">
-                        <label className="form-label">Fotografía</label>
+                    <div className="celdas-grupo">
+                        <label className="formu-label">Fotografía</label>
                         <input
                             type="text"
                             name="photography_by"
                             value={formData.photography_by}
                             onChange={handleChange}
-                            className="form-input"
+                            className="formu-input"
                         />
                         {errors.photography_by && <p className="error-message">{errors.photography_by}</p>}
                     </div>
 
-                    <div className="field-group">
-                        <label className="form-label">Géneros*</label>
+                    <div className="celdas-grupo">
+                        <label className="formu-label">Géneros*</label>
                         <Select
                             isMulti
                             name="generos"
                             options={generos}
                             value={generos.filter(g => formData.generos.includes(g.value))}
                             onChange={(selectedOptions) => handleMultiSelectChange('generos', selectedOptions)}
-                            className="select-input"
+                            className="seleccion-input"
                             classNamePrefix="select"
                         />
                         {errors.generos && <p className="error-message">{errors.generos}</p>}
                     </div>
 
-                    <div className="field-group">
-                        <label className="form-label">Directores*</label>
+                    <div className="celdas-grupo">
+                        <label className="formu-label">Directores*</label>
                         <Select
                             isMulti
                             name="directores"
                             options={directores}
                             value={directores.filter(d => formData.directores.includes(d.value))}
                             onChange={(selectedOptions) => handleMultiSelectChange('directores', selectedOptions)}
-                            className="select-input"
+                            className="seleccion-input"
                             classNamePrefix="select"
                         />
                         <p>¿No lo encuentras? <span className="crealo-link"
@@ -303,15 +303,15 @@ const CreatePelicula = () => {
                         {errors.directores && <p className="error-message">{errors.directores}</p>}
                     </div>
 
-                    <div className="field-group">
-                        <label className="form-label">Actores*</label>
+                    <div className="celdas-grupo">
+                        <label className="formu-label">Actores*</label>
                         <Select
                             isMulti
                             name="actores"
                             options={actores}
                             value={actores.filter(a => formData.actores.includes(a.value))}
                             onChange={(selectedOptions) => handleMultiSelectChange('actores', selectedOptions)}
-                            className="select-input"
+                            className="seleccion-input"
                             classNamePrefix="select"
                         />
                         <p>¿No lo encuentras? <span className="crealo-link"
@@ -319,15 +319,15 @@ const CreatePelicula = () => {
                         {errors.actores && <p className="error-message">{errors.actores}</p>}
                     </div>
 
-                    <div className="field-group">
-                        <label className="form-label">Premios</label>
+                    <div className="celdas-grupo">
+                        <label className="formu-label">Premios</label>
                         <Select
                             isMulti
                             name="premios"
                             options={premios}
                             value={premios.filter(p => formData.premios.includes(p.value))}
                             onChange={(selectedOptions) => handleMultiSelectChange('premios', selectedOptions)}
-                            className="select-input"
+                            className="seleccion-input"
                             classNamePrefix="select"
                         />
                         {errors.premios && <p className="error-message">{errors.premios}</p>}

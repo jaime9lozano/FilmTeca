@@ -88,7 +88,7 @@ const CreateValoracion = () => {
     };
 
     return (
-        <div className="form-container">
+        <div className="form-contenedor">
             <div className="background-image"
                  style={{backgroundImage: movie ? `url(https://res.cloudinary.com/dj0fdyymb/image/upload/${movie.image})` : 'none'}}>
             </div>

@@ -57,7 +57,7 @@ export class PeliculasService {
       .createQueryBuilder('pelicula')
       .leftJoinAndSelect('pelicula.valoraciones', 'valoracion')
       .where('pelicula.deletedAt IS NULL');
-    query.limit = 12;
+    query.limit = 16;
 
     const pagination = await paginate(query, queryBuilder, {
       sortableColumns: ['title', 'release_year'],
