@@ -47,7 +47,7 @@ export class PeliculasController {
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
-  @Roles('ADMIN')
+  @Roles('SUPERUSER')
   @HttpCode(201)
   async create(
     @Body() createPeliculaDto: CreatePeliculaDto,

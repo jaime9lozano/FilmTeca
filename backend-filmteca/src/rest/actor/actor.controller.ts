@@ -44,7 +44,7 @@ export class ActorController {
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
-  @Roles('ADMIN')
+  @Roles('SUPERUSER')
   @HttpCode(201)
   async create(@Body() createActorDto: CreateActorDto): Promise<Actor> {
     this.logger.log(`Create actor`);
