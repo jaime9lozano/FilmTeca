@@ -78,7 +78,7 @@ export class PeliculasController {
 
   @Patch(':id/imagen')
   @UseGuards(JwtAuthGuard, RolesAuthGuard)
-  @Roles('ADMIN')
+  @Roles('SUPERUSER')
   @UseInterceptors(
     FileInterceptor('file', {
       // No es necesario configurar almacenamiento aquí porque el archivo se enviará como buffer a Cloudinary
