@@ -6,6 +6,7 @@ import {
   Delete,
   UseGuards,
   Body,
+  Query,
 } from '@nestjs/common';
 import { FavoritoService } from './favorito.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -20,14 +21,14 @@ export class FavoritoController {
   // Endpoint para verificar si una película es favorita
   @Get('es-favorita')
   async isPeliculaFavorita(
-    @Body('userId') userId: number,
-    @Body('peliculaId') peliculaId: number,
+    @Query('userId') userId: number,
+    @Query('peliculaId') peliculaId: number,
   ): Promise<{ isFavorita: boolean }> {
     const isFavorita = await this.favoritoService.isPeliculaFavorita(
       userId,
       peliculaId,
     );
-    return { isFavorita }; // Retorna un objeto con la respuesta
+    return { isFavorita };
   }
 
   @Post('add')

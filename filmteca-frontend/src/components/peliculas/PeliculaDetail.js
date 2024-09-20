@@ -7,6 +7,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import Cookies from "js-cookie";
 import {useAuth} from "../../AuthContext";
 import { FaStar } from 'react-icons/fa';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 
 axios.defaults.withCredentials = true;
 
@@ -19,9 +22,11 @@ const PeliculaDetail = () => {
     const [loadingPelicula, setLoadingPelicula] = useState(true);
     const [loadingValoraciones, setLoadingValoraciones] = useState(true);
     const [error, setError] = useState(null);
-    const { roles, isAuthenticated } = useAuth();
+    const { roles, isAuthenticated, userId } = useAuth();
+    const [esFavorita, setEsFavorita] = useState(false);
     const isAdmin = roles && roles.includes('ADMIN');
     const isSuperUser = roles && roles.includes('SUPERUSER');
+    const [loadingFav, setLoadingFav] = useState(true);
     const baseURL = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000' // URL para desarrollo
         : 'https://filmteca.onrender.com'; // URL para producción
@@ -63,7 +68,27 @@ const PeliculaDetail = () => {
                 });
             });
 
-    }, [baseURL, id]);
+        if (isAuthenticated) {
+            // Verificamos si la película es favorita cuando se carga el componente
+            axios
+                .get(`${baseURL}/favoritos/es-favorita`, {
+                    params: { userId, peliculaId: id },
+                    headers: {
+                        Authorization: `Bearer ${Cookies.get('auth_token')}`
+                    }
+                })
+                .then((response) => {
+                    setEsFavorita(response.data.isFavorita);
+                })
+                .catch((error) => {
+                    console.error('Error al verificar si la película es favorita:', error);
+                })
+                .finally(() => {
+                    setLoadingFav(false);
+                });
+        }
+
+    }, [baseURL, id, isAuthenticated, userId]);
 
     const handleDelete = () => {
         setDeleting(true); // Activar estado de eliminación
@@ -124,6 +149,43 @@ const PeliculaDetail = () => {
         return <p>No se encontraron detalles para esta película.</p>;
     }
 
+    const toggleFavorito = () => {
+        if (!isAuthenticated) {
+            return; // Si no está autenticado, no hacemos nada
+        }
+
+        if (esFavorita) {
+            // Si es favorita, la eliminamos
+            axios.delete(`${baseURL}/favoritos/remove`, {
+                    data: { userId, peliculaId: id },
+                    headers: {
+                        Authorization: `Bearer ${Cookies.get('auth_token')}`
+                    }
+                })
+                .then(() => {
+                    setEsFavorita(false); // Cambiamos el estado
+                })
+                .catch((error) => {
+                    console.error('Error al eliminar de favoritos:', error);
+                });
+        } else {
+            // Si no es favorita, la añadimos
+            axios.post(`${baseURL}/favoritos/add`, {
+                userId, peliculaId: id
+            }, {
+                headers: {
+                    Authorization: `Bearer ${Cookies.get('auth_token')}`
+                }
+            })
+                .then(() => {
+                    setEsFavorita(true); // Cambiamos el estado
+                })
+                .catch((error) => {
+                    console.error('Error al añadir a favoritos:', error);
+                });
+        }
+    };
+
     return (
         <div className="pelicula-detail-container">
             <div className="button-container">
@@ -157,7 +219,17 @@ const PeliculaDetail = () => {
             <ToastContainer/>
             <h1 className="pelicula-titleDetail">{pelicula.title}</h1>
             <div className="pelicula-detail-content">
-                <img src={`${cloudinaryURL}${pelicula.image}`} alt={pelicula.title} className="pelicula-detail-image" />
+                <div className="pelicula-image-container">
+                    <img src={`${cloudinaryURL}${pelicula.image}`} alt={pelicula.title}
+                         className="pelicula-detail-image"/>
+                    {!loadingFav && (
+                        <FontAwesomeIcon
+                            icon={esFavorita ? solidHeart : regularHeart}
+                            onClick={toggleFavorito}
+                            className={`icono-corazon ${esFavorita ? 'favorito' : ''}`}
+                        />
+                    )}
+                </div>
                 <div className="pelicula-detail-info">
                     <p><strong>Sinopsis:</strong> {pelicula.sinopsis}</p>
 
@@ -196,7 +268,7 @@ const PeliculaDetail = () => {
                 ) : (
                     valoraciones.map(valoracion => (
                         <div key={valoracion.id} className="valoracion-card">
-                            <div className="valoracion-header">
+                        <div className="valoracion-header">
                                 <p className="valoracion-usuario"><strong>Usuario:</strong> {valoracion.user.name}</p>
                                 <div className="valoracion-rating">
                                     {[...Array(10)].map((star, i) => {
@@ -222,6 +294,3 @@ const PeliculaDetail = () => {
 };
 
 export default PeliculaDetail;
-
-
-

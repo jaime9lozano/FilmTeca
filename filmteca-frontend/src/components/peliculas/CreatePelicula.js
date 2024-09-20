@@ -130,7 +130,6 @@ const CreatePelicula = () => {
     };
 
     // Lógica para crear un nuevo actor o director
-    // Lógica para crear un nuevo actor o director
     const handleCreateActor = () => {
         const token = Cookies.get('auth_token'); // Obtener el token de autenticación
 
