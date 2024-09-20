@@ -223,6 +223,7 @@
     bottom: 10px;
     right: 10px;
     cursor: pointer;
+    color: gray;
     transition: color 0.3s;
 }
 
