@@ -13,6 +13,7 @@ import { Actor } from '../../actor/entities/actor.entity';
 import { Director } from '../../director/entities/director.entity';
 import { Premio } from '../../premio/entities/premio.entity';
 import { Valoracion } from '../../valoracion/entities/valoracion.entity';
+import { Favorito } from '../../favorito/entities/favorito.entity';
 
 @Entity('peliculas')
 export class Pelicula {
@@ -82,6 +83,9 @@ export class Pelicula {
     eager: true,
   })
   valoraciones: Valoracion[];
+
+  @OneToMany(() => Favorito, (favorito) => favorito.pelicula)
+  favoritos: Favorito[];
 
   @CreateDateColumn({
     name: 'created_at',

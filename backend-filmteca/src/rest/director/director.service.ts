@@ -7,12 +7,6 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { Director } from './entities/director.entity';
 import { DirectorMapper } from './mapeador/director-mapper';
-import {
-  FilterOperator,
-  FilterSuffix,
-  paginate,
-  PaginateQuery,
-} from 'nestjs-paginate';
 
 @Injectable()
 export class DirectorService {

@@ -13,6 +13,7 @@ import { ValoracionModule } from './rest/valoracion/valoracion.module';
 import * as dotenv from 'dotenv';
 import { CloudinaryModule } from './config/cloudinary/cloudinary.module';
 import { ConfigModule } from '@nestjs/config';
+import { FavoritoModule } from './rest/favorito/favorito.module';
 
 dotenv.config();
 @Module({
@@ -42,6 +43,7 @@ dotenv.config();
     PremioModule,
     ActorModule,
     ValoracionModule,
+    FavoritoModule,
   ],
   controllers: [],
   providers: [],

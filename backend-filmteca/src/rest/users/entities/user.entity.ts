@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { UserRole } from './user-role.entity';
 import { Valoracion } from '../../valoracion/entities/valoracion.entity';
+import { Favorito } from '../../favorito/entities/favorito.entity';
 
 @Entity({ name: 'users' }) // Nombre de la tabla (es case sensitive!!!)
 export class Usuario {
@@ -30,6 +31,9 @@ export class Usuario {
     eager: true,
   })
   valoraciones: Valoracion[];
+
+  @OneToMany(() => Favorito, (favorito) => favorito.usuario)
+  favoritos: Favorito[];
 
   @CreateDateColumn({
     name: 'created_at',
