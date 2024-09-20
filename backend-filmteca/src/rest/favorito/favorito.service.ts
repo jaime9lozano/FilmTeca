@@ -22,6 +22,20 @@ export class FavoritoService {
     private peliculaRepository: Repository<Pelicula>,
   ) {}
 
+  async isPeliculaFavorita(
+    userId: number,
+    peliculaId: number,
+  ): Promise<boolean> {
+    const favorito = await this.favoritoRepository.findOne({
+      where: {
+        usuario: { id: userId },
+        pelicula: { id: peliculaId },
+      },
+    });
+
+    return favorito !== null; // Retorna true si existe, false si no
+  }
+
   async addFavorito(userId: number, peliculaId: number): Promise<Favorito> {
     const usuario = await this.usuarioRepository.findOneBy({ id: userId });
     const pelicula = await this.peliculaRepository.findOneBy({

@@ -17,6 +17,19 @@ import { Roles, RolesAuthGuard } from '../auth/guards/roles-auth.guard';
 export class FavoritoController {
   constructor(private readonly favoritoService: FavoritoService) {}
 
+  // Endpoint para verificar si una película es favorita
+  @Get('es-favorita')
+  async isPeliculaFavorita(
+    @Body('userId') userId: number,
+    @Body('peliculaId') peliculaId: number,
+  ): Promise<{ isFavorita: boolean }> {
+    const isFavorita = await this.favoritoService.isPeliculaFavorita(
+      userId,
+      peliculaId,
+    );
+    return { isFavorita }; // Retorna un objeto con la respuesta
+  }
+
   @Post('add')
   addFavorito(
     @Body('userId') userId: number,
