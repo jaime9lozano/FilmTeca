@@ -69,12 +69,18 @@ export class FavoritoService {
       .createQueryBuilder('favorito')
       .innerJoin('favorito.usuario', 'usuario') // Unir con la tabla de usuarios
       .innerJoinAndSelect('favorito.pelicula', 'pelicula') // Unir con la tabla de películas y seleccionar los datos
+      .leftJoinAndSelect('pelicula.valoraciones', 'valoracion')
       .where('usuario.id = :userId', { userId }) // Filtrar por el id del usuario
       .andWhere('pelicula.deletedAt IS NULL'); // Filtrar por los favoritos que no han sido eliminados
 
     const favoritos = await queryBuilder.getMany();
 
     // Devolver solo la información de la película
-    return favoritos.map((favorito) => favorito.pelicula);
+    return favoritos.map((favorito) => {
+      return {
+        pelicula: favorito.pelicula,
+        valoraciones: favorito.pelicula.valoraciones, // Incluir las valoraciones de la película
+      };
+    });
   }
 }

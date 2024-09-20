@@ -14,6 +14,7 @@ import CreateValoracion from "./components/valoracion/CreateValoracion";
 import UserValoraciones from "./components/usuario/UserValoraciones";
 import ProtectedRoute from "./ProtectedRoute";
 import Forbidden from "./components/errores/Forbidden";
+import UserFavoritos from "./components/favoritos/UserFavoritos";
 
 function App() {
     return (
@@ -33,6 +34,7 @@ function App() {
                         <Route path="/genero/:id" element={<PeliculasByGenero />} />
                         <Route path="/user" element={<ProtectedRoute element={<UsersInfo />} allowedRoles={['USER']} />} />
                         <Route path="/userValoraciones/:id" element={<ProtectedRoute element={<UserValoraciones />} allowedRoles={['USER']} />} />
+                        <Route path="/userFavoritos/:id" element={<ProtectedRoute element={<UserFavoritos />} allowedRoles={['USER']} />} />
                     </Routes>
                 </div>
                 <Footer/>

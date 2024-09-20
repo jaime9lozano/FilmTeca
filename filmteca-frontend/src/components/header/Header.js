@@ -4,11 +4,11 @@ import {useNavigate} from "react-router-dom";
 import Cookies from 'js-cookie';
 import axios from "axios";
 import { Menu, MenuItem, IconButton } from '@mui/material';
-import { FaFilm, FaStar, FaUser } from 'react-icons/fa';
+import { FaFilm, FaStar, FaUser, FaHeart } from 'react-icons/fa';
 import { MdMenu } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import {useAuth} from "../../AuthContext";
-import {IoMdList} from "react-icons/io";
+import { useAuth } from "../../AuthContext";
+import { IoMdList } from "react-icons/io";
 
 function Header() {
     const navigate = useNavigate();
@@ -89,6 +89,11 @@ function Header() {
 
     const handleValoracionesClick = () => {
         navigate(`/userValoraciones/${userId}`); // Redirigir a la página de creación de películas
+        handleMenuClose(); // Cerrar el menú
+    };
+
+    const handleFavoritosClick = () => {
+        navigate(`/userFavoritos/${userId}`); // Redirigir a la página de creación de películas
         handleMenuClose(); // Cerrar el menú
     };
 
@@ -204,6 +209,34 @@ function Header() {
                         >
                             <FaStar style={{ marginRight: '8px' }} />
                             Valoraciones
+                        </MenuItem>
+                    )}
+                    {isAuthenticated && (
+                        <MenuItem
+                            onClick={handleFavoritosClick}
+                            sx={{
+                                color: 'white',
+                                '&:hover': {
+                                    backgroundColor: '#003d00',
+                                    color: '#FDC1DA',
+                                    transition: 'background-color 0.3s ease, color 0.3s ease'
+                                },
+                                borderRadius: '8px',
+                                padding: '8px 16px',
+                                fontWeight: 'bold',
+                                fontSize: '14px',
+                                '@media (max-width: 768px)': {
+                                    padding: '6px 12px',
+                                    fontSize: '12px',
+                                },
+                                '@media (max-width: 480px)': {
+                                    padding: '4px 8px',
+                                    fontSize: '10px',
+                                },
+                            }}
+                        >
+                            <FaHeart style={{ marginRight: '8px' }} />
+                            Favoritos
                         </MenuItem>
                     )}
                     <Menu
