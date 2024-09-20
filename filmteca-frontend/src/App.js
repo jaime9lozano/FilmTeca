@@ -12,6 +12,8 @@ import CreatePelicula from "./components/peliculas/CreatePelicula";
 import CambiarImagen from "./components/imagen/CambiarImagen";
 import CreateValoracion from "./components/valoracion/CreateValoracion";
 import UserValoraciones from "./components/usuario/UserValoraciones";
+import ProtectedRoute from "./ProtectedRoute";
+import Forbidden from "./components/errores/Forbidden";
 
 function App() {
     return (
@@ -20,16 +22,17 @@ function App() {
                 <Header/>
                 <div className="content">
                     <Routes>
-                        <Route path="/login" element={<Login/>}/>
-                        <Route path="/register" element={<Register/>}/>
-                        <Route path="/" element={<PeliculasList/>}/>
-                        <Route path="/pelicula/:id" element={<PeliculaDetail/>}/>
-                        <Route path="/createPelicula" element={<CreatePelicula/>}/>
-                        <Route path="/createValoracion/:id" element={<CreateValoracion/>}/>
-                        <Route path="/cambiarImagen/:id" element={<CambiarImagen/>}/>
-                        <Route path="/genero/:id" element={<PeliculasByGenero/>}/>
-                        <Route path="/user" element={<UsersInfo/>}/>
-                        <Route path="/userValoraciones/:id" element={<UserValoraciones/>}/>
+                        <Route path="/forbidden" element={<Forbidden />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/" element={<PeliculasList />} />
+                        <Route path="/pelicula/:id" element={<PeliculaDetail />} />
+                        <Route path="/createPelicula" element={<ProtectedRoute element={<CreatePelicula />} allowedRoles={['SUPERUSER']} />} />
+                        <Route path="/createValoracion/:id" element={<ProtectedRoute element={<CreateValoracion />} allowedRoles={['USER']} />} />
+                        <Route path="/cambiarImagen/:id" element={<ProtectedRoute element={<CambiarImagen />} allowedRoles={['SUPERUSER']} />} />
+                        <Route path="/genero/:id" element={<PeliculasByGenero />} />
+                        <Route path="/user" element={<ProtectedRoute element={<UsersInfo />} allowedRoles={['USER']} />} />
+                        <Route path="/userValoraciones/:id" element={<ProtectedRoute element={<UserValoraciones />} allowedRoles={['USER']} />} />
                     </Routes>
                 </div>
                 <Footer/>
