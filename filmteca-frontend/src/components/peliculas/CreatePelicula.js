@@ -373,7 +373,6 @@ const CreatePelicula = () => {
                     </div>
                 </div>
             )}
-
         </div>
     );
 };

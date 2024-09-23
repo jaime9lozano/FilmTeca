@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import Cookies from 'js-cookie';
 import axios from "axios";
 import { Menu, MenuItem, IconButton } from '@mui/material';
-import { FaFilm, FaStar, FaUser, FaHeart } from 'react-icons/fa';
+import {FaFilm, FaStar, FaUser, FaHeart, FaMoon, FaSun} from 'react-icons/fa';
 import { MdMenu } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useAuth } from "../../AuthContext";
@@ -19,6 +19,12 @@ function Header() {
     const openGenerosMenu = Boolean(generosAnchorEl);
     const { isAuthenticated, userId, roles, updateAuthState } = useAuth();
     const isSuperUser = roles && roles.includes('SUPERUSER');
+    const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
+
+    useEffect(() => {
+        document.body.classList.toggle('dark-mode', darkMode);
+        localStorage.setItem('darkMode', darkMode);
+    }, [darkMode]);
 
     // Obtener los géneros al cargar el componente
     useEffect(() => {
@@ -95,6 +101,10 @@ function Header() {
     const handleFavoritosClick = () => {
         navigate(`/userFavoritos/${userId}`); // Redirigir a la página de creación de películas
         handleMenuClose(); // Cerrar el menú
+    };
+
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
     };
 
     return (
@@ -344,6 +354,10 @@ function Header() {
                 </h1>
             </div>
             <div className="header-right">
+                {/* Botón para alternar el modo oscuro */}
+                <button className="header-icon" onClick={toggleDarkMode}>
+                    {darkMode ? <FaSun size={24}/> : <FaMoon size={24}/>}
+                </button>
                 {isAuthenticated ? (
                     <>
                         <button className="header-icon" onClick={() => navigate('/user')}>

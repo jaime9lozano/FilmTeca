@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     min-height: 80vh;
-    background: linear-gradient(to bottom, #f9f9f9, #e0e0e0);
+    background: var(--bg-color);
     padding: 20px;
 }
 
@@ -24,7 +24,7 @@
 
 .user-info-label {
     font-weight: bold;
-    color: #333;
+    color: var(--text-color);
     margin-right: 10px;
     width: 150px; /* Ajusta según el espacio disponible */
     text-align: right;
@@ -35,12 +35,14 @@
     border-radius: 4px;
     padding: 8px;
     font-size: 1em;
-    width: calc(100% - 160px); /* Ajusta el ancho según el espacio */
+    width: calc(100% - 160px);
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 .user-info-row span {
     font-size: 1em;
-    color: #555;
+    color: var(--text-color);
 }
 
 .btn-edit, .btn-delete, .btn-save, .btn-cancel, .btn-password {
@@ -80,7 +82,7 @@
 }
 
 .user-card {
-    background-color: #ffffff;
+    background-color: var(--bg-color);
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
@@ -97,38 +99,40 @@
     width: calc(100% - 16px);
     margin: 10px 0;
     font-size: 1em;
+    background-color: var(--bg-color); /* Fondo dinámico */
+    color: var(--text-color);
 }
 
 .user-card h2 {
     font-size: 2em;
     margin-bottom: 10px;
-    color: #333;
+    color: var(--text-color);
     font-weight: bold;
 }
 
 .user-card p {
     font-size: 1.1em;
-    color: #555;
+    color: var(--text-color);
     margin: 8px 0;
     line-height: 1.5;
 }
 
 .user-card .user-username {
     font-size: 1.4em;
-    color: #888;
+    color: var(--text-color);
     margin-bottom: 15px;
 }
 
 .user-card .user-email {
-    color: #888;
+    color: var(--text-color);
 }
 
 .user-card .user-roles {
-    color: #888;
+    color: var(--text-color);
 }
 
 .user-card .user-date {
-    color: #888;
+    color: var(--text-color);
 }
 
 input, textarea, select {
@@ -136,6 +140,8 @@ input, textarea, select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 select[multiple] {

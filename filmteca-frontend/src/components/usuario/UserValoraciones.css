@@ -34,7 +34,8 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
     position: relative;
-    background-color: #fff;
+    background-color: var(--bg-color); /* Fondo dinámico */
+    color: var(--text-color); /* Texto dinámico */
     width: 100%;
     max-width: 220px; /* Limitar el ancho máximo para pantallas pequeñas */
     height: 320px; /* Asegurar altura consistente */
@@ -83,7 +84,7 @@
 
 .valoracion2-date {
     font-size: 0.85em;
-    color: #777;
+    color: var(--text-color);
 }
 
 .valoracion-link {

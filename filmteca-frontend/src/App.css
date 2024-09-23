@@ -1,4 +1,14 @@
 /* src/App.css */
+
+/* Variables de color para modo claro (por defecto) */
+:root {
+    --bg-color: #ffffff; /* Color de fondo por defecto */
+    --text-color: #000000; /* Color del texto por defecto */
+    --button-bg-color: #f0f0f0; /* Color del fondo de botones en modo claro */
+    --button-hover-bg-color: #e0e0e0; /* Color de hover de botones en modo claro */
+}
+
+/* Estilos generales aplicando variables */
 html, body {
     width: 100%; /* Asegura que el ancho de la página ocupe el 100% */
     height: 100%;
@@ -6,20 +16,50 @@ html, body {
     padding: 0;
     overflow-x: hidden; /* Evita el desplazamiento horizontal */
     box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el tamaño total de los elementos */
+    background-color: var(--bg-color); /* Aplica el color de fondo */
+    color: var(--text-color); /* Aplica el color del texto */
 }
 
+/* Estilos específicos del modo oscuro */
+.dark-mode {
+    --bg-color: #181818; /* Color de fondo en modo oscuro */
+    --text-color: #ffffff; /* Color del texto en modo oscuro */
+    --button-bg-color: #333333; /* Color del fondo de botones en modo oscuro */
+    --button-hover-bg-color: #444444; /* Color de hover de botones en modo oscuro */
+}
+
+/* Estructura de la aplicación */
 .app {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: var(--bg-color); /* Aplicamos el color de fondo dinámico */
+    color: var(--text-color); /* Aplicamos el color de texto dinámico */
 }
 
 .content {
     flex: 1;
 }
 
+/* Contenedor general */
 .container {
     max-width: 100%;
     overflow-x: hidden;
 }
+
+/* Estilo de los botones */
+button {
+    background-color: var(--button-bg-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--button-hover-bg-color);
+}
+
 

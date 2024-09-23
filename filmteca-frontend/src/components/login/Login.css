@@ -5,18 +5,18 @@
     align-items: center;
     height: 100vh;
     margin: 0 0 0;
-    background: linear-gradient(to right, #f8f9fa, #e9ecef);
+    background: var(--bg-color);
 }
 
 .login-container h2 {
     margin-bottom: 20px;
-    color: #333;
+    color: var(--text-color);
     font-size: 2rem;
     text-align: center;
 }
 
 .login-form {
-    background: #ffffff;
+    background: var(--bg-color);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -33,7 +33,7 @@
     display: block;
     margin-bottom: 5px;
     font-size: 1rem;
-    color: #555;
+    color: var(--text-color);
 }
 
 .form-group input {
@@ -43,6 +43,8 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 .submit-button {

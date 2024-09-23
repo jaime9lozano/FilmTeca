@@ -15,12 +15,31 @@ import UserValoraciones from "./components/usuario/UserValoraciones";
 import ProtectedRoute from "./ProtectedRoute";
 import Forbidden from "./components/errores/Forbidden";
 import UserFavoritos from "./components/favoritos/UserFavoritos";
+import {useEffect, useState} from "react";
 
 function App() {
+    // Estado para controlar el modo oscuro
+    const [darkMode, setDarkMode] = useState(false);
+
+    // Efecto para añadir o quitar la clase del modo oscuro
+    useEffect(() => {
+        if (darkMode) {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+    }, [darkMode]);
+
+    // Función para alternar entre el modo oscuro y claro
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+    };
+
     return (
         <Router>
-            <div className="app">
-                <Header/>
+            <div className={`app ${darkMode ? 'dark' : ''}`}>
+                {/* Pasamos la función y el estado al Header */}
+                <Header toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
                 <div className="content">
                     <Routes>
                         <Route path="/forbidden" element={<Forbidden />} />
@@ -37,7 +56,7 @@ function App() {
                         <Route path="/userFavoritos/:id" element={<ProtectedRoute element={<UserFavoritos />} allowedRoles={['USER']} />} />
                     </Routes>
                 </div>
-                <Footer/>
+                <Footer />
             </div>
         </Router>
     );

@@ -4,7 +4,7 @@
     max-width: 1200px;
     margin: auto;
     position: relative; /* Necesario para el posicionamiento del botón de volver */
-    background-color: #f5f5f5; /* Fondo suave para el contenedor */
+    background-color: var(--bg-color); /* Fondo suave para el contenedor */
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
@@ -14,7 +14,7 @@
     margin-top: 60px;
     margin-bottom: 20px;
     text-align: center;
-    color: #333; /* Color del título */
+    color: var(--text-color);
 }
 
 .pelicula-detail-content {
@@ -39,7 +39,7 @@
 
 .pelicula-detail-info {
     max-width: 600px;
-    background-color: #ffffff; /* Fondo blanco para el contenedor de información */
+    background-color: var(--bg-color); /* Fondo blanco para el contenedor de información */
     padding: 20px;
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
@@ -53,7 +53,7 @@
 .pelicula-detail-info h3 {
     font-size: 1.2em;
     margin-bottom: 10px;
-    color: #333; /* Color de los encabezados de sección */
+    color: var(--text-color); /* Color de los encabezados de sección */
 }
 
 .pelicula-detail-info p {
@@ -63,7 +63,7 @@
 
 .pelicula-detail-info strong {
     font-weight: bold; /* Negrita para los títulos */
-    color: #333; /* Color del texto en negrita */
+    color: var(--text-color); /* Color del texto en negrita */
 }
 
 /* Contenedor de botones para evitar que se solapen */
@@ -159,13 +159,13 @@
 /* Contenedor de valoraciones */
 .valoraciones-container {
     margin-top: 40px;
-    background-color: #f9f9f9;
+    background-color: var(--bg-color);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .valoracion-card {
-    background-color: #fff;
+    background-color: var(--bg-color);
     padding: 20px;
     margin-bottom: 15px;
     border-radius: 8px;
@@ -184,7 +184,7 @@
 .valoracion-usuario {
     font-weight: bold;
     font-size: 16px;
-    color: #333;
+    color: var(--text-color);
 }
 .valoracion-rating {
     display: flex;
@@ -193,17 +193,17 @@
 .valoracion-rating {
     margin-left: 8px;
     font-size: 14px;
-    color: #333;
+    color: var(--text-color);
 }
 .valoracion-review {
     font-size: 14px;
-    color: #555;
+    color: var(--text-color);
     margin: 10px 0;
 }
 
 .valoracion-fecha {
     font-size: 12px;
-    color: #888;
+    color: var(--text-color);
 }
 
 /* loading */
