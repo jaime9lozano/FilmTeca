@@ -18,21 +18,28 @@ import UserFavoritos from "./components/favoritos/UserFavoritos";
 import {useEffect, useState} from "react";
 
 function App() {
-    // Estado para controlar el modo oscuro
     const [darkMode, setDarkMode] = useState(false);
 
-    // Efecto para añadir o quitar la clase del modo oscuro
     useEffect(() => {
-        if (darkMode) {
-            document.body.classList.add('dark-mode');
-        } else {
-            document.body.classList.remove('dark-mode');
-        }
+        // Comprobar la preferencia del sistema al cargar
+        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setDarkMode(prefersDarkMode);
+
+        // Aplicar el modo oscuro si está habilitado
+        document.body.classList.toggle('dark-mode', prefersDarkMode);
+
+        // Guardar la preferencia en localStorage
+        localStorage.setItem('darkMode', prefersDarkMode);
+    }, []);
+
+    useEffect(() => {
+        // Actualizar la clase del body cuando cambie darkMode
+        document.body.classList.toggle('dark-mode', darkMode);
+        localStorage.setItem('darkMode', darkMode);
     }, [darkMode]);
 
-    // Función para alternar entre el modo oscuro y claro
     const toggleDarkMode = () => {
-        setDarkMode(!darkMode);
+        setDarkMode(prev => !prev);
     };
 
     return (

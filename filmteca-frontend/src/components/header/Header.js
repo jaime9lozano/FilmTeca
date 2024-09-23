@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from "../../AuthContext";
 import { IoMdList } from "react-icons/io";
 
-function Header() {
+function Header({ toggleDarkMode, darkMode }) {
     const navigate = useNavigate();
     const [generos, setGeneros] = useState([]);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -19,12 +19,6 @@ function Header() {
     const openGenerosMenu = Boolean(generosAnchorEl);
     const { isAuthenticated, userId, roles, updateAuthState } = useAuth();
     const isSuperUser = roles && roles.includes('SUPERUSER');
-    const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
-
-    useEffect(() => {
-        document.body.classList.toggle('dark-mode', darkMode);
-        localStorage.setItem('darkMode', darkMode);
-    }, [darkMode]);
 
     // Obtener los géneros al cargar el componente
     useEffect(() => {
@@ -101,10 +95,6 @@ function Header() {
     const handleFavoritosClick = () => {
         navigate(`/userFavoritos/${userId}`); // Redirigir a la página de creación de películas
         handleMenuClose(); // Cerrar el menú
-    };
-
-    const toggleDarkMode = () => {
-        setDarkMode(!darkMode);
     };
 
     return (
