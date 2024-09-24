@@ -138,10 +138,20 @@ export class UsersService {
         updateUserDto.password,
       );
     }
+
+    // Verificar si se quiere cambiar el campo deleted_at y actualizarlo
+    if (updateUserDto.deleted_at !== undefined) {
+      user.deletedAt = new Date();
+    }
+    if (updateUserDto.deleted_at === null) {
+      user.deletedAt = null;
+    }
+
     // No sobrescribes los roles actuales del usuario cuando actualizas
     const rolesBackup = [...user.roles];
     Object.assign(user, updateUserDto);
 
+    /*
     if (updateRoles) {
       // Borramos los roles antiguos y añadimos los nuevos
       for (const userRole of rolesBackup) {
@@ -157,6 +167,7 @@ export class UsersService {
       // Restauramos los roles originales porque no queríamos actualizarlos
       user.roles = rolesBackup;
     }
+    */
 
     const updatedUser = await this.usuariosRepository.save(user);
 

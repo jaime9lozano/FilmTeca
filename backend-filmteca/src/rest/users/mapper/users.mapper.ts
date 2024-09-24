@@ -9,12 +9,12 @@ export class UsuariosMapper {
   toResponseDto(user: Usuario): UserDto {
     const userDto = new UserDto();
     userDto.id = user.id;
-    userDto.nombre = user.name;
+    userDto.name = user.name;
     userDto.username = user.username;
     userDto.email = user.email;
     userDto.createdAt = user.createdAt;
     userDto.updatedAt = user.updatedAt;
-    userDto.isDeleted = user.deletedAt;
+    userDto.deleted_at = user.deletedAt;
     userDto.roles = user.roles.map((role) => role.role);
     return userDto;
   }
@@ -22,12 +22,12 @@ export class UsuariosMapper {
   toResponseDtoWithRoles(user: Usuario, roles: UserRole[]): UserDto {
     const userDto = new UserDto();
     userDto.id = user.id;
-    userDto.nombre = user.name;
+    userDto.name = user.name;
     userDto.username = user.username;
     userDto.email = user.email;
     userDto.createdAt = user.createdAt;
     userDto.updatedAt = user.updatedAt;
-    userDto.isDeleted = user.deletedAt;
+    userDto.deleted_at = user.deletedAt;
     userDto.roles = roles.map((role) => role.role);
     return userDto;
   }

@@ -1,11 +1,10 @@
 export class UserDto {
   id: number;
-  nombre: string;
-  apellidos: string;
+  name: string;
   email: string;
   username: string;
   createdAt: Date;
   updatedAt: Date;
-  isDeleted: Date | null;
+  deleted_at: Date | null;
   roles: string[];
 }

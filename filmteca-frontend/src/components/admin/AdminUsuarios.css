@@ -1,0 +1,98 @@
+/* AdminUsuarios.css */
+.gestion-usuarios {
+    padding: 20px;
+    color: var(--text-color); /* Cambia con el modo oscuro */
+    background-color: var(--bg-color); /* Cambia con el modo oscuro */
+}
+
+.usuarios-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto; /* Permite que la tabla se adapte automáticamente al ancho */
+}
+
+.usuarios-table th, .usuarios-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: var(--text-color); /* Cambia con el modo oscuro */
+    background-color: var(--bg-color);
+    word-wrap: break-word; /* Ajusta el contenido a varias líneas si es necesario */
+}
+
+/* Indicadores de usuarios activos y desactivados */
+.usuario-activo {
+    background-color: #f5fff5;
+}
+
+.usuario-desactivado {
+    background-color: #fff5f5;
+}
+
+button {
+    margin-right: 10px;
+}
+
+/* Estilos para tablets */
+@media (max-width: 768px) {
+    .usuarios-table th, .usuarios-table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .gestion-usuarios {
+        padding: 15px;
+    }
+
+    .usuarios-table th, .usuarios-table td {
+        white-space: nowrap;
+    }
+}
+
+/* Estilos para móviles */
+@media (max-width: 480px) {
+    .usuarios-table {
+        border: none; /* Elimina bordes para hacerlo más limpio */
+    }
+
+    /* Ocultamos los encabezados (th) en pantallas pequeñas */
+    .usuarios-table thead {
+        display: none;
+    }
+
+    /* Hacemos que cada fila se comporte como una lista en móviles */
+    .usuarios-table tr {
+        display: block;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .usuarios-table td {
+        display: block;
+        width: 100%;
+        text-align: right;
+        padding: 6px;
+        font-size: 12px;
+        position: relative;
+        white-space: normal;
+        box-sizing: border-box;
+    }
+
+    /* Usamos el pseudo-elemento ::before para añadir los títulos de las columnas */
+    .usuarios-table td::before {
+        content: attr(data-label); /* Obtenemos el valor desde el atributo data-label */
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 6px;
+        font-weight: bold;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    /* Ajustamos los botones para que queden alineados correctamente */
+    .usuarios-table td:last-child {
+        text-align: center;
+        padding: 10px 0;
+    }
+}

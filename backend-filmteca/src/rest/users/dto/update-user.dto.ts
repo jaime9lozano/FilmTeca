@@ -15,5 +15,5 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   password?: string;
   @IsOptional()
   @IsDateString({}, { message: 'El formato de la fecha no es válido' })
-  deleted_at?: string | null;
+  deleted_at?: String | null;
 }
