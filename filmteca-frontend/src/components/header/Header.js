@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import Cookies from 'js-cookie';
 import axios from "axios";
 import { Menu, MenuItem, IconButton } from '@mui/material';
-import {FaFilm, FaStar, FaUser, FaHeart, FaMoon, FaSun} from 'react-icons/fa';
+import {FaFilm, FaStar, FaUser, FaHeart, FaMoon, FaSun, FaTools, FaUserTie, FaTrophy, FaUsers} from 'react-icons/fa';
 import { MdMenu } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useAuth } from "../../AuthContext";
@@ -15,10 +15,13 @@ function Header({ toggleDarkMode, darkMode }) {
     const [generos, setGeneros] = useState([]);
     const [anchorEl, setAnchorEl] = useState(null);
     const [generosAnchorEl, setGenerosAnchorEl] = useState(null);
+    const [adminAnchorEl, setAdminAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const openGenerosMenu = Boolean(generosAnchorEl);
+    const openAdminMenu = Boolean(adminAnchorEl);
     const { isAuthenticated, userId, roles, updateAuthState } = useAuth();
     const isSuperUser = roles && roles.includes('SUPERUSER');
+    const isAdmin = roles && roles.includes('ADMIN');
 
     // Obtener los géneros al cargar el componente
     useEffect(() => {
@@ -70,15 +73,25 @@ function Header({ toggleDarkMode, darkMode }) {
 
     const handleMenuClose = () => {
         setAnchorEl(null);
-        setGenerosAnchorEl(null); // Cerrar el menú de géneros al cerrar el menú principal
+        setGenerosAnchorEl(null);
+        setAdminAnchorEl(null);
     };
 
     const handleGenerosMenuOpen = (event) => {
         setGenerosAnchorEl(event.currentTarget);
     };
 
+    const handleAdminMenuOpen = (event) => {
+        setAdminAnchorEl(event.currentTarget);
+    };
+
     const handleGenerosMenuClose = () => {
         setGenerosAnchorEl(null);
+        setAnchorEl(null);
+    };
+
+    const handleAdminMenuClose = () => {
+        setAdminAnchorEl(null);
         setAnchorEl(null);
     };
 
@@ -95,6 +108,11 @@ function Header({ toggleDarkMode, darkMode }) {
     const handleFavoritosClick = () => {
         navigate(`/userFavoritos/${userId}`); // Redirigir a la página de creación de películas
         handleMenuClose(); // Cerrar el menú
+    };
+
+    const handleNavigation = (path) => {
+        navigate(path);
+        handleMenuClose();
     };
 
     return (
@@ -239,6 +257,34 @@ function Header({ toggleDarkMode, darkMode }) {
                             Favoritos
                         </MenuItem>
                     )}
+                    {isAdmin && (
+                        <MenuItem
+                            onClick={handleAdminMenuOpen}
+                            sx={{
+                                color: 'white',
+                                '&:hover': {
+                                    backgroundColor: '#003d00',
+                                    color: '#FDC1DA',
+                                    transition: 'background-color 0.3s ease, color 0.3s ease'
+                                },
+                                borderRadius: '8px',
+                                padding: '8px 16px',
+                                fontWeight: 'bold',
+                                fontSize: '14px',
+                                '@media (max-width: 768px)': {
+                                    padding: '6px 12px',
+                                    fontSize: '12px',
+                                },
+                                '@media (max-width: 480px)': {
+                                    padding: '4px 8px',
+                                    fontSize: '10px',
+                                },
+                            }}
+                        >
+                            <FaTools style={{ marginRight: '8px' }} />
+                            Gestión
+                        </MenuItem>
+                    )}
                     <Menu
                         anchorEl={generosAnchorEl}
                         open={openGenerosMenu}
@@ -326,6 +372,177 @@ function Header({ toggleDarkMode, darkMode }) {
                                 No hay géneros disponibles
                             </MenuItem>
                         )}
+                    </Menu>
+                    {/* Submenú de gestión */}
+                    <Menu
+                        anchorEl={adminAnchorEl}
+                        open={openAdminMenu}
+                        onClose={handleAdminMenuClose}
+                        PaperProps={{
+                            sx: {
+                                backgroundColor: '#282c34',
+                                color: 'white',
+                                borderRadius: '8px',
+                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
+                                width: '150px',
+                                height: 'auto',
+                                '@media (max-width: 768px)': {
+                                    width: '120px',
+                                },
+                                '@media (max-width: 480px)': {
+                                    width: '100px',
+                                },
+                            },
+                        }}
+                    >
+                        <MenuItem sx={{
+                            color: 'white',
+                            '&:hover': {
+                                backgroundColor: '#003d00',
+                                color: '#FDC1DA',
+                                transition: 'background-color 0.3s ease, color 0.3s ease'
+                            },
+                            borderRadius: '8px',
+                            padding: '8px 16px',
+                            fontSize: '14px',
+                            '@media (max-width: 768px)': {
+                                padding: '6px 12px',
+                                fontSize: '12px',
+                            },
+                            '@media (max-width: 480px)': {
+                                padding: '4px 8px',
+                                fontSize: '10px',
+                            },
+                        }} onClick={() => handleNavigation('/admin/peliculas')}>
+                            <FaFilm style={{ marginRight: '8px' }} />
+                            Películas
+                        </MenuItem>
+                        <MenuItem sx={{
+                            color: 'white',
+                            '&:hover': {
+                                backgroundColor: '#003d00',
+                                color: '#FDC1DA',
+                                transition: 'background-color 0.3s ease, color 0.3s ease'
+                            },
+                            borderRadius: '8px',
+                            padding: '8px 16px',
+                            fontSize: '14px',
+                            '@media (max-width: 768px)': {
+                                padding: '6px 12px',
+                                fontSize: '12px',
+                            },
+                            '@media (max-width: 480px)': {
+                                padding: '4px 8px',
+                                fontSize: '10px',
+                            },
+                        }} onClick={() => handleNavigation('/admin/generos')}>
+                            <IoMdList style={{ marginRight: '8px' }} />Generos
+                        </MenuItem>
+                        <MenuItem sx={{
+                            color: 'white',
+                            '&:hover': {
+                                backgroundColor: '#003d00',
+                                color: '#FDC1DA',
+                                transition: 'background-color 0.3s ease, color 0.3s ease'
+                            },
+                            borderRadius: '8px',
+                            padding: '8px 16px',
+                            fontSize: '14px',
+                            '@media (max-width: 768px)': {
+                                padding: '6px 12px',
+                                fontSize: '12px',
+                            },
+                            '@media (max-width: 480px)': {
+                                padding: '4px 8px',
+                                fontSize: '10px',
+                            },
+                        }} onClick={() => handleNavigation('/admin/actores')}>
+                            <FaUserTie style={{ marginRight: '8px' }} />
+                            Actores</MenuItem>
+                        <MenuItem sx={{
+                            color: 'white',
+                            '&:hover': {
+                                backgroundColor: '#003d00',
+                                color: '#FDC1DA',
+                                transition: 'background-color 0.3s ease, color 0.3s ease'
+                            },
+                            borderRadius: '8px',
+                            padding: '8px 16px',
+                            fontSize: '14px',
+                            '@media (max-width: 768px)': {
+                                padding: '6px 12px',
+                                fontSize: '12px',
+                            },
+                            '@media (max-width: 480px)': {
+                                padding: '4px 8px',
+                                fontSize: '10px',
+                            },
+                        }} onClick={() => handleNavigation('/admin/directores')}>
+                            <FaUserTie style={{ marginRight: '8px' }} />
+                            Directores</MenuItem>
+                        <MenuItem sx={{
+                            color: 'white',
+                            '&:hover': {
+                                backgroundColor: '#003d00',
+                                color: '#FDC1DA',
+                                transition: 'background-color 0.3s ease, color 0.3s ease'
+                            },
+                            borderRadius: '8px',
+                            padding: '8px 16px',
+                            fontSize: '14px',
+                            '@media (max-width: 768px)': {
+                                padding: '6px 12px',
+                                fontSize: '12px',
+                            },
+                            '@media (max-width: 480px)': {
+                                padding: '4px 8px',
+                                fontSize: '10px',
+                            },
+                        }} onClick={() => handleNavigation('/admin/premios')}>
+                            <FaTrophy style={{ marginRight: '8px' }} />
+                            Premios</MenuItem>
+                        <MenuItem sx={{
+                            color: 'white',
+                            '&:hover': {
+                                backgroundColor: '#003d00',
+                                color: '#FDC1DA',
+                                transition: 'background-color 0.3s ease, color 0.3s ease'
+                            },
+                            borderRadius: '8px',
+                            padding: '8px 16px',
+                            fontSize: '14px',
+                            '@media (max-width: 768px)': {
+                                padding: '6px 12px',
+                                fontSize: '12px',
+                            },
+                            '@media (max-width: 480px)': {
+                                padding: '4px 8px',
+                                fontSize: '10px',
+                            },
+                        }} onClick={() => handleNavigation('/admin/valoraciones')}>
+                            <FaStar style={{ marginRight: '8px' }} />
+                            Valoraciones</MenuItem>
+                        <MenuItem sx={{
+                            color: 'white',
+                            '&:hover': {
+                                backgroundColor: '#003d00',
+                                color: '#FDC1DA',
+                                transition: 'background-color 0.3s ease, color 0.3s ease'
+                            },
+                            borderRadius: '8px',
+                            padding: '8px 16px',
+                            fontSize: '14px',
+                            '@media (max-width: 768px)': {
+                                padding: '6px 12px',
+                                fontSize: '12px',
+                            },
+                            '@media (max-width: 480px)': {
+                                padding: '4px 8px',
+                                fontSize: '10px',
+                            },
+                        }} onClick={() => handleNavigation('/admin/usuarios')}>
+                            <FaUsers style={{ marginRight: '8px' }} />
+                            Usuarios</MenuItem>
                     </Menu>
                 </Menu>
                 <img

@@ -16,6 +16,13 @@ import ProtectedRoute from "./ProtectedRoute";
 import Forbidden from "./components/errores/Forbidden";
 import UserFavoritos from "./components/favoritos/UserFavoritos";
 import {useEffect, useState} from "react";
+import AdminPeliculas from "./components/admin/AdminPeliculas";
+import AdminGeneros from "./components/admin/AdminGeneros";
+import AdminActores from "./components/admin/AdminActores";
+import AdminDirectores from "./components/admin/AdminDirectores";
+import AdminPremios from "./components/admin/AdminPremios";
+import AdminValoraciones from "./components/admin/AdminValoraciones";
+import AdminUsuarios from "./components/admin/AdminUsuarios";
 
 function App() {
     const [darkMode, setDarkMode] = useState(false);
@@ -61,6 +68,13 @@ function App() {
                         <Route path="/user" element={<ProtectedRoute element={<UsersInfo />} allowedRoles={['USER']} />} />
                         <Route path="/userValoraciones/:id" element={<ProtectedRoute element={<UserValoraciones />} allowedRoles={['USER']} />} />
                         <Route path="/userFavoritos/:id" element={<ProtectedRoute element={<UserFavoritos />} allowedRoles={['USER']} />} />
+                        <Route path="/admin/peliculas" element={<ProtectedRoute element={<AdminPeliculas />} allowedRoles={['ADMIN']} />} />
+                        <Route path="/admin/generos" element={<ProtectedRoute element={<AdminGeneros />} allowedRoles={['ADMIN']} />} />
+                        <Route path="/admin/actores" element={<ProtectedRoute element={<AdminActores />} allowedRoles={['ADMIN']} />} />
+                        <Route path="/admin/directores" element={<ProtectedRoute element={<AdminDirectores />} allowedRoles={['ADMIN']} />} />
+                        <Route path="/admin/premios" element={<ProtectedRoute element={<AdminPremios />} allowedRoles={['ADMIN']} />} />
+                        <Route path="/admin/valoraciones" element={<ProtectedRoute element={<AdminValoraciones />} allowedRoles={['ADMIN']} />} />
+                        <Route path="/admin/usuarios" element={<ProtectedRoute element={<AdminUsuarios />} allowedRoles={['ADMIN']} />} />
                     </Routes>
                 </div>
                 <Footer />
