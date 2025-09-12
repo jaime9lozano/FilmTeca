@@ -17,10 +17,6 @@ import { FavoritoModule } from './rest/favorito/favorito.module';
 
 dotenv.config();
 
-console.log('DB_USERNAME:', process.env.DB_USERNAME);
-console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
-console.log('DB_HOST:', process.env.DB_HOST);
-
 @Module({
   imports: [
     ConfigModule.forRoot({
